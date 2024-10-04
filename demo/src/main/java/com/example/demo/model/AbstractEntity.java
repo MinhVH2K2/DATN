@@ -12,21 +12,29 @@ import java.util.Date;
 @Getter
 @Setter
 @MappedSuperclass
+
 public abstract class AbstractEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "user_id")
+    private String id;
 
-    @Column(name = "create_date")
+    @Column(name = "created_date")
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
 
-    @Column(name = "update_date")
+    @Column(name = "created_by")
+    private String createBy;
+
+    @Column(name = "updated_date")
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateDate;
+
+    @Column(name = "updated_by")
+    private String updateBy;
+
 
 
 }
