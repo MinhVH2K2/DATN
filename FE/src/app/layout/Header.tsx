@@ -6,7 +6,7 @@ export default function Header() {
 
     <div className="d-flex align-items-center justify-content-between">
       <a className="pointer logo d-flex align-items-center">
-        <img src="assets/img/logo2.png" alt=""/>
+        <img src="assets/img/logo.png" alt=""/>
         <span className="fw-bold d-none d-lg-block" style={{color: '#EF8121'}}>Heaven</span>
         <span className="fw-bold d-none d-lg-block">Shop</span>
       </a>

@@ -12,14 +12,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResponseDataSuccsess<T> {
-    private int stauts;
+    private int status;
     private String message;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private T data;
 
     public ResponseDataSuccsess(int stauts, String message) {
-        this.stauts = stauts;
+        this.status = stauts;
         this.message = message;
     }
 }
