@@ -9,6 +9,7 @@ import Error500 from "./app/page/error/Error500";
 import NotFound from "./app/page/error/NotFound";
 import { authRouter } from "./app/router/authRouter";
 import { productRouter } from "./app/router/productRouter";
+import { PrimeReactProvider } from 'primereact/api';
 
 export const spinner = (
   <div className="progress-spinner text-center">
