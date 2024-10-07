@@ -1,7 +1,9 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.request.UserRequest;
+import com.example.demo.model.Roles;
 import com.example.demo.model.User;
+import com.example.demo.repository.RolesRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,6 +16,8 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    RolesRepository rolesRepository;
     public String addUser(UserRequest request) throws Exception {
         if (userRepository.existsByuserName(request.getUserName()))
             throw new Exception("Người dùng đã tồn tại");
@@ -23,6 +27,7 @@ public class UserService {
                 .passWord(passwordEncoder.encode(request.getPassWord()))
                 .fullName(request.getFullName())
                 .build();
+        user.setRoles(rolesRepository.findByroleName("USER"));
         userRepository.save(user);
         return user.getUserName();
     }
