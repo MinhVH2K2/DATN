@@ -1,7 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Colors;
-import com.example.demo.service.ColorsService;
+import com.example.demo.model.Marterial;
+import com.example.demo.model.Sizes;
+import com.example.demo.service.MarterialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,56 +17,53 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
-@RestController
-@RequestMapping("/colors")
-public class ColorsController {
+@Controller
+@RequestMapping("/Marterial")
+public class MarterialController {
+
     @Autowired
-    private ColorsService colorsService;
+    private MarterialService marterialService;
 
-
-    @GetMapping("/getAll-corler")
-    public ResponseEntity<?> getAll(@RequestParam("p") Optional<Integer> number) {
-        Pageable pageable = PageRequest.of(number.orElse(0), 5);
-        return new ResponseEntity<>(colorsService.getAll(pageable).getContent(), HttpStatus.OK);
+    @GetMapping("/getAll-marterial")
+    public ResponseEntity<?> getAll(@RequestParam("p") Optional<Integer> p) {
+        Pageable pageable = PageRequest.of(p.orElse(0), 5);
+        return new ResponseEntity<>(marterialService.getAll(pageable).getContent(), HttpStatus.OK);
     }
 
-    @PostMapping("/add-corler")
-    public ResponseEntity<?> add(@RequestBody Colors colors) {
-        if (colors.getCorlorName().trim().length() == 0) {
+    @PostMapping("/add-marterial")
+    public ResponseEntity<?> add(@RequestBody Marterial marterial) {
+        if (marterial.getMaterialName().trim().length() == 0) {
             return new ResponseEntity<>("không được để trống ", HttpStatus.BAD_REQUEST);
         }
-        Boolean check = colorsService.createColors(colors);
+        Boolean check = marterialService.createMarterial(marterial);
         return new ResponseEntity<>(check == false ? "thất bại " : "thành công", check == true ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 
-    @PutMapping("/update-corler")
-    public ResponseEntity<?> update(@RequestBody Colors colors) {
-        if (colors.getCorlorName().trim().length() == 0) {
+    @PutMapping("/update-marteiral")
+    public ResponseEntity<?> update(@RequestBody Marterial marterial) {
+        if (marterial.getMaterialName().trim().length() == 0) {
             return new ResponseEntity<>("không được để trống ", HttpStatus.BAD_REQUEST);
         }
-        Boolean check = colorsService.updateColors(colors);
-        return new ResponseEntity<>(check == false ? "thất bại " : "thành công ", check == false ? HttpStatus.BAD_REQUEST : HttpStatus.OK);
+        Boolean check = marterialService.createMarterial(marterial);
+        return new ResponseEntity<>(check == false ? "thất bại " : "thành công", check == true ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 
-    @DeleteMapping("/delete-corler/{id}")
+    @DeleteMapping("/delete-marteiral/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        Boolean check = colorsService.deleteColors(id);
+        Boolean check = marterialService.deleteMarterial(id);
         return new ResponseEntity<>(check == false ? "thất bại " : "thành công", check == false ? HttpStatus.BAD_REQUEST : HttpStatus.OK);
     }
 
-    @GetMapping("/finbyid-corler/{id}")
+    @GetMapping("/finbyid-marterial/{id}")
     public ResponseEntity<?> finById(@PathVariable Long id) {
-        Optional<Colors> colors = colorsService.finbyId(id);
-        if (colors.isPresent()) {
-            return new ResponseEntity<>(colors.get(), HttpStatus.OK);
+        Optional<Marterial> sizes = marterialService.finbyId(id);
+        if (sizes.isPresent()) {
+            return new ResponseEntity<>(sizes.get(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>("không tìm thấy ", HttpStatus.NOT_FOUND);
         }
     }
-
-
 }

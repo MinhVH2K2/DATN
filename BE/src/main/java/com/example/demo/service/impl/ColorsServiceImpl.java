@@ -26,10 +26,10 @@ public class ColorsServiceImpl implements ColorsService {
 
     @Override
     public Boolean createColors(Colors colors) {
-        Random random = new Random(1000);
+        int random = new Random().nextInt(10000);
         try {
             Colors colors1 = Colors.builder()
-                    .colorCode("Colors" + random)
+                    .colorCode("color" + random)
                     .corlorName(colors.getCorlorName())
                     .build();
             colorsRepository.save(colors1);
