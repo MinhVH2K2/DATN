@@ -36,7 +36,7 @@ public class ProductImages {
     private Long isThumbnail;
 
     @ManyToOne
-    @JoinColumn(name = "product_detail_id")
-    private ProductDetail productDetail;
+    @JoinColumn(name = "product_id")
+    private Products products;
 
 }
