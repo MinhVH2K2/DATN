@@ -29,11 +29,11 @@ public class OrdersController {
         return ResponseEntity.ok(orders);
     }
 
-    @PostMapping("/add-orders2")
-    public Orders createOrder(@RequestBody Orders orders, @RequestBody List<OrderItems> orderItemsData) {
-        System.out.println(orders.toString());
-        return orderService.createOrder(orders, orderItemsData);
-    }
+    // @PostMapping("/add-orders2")
+    // public Orders createOrder(@RequestBody Orders orders, @RequestBody List<OrderItems> orderItemsData) {
+    //     System.out.println(orders.toString());
+    //     return orderService.createOrder(orders, orderItemsData);
+    // }
 
     @PostMapping("/add-orders")
     public Orders createOrder(@RequestBody OrderRequest orderRequest) {
