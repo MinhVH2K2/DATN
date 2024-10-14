@@ -50,7 +50,6 @@ public class AuthenticationResponse {
             throw new Exception("Tài khoản hoặc mật khẩu không chính xác");
         }
 
-
         return token = generateToken(user);
 
 

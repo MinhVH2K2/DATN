@@ -14,7 +14,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @PostMapping("adduser")
+        @PostMapping("adduser")
     public ResponseDataSuccsess<?> addUser(@RequestBody UserRequest request) {
         try {
             userService.addUser(request);
