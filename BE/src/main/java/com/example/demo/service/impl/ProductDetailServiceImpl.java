@@ -1,6 +1,9 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.model.Colors;
 import com.example.demo.model.ProductDetail;
+import com.example.demo.model.Products;
+import com.example.demo.model.Sizes;
 import com.example.demo.repository.ProductDetailRepository;
 import com.example.demo.service.ProductDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +17,7 @@ import java.util.Optional;
 public class ProductDetailServiceImpl implements ProductDetailService {
 
     @Autowired
-    private ProductDetailRepository productDetailRepository ;
+    private ProductDetailRepository productDetailRepository;
 
     @Override
     public Page<ProductDetail> getAll(Pageable pageable) {
@@ -23,21 +26,67 @@ public class ProductDetailServiceImpl implements ProductDetailService {
 
     @Override
     public Boolean createProductDetail(ProductDetail productDetail) {
-        return null;
+        try {
+            ProductDetail productDetail1 = ProductDetail.builder()
+                    .products(Products.builder()
+                            .productId(productDetail.getProducts().getProductId())
+                            .build())
+                    .colors(Colors.builder()
+                            .colerId(productDetail.getColors().getColerId())
+                            .build())
+                    .sizes(Sizes.builder()
+                            .sizesId(productDetail.getSizes().getSizesId())
+                            .build())
+                    .quantity(productDetail.getQuantity())
+                    .description(productDetail.getDescription())
+                    .build();
+            productDetailRepository.save(productDetail1);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 
     @Override
     public Boolean updateProductDetail(ProductDetail productDetail) {
-        return null;
+        try {
+            ProductDetail productDetail1 = ProductDetail.builder()
+                    .productDetailId(productDetail.getProductDetailId())
+                    .products(Products.builder()
+                            .productId(productDetail.getProducts().getProductId())
+                            .build())
+                    .colors(Colors.builder()
+                            .colerId(productDetail.getColors().getColerId())
+                            .build())
+                    .sizes(Sizes.builder()
+                            .sizesId(productDetail.getSizes().getSizesId())
+                            .build())
+                    .quantity(productDetail.getQuantity())
+                    .description(productDetail.getDescription())
+                    .build();
+            productDetailRepository.save(productDetail1);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
     public Boolean deleteProductDetail(Long id) {
-        return null;
+        try {
+            productDetailRepository.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
     public Optional<ProductDetail> finbyId(Long id) {
-        return Optional.empty();
+        return productDetailRepository.findById(id);
     }
 }

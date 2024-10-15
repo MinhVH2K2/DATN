@@ -1,6 +1,8 @@
 package com.example.demo.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,6 +17,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Table(name = "product_details")
@@ -43,10 +47,14 @@ public class ProductDetail {
     @ManyToOne
     @JoinColumn(name = "size_id")
     private Sizes sizes;
-
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", referencedColumnName = "product_id")
     private Products products;
+
+    @OneToMany(mappedBy = "productDetail" ,cascade = CascadeType.ALL)
+    private List<ProductImages> productImages ;
+
 
 
 }

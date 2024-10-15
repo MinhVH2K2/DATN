@@ -35,7 +35,7 @@ public class ProductImadesController {
     @PostMapping("/add-product-images")
     public ResponseEntity<?> add(@RequestBody ProductImages productImages) {
         if (productImages.getImageUrl().trim().length() == 0
-                || productImages.getProducts().getProductId().trim().length() == 0
+                || productImages.getProductDetail().getProductDetailId() == 0
                 || productImages.getIsThumbnail() == 0
         ) {
             return new ResponseEntity<>("không được để trống ", HttpStatus.BAD_REQUEST);
@@ -47,7 +47,7 @@ public class ProductImadesController {
     @PutMapping("/update-product-images")
     public ResponseEntity<?> update(@RequestBody ProductImages productImages) {
         if (productImages.getImageUrl().trim().length() == 0
-                || productImages.getProducts().getProductId().trim().length() == 0
+                ||productImages.getProductDetail().getProductDetailId() == 0
                 || productImages.getIsThumbnail() == 0
                 || productImages.getImageId().trim().length() == 0
         ) {

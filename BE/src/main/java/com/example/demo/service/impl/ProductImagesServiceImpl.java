@@ -1,6 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.model.Colors;
+import com.example.demo.model.ProductDetail;
 import com.example.demo.model.ProductImages;
 import com.example.demo.model.Products;
 import com.example.demo.repository.ProductImagesRepository;
@@ -34,8 +35,8 @@ public class ProductImagesServiceImpl implements ProductImagesService {
             ProductImages productImages1 = ProductImages.builder()
                     .imageId("image" + random)
                     .imageUrl(productImages.getImageUrl())
-                    .products(Products.builder()
-                            .productId(productImages.getProducts().getProductId())
+                    .productDetail(ProductDetail.builder()
+                            .productDetailId(productImages.getProductDetail().getProductDetailId())
                             .build())
                     .build();
             productImagesRepository.save(productImages1);
@@ -54,8 +55,8 @@ public class ProductImagesServiceImpl implements ProductImagesService {
             ProductImages productImages1 = ProductImages.builder()
                     .imageId(productImages.getImageId())
                     .imageUrl(productImages.getImageUrl())
-                    .products(Products.builder()
-                            .productId(productImages.getProducts().getProductId())
+                    .productDetail(ProductDetail.builder()
+                            .productDetailId(productImages.getProductDetail().getProductDetailId())
                             .build())
                     .build();
             productImagesRepository.save(productImages1);

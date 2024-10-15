@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,9 +35,9 @@ public class ProductImages {
 
     @Column(name = "is_thumbnail")
     private Long isThumbnail;
-
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Products products;
+    @JoinColumn(name = "product_detail_id")
+    private ProductDetail productDetail;
 
 }

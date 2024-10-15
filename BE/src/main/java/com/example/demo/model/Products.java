@@ -1,13 +1,18 @@
 package com.example.demo.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -19,6 +24,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -65,10 +71,11 @@ public class Products {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateDate;
 
+    //    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "brand_id")
     private Brands brands;
-
+//
     @ManyToOne
     @JoinColumn(name = "material_id")
     private Marterial marterial;
@@ -76,6 +83,10 @@ public class Products {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Categories categories;
+
+
+    @OneToMany(mappedBy ="products" , cascade = CascadeType.ALL)
+    private List<ProductDetail> productDetails ;
 
     @ManyToOne
     @JoinColumn(name = "created_by")
