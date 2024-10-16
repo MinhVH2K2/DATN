@@ -1,5 +1,8 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.response.OrderResponse;
+import com.example.demo.dto.response.OrdersResponse;
+import com.example.demo.dto.response.PageResponse;
 import com.example.demo.model.Discounts;
 import com.example.demo.model.OrderItems;
 import com.example.demo.model.Orders;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrdersService {
@@ -30,11 +34,61 @@ public class OrdersService {
     @Autowired
     private DiscountsRepository discountsRepository;
 
-    public Page<Orders> getAllOrders(Pageable pageable) {
-        return ordersRepository.findAll(pageable);
+    //    public OrdersResponse<Orders> getAllOrders(Pageable pageable) {
+//        Page<Orders> pageOrders = ordersRepository.findAll(pageable);
+//
+//        OrdersResponse<Orders> response = OrdersResponse.<Orders>builder()
+//                .pageNo(pageOrders.getNumber())
+//                .pageSize(pageOrders.getSize())
+//                .totalElements(pageOrders.getTotalElements())
+//                .totalPages(pageOrders.getTotalPages())
+//                .data(pageOrders.getContent())
+//                .build();
+//        return response;
+//    }
+//    public OrdersResponse<Orders> getAllOrders(Pageable pageable) {
+//        Page<Orders> pageOrders = ordersRepository.findAllWithOrderItemsAndDiscounts(pageable);
+//
+//        OrdersResponse<Orders> response = OrdersResponse.<Orders>builder()
+//                .pageNo(pageOrders.getNumber())
+//                .pageSize(pageOrders.getSize())
+//                .totalElements(pageOrders.getTotalElements())
+//                .totalPages(pageOrders.getTotalPages())
+//                .data(pageOrders.getContent())
+//                .build();
+//
+//        return response;
+//    }
+    public OrdersResponse<OrderResponse> getAllOrders(Pageable pageable) {
+        Page<Orders> pageOrders = ordersRepository.findAllWithOrderItemsAndDiscounts(pageable);
+
+        List<OrderResponse> orderResponseList = pageOrders.getContent().stream()
+                .map(order -> OrderResponse.builder()
+                        .orderId(order.getOrderId())
+                        .userId(order.getUserId())
+                        .discountId(order.getDiscountId())
+                        .totalPrice(order.getTotalPrice())
+                        .status(order.getStatus())
+                        .createdDate(order.getCreatedDate())
+                        .createdBy(order.getCreatedBy())
+                        .updatedDate(order.getUpdatedDate())
+                        .updatedBy(order.getUpdatedBy())
+                        .orderItems(order.getOrderItems())
+                        .discounts(order.getDiscounts())
+                        .build())
+                .collect(Collectors.toList());
+
+        OrdersResponse<OrderResponse> response = OrdersResponse.<OrderResponse>builder()
+                .pageNo(pageOrders.getNumber())
+                .pageSize(pageOrders.getSize())
+                .totalElements(pageOrders.getTotalElements())
+                .totalPages(pageOrders.getTotalPages())
+                .data(orderResponseList)
+                .build();
+
+        return response;
     }
 
-    private static final Logger logger = LoggerFactory.getLogger(OrdersService.class);
 
     /*
         @Transactional
@@ -91,6 +145,7 @@ public class OrdersService {
             return savedOrder; // Trả về đơn hàng đã lưu
         }
      */
+
     @Transactional
     public Orders createOrder(Orders order, List<OrderItems> orderItemsData) {
         if (orderItemsData == null || orderItemsData.isEmpty()) {
@@ -118,10 +173,8 @@ public class OrdersService {
 
             orderItems.add(orderItem);
             totalPrice = totalPrice.add(totalItemPrice);
-
             orderItemsRepository.save(orderItem); // Ensure each orderItem is saved
         }
-
         savedOrder.setTotalPrice(totalPrice);
         ordersRepository.save(savedOrder);
         return savedOrder;

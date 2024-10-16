@@ -13,5 +13,6 @@ public interface OrderItemsRepository extends JpaRepository<OrderItems, Long> {
     @Override
     List<OrderItems> findAllById(Iterable<Long> longs);
 
+    List<OrderItems> findByOrderId(String orderId);
 
 }
