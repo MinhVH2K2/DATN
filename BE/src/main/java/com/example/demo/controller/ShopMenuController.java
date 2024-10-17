@@ -5,6 +5,7 @@ import com.example.demo.dto.response.ResponseDataSuccsess;
 import com.example.demo.service.ShopMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +18,9 @@ public class ShopMenuController {
     ShopMenuService shopMenuService;
 
     @PostMapping("addshopmenu")
-    public ResponseDataSuccsess<?> addshopmenu(@RequestBody ShopMenuRequest request){
-        return new ResponseDataSuccsess<>(HttpStatus.OK.value(),"ADD SHOP MENU",shopMenuService.addShopMenu(request));
+    public ResponseDataSuccsess<?> addshopmenu(@RequestBody ShopMenuRequest request) {
+        return new ResponseDataSuccsess<>(HttpStatus.OK.value(), "ADD SHOP MENU", shopMenuService.addShopMenu(request));
 
     }
 }
+

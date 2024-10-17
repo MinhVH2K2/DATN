@@ -11,15 +11,15 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResponseDataSuccsess<T> {
-    private int stauts;
+public class ResponseDataSuccsess <T> {
+    private int status;
     private String message;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private T data;
 
-    public ResponseDataSuccsess(int stauts, String message) {
-        this.stauts = stauts;
+    public ResponseDataSuccsess(int status, String message) {
+        this.status = status;
         this.message = message;
     }
 }
