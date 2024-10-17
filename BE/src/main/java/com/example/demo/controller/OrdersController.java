@@ -22,8 +22,7 @@ public class OrdersController {
     private OrdersService orderService;
 
     @GetMapping("/all-orders")
-    public ResponseEntity<OrdersResponse<OrderResponse>> getAllOrders(@RequestParam(defaultValue = "0") int page,
-                                                                      @RequestParam(defaultValue = "10") int size) {
+    public ResponseEntity<OrdersResponse<OrderResponse>> getAllOrders(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
         OrdersResponse<OrderResponse> ordersResponse = orderService.getAllOrders(pageable);
         return ResponseEntity.ok(ordersResponse);
@@ -34,11 +33,5 @@ public class OrdersController {
         System.out.println(orderRequest.toString());
         return orderService.createOrder(orderRequest.getOrder(), orderRequest.getOrderItemsData());
     }
-//    @PostMapping("/add-orders2")
-//    public Orders createOrder(@RequestBody Orders orders, @RequestBody List<OrderItems> orderItemsData) {
-//        System.out.println(orders.toString());
-//        return orderService.createOrder(orders, orderItemsData);
-//    }
-
 
 }

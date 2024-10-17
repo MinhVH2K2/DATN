@@ -22,7 +22,6 @@ public class OrdersItemsController {
     @Autowired
     private OrdersItemsService orderItemsService;
 
-
     @GetMapping("/by-order/{orderId}")
     public ResponseEntity<List<OrderItems>> getOrderItemsByOrderId(@PathVariable String orderId) {
         List<OrderItems> orderItems = orderItemsService.findOrderItemsByOrderId(orderId);

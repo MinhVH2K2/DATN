@@ -21,19 +21,6 @@ public class DiscountsController {
         return discountService.findAllDiscounts(pageable);
     }
 
-    // Phương thức để tìm mã giảm giá theo ID
-//    @GetMapping("/{discountId}")
-//    public ResponseEntity<Discounts> getDiscountById(@PathVariable String discountId) {
-//        return discountService.findDiscountById(discountId);
-//    }
-
-    // Phương thức để tìm mã giảm giá theo giá trị
-//    @GetMapping("/value/{discountValue}")
-//    public ResponseEntity<Discounts> getDiscountByValue(@PathVariable int discountValue) {
-//        return discountService.findDiscountByValue(discountValue);
-//    }
-
-    // Phương thức để tạo mã giảm giá mới
     @PostMapping("/add-discounts")
     public ResponseEntity<Discounts> createDiscount(@RequestBody Discounts discounts) {
         return discountService.createDiscount(discounts);
@@ -44,9 +31,8 @@ public class DiscountsController {
         if (updatedDiscount == null || updatedDiscount.getDiscountId() == null || updatedDiscount.getDiscountId().isEmpty()) {
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
-                    .body("Invalid discount data. Discount ID must not be null or empty.");
+                    .body("Dữ liệu giảm giá không hợp lệ. Mã giảm giá không được để trống hoặc rỗng.");
         }
-
         return discountService.updateDiscount(updatedDiscount);
     }
 
