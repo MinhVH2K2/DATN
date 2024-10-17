@@ -1,6 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import { useNavigate } from 'react-router-dom';
+        
 
 export default function Product() {
+   const navigate = useNavigate();
+   const [products, setProducts] = useState([]);
   return (
     <>
         <div className="container">
@@ -17,7 +23,7 @@ export default function Product() {
                            </nav>
                         </div>                      
                         <div>
-                           <a href="add-product.html" className="btn btn-primary">Add Product</a>
+                           <a onClick={()=>{navigate('/product-add')}} className="btn btn-primary">Add Product</a>
                         </div>
                      </div>
                   </div>
@@ -42,72 +48,14 @@ export default function Product() {
                               </div>
                            </div>
                         </div>                     
-                        <div className="card-body p-0">
-                            <div className="table-responsive">
-                              <table className="table table-centered table-hover text-nowrap table-borderless mb-0 table-with-checkbox">
-                                 <thead className="bg-light">
-                                    <tr>
-                                       <th>
-                                          <div className="form-check">
-                                             <input className="form-check-input" type="checkbox" value="" id="checkAll" />
-                                             <label className="form-check-label" htmlFor="checkAll"></label>
-                                          </div>
-                                       </th>
-                                       <th>Image</th>
-                                       <th>Proudct Name</th>
-                                       <th>Category</th>
-                                       <th>Status</th>
-                                       <th>Price</th>
-                                       <th>Create at</th>
-                                       <th></th>
-                                    </tr>
-                                 </thead>
-                                 <tbody>
-                                 <tr>
-                                       <td>
-                                          <div className="form-check">
-                                             <input className="form-check-input" type="checkbox" value="" id="productOne" />
-                                             <label className="form-check-label" htmlFor="productOne"></label>
-                                          </div>
-                                       </td>
-                                       <td>
-                                          <a href="#!"><img src="../assets/images/products/product-img-1.jpg" alt="" className="icon-shape icon-md" /></a>
-                                       </td>
-                                       <td><a href="#" className="text-reset">Haldiram's Sev Bhujia</a></td>
-                                       <td>Snack & Munchies</td>
-
-                                       <td>
-                                          <span className="badge bg-light-primary text-dark-primary">Active</span>
-                                       </td>
-                                       <td>$18.00</td>
-                                       <td>24 Nov 2022</td>
-                                       <td>
-                                          <div className="dropdown">
-                                             <a href="#" className="text-reset" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i className="feather-icon icon-more-vertical fs-5"></i>
-                                             </a>
-                                             <ul className="dropdown-menu">
-                                                <li>
-                                                   <a className="dropdown-item" href="#">
-                                                      <i className="bi bi-trash me-3"></i>
-                                                      Delete
-                                                   </a>
-                                                </li>
-                                                <li>
-                                                   <a className="dropdown-item" href="#">
-                                                      <i className="bi bi-pencil-square me-3"></i>
-                                                      Edit
-                                                   </a>
-                                                </li>
-                                             </ul>
-                                          </div>
-                                       </td>
-                                    </tr>
-    
-                                </tbody>  
-                                </table>
-                             </div>
-                        </div>
+                        <div className="card">
+                              <DataTable value={products} tableStyle={{ minWidth: '50rem' }}>
+                                 <Column field="code" header="Code"></Column>
+                                 <Column field="name" header="Name"></Column>
+                                 <Column field="category" header="Category"></Column>
+                                 <Column field="quantity" header="Quantity"></Column>
+                              </DataTable>
+        </div>
                         <div className="border-top d-md-flex justify-content-between align-items-center px-6 py-6">
                            <span>Showing 1 to 8 of 12 entries</span>
                            <nav className="mt-2 mt-md-0">
