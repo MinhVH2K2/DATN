@@ -18,8 +18,6 @@ public class UserService {
     @Autowired
     RolesRepository rolesRepository;
 
-    @Autowired
-    RolesRepository rolesRepository;
     public String addUser(UserRequest request) throws Exception {
         if (userRepository.existsByuserName(request.getUserName()))
             throw new Exception("Người dùng đã tồn tại");

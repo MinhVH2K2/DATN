@@ -29,24 +29,23 @@ public class AuthenticationController {
             return new ResponseDataSuccsess<>(HttpStatus.BAD_REQUEST.value() , e.getMessage());
         }
     }
-
-    @PostMapping("/login")
-    public ResponseEntity<ResponseData> login(@RequestBody AuthenticationRequest request) throws Exception {
-        ResponseData responseData = new ResponseData();
-        try {
-            String token = authenticationResponse.authentication(request);
-            if (token != null) {
-                Map<String, String> result = new HashMap<>();
-                result.put("token", token);
-                responseData.setData(result);
-                responseData.setStatus(true);
-            }else{
-                responseData.setStatus(false);
-            }
-        }catch (Exception e) {
-            e.printStackTrace();
-            responseData.setStatus(false);
-        }
-        return ResponseEntity.ok(responseData);
-    }
+//    @PostMapping("/login")
+//    public ResponseEntity<ResponseData> login(@RequestBody AuthenticationRequest request) throws Exception {
+//        ResponseData responseData = new ResponseData();
+//        try {
+//            String token = authenticationResponse.authentication(request);
+//            if (token != null) {
+//                Map<String, String> result = new HashMap<>();
+//                result.put("token", token);
+//                responseData.setData(result);
+//                responseData.setStatus(true);
+//            }else{
+//                responseData.setStatus(false);
+//            }
+//        }catch (Exception e) {
+//            e.printStackTrace();
+//            responseData.setStatus(false);
+//        }
+//        return ResponseEntity.ok(responseData);
+//    }
 }
