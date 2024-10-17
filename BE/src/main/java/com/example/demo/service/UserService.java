@@ -15,6 +15,8 @@ public class UserService {
     UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    RolesRepository rolesRepository;
 
     @Autowired
     RolesRepository rolesRepository;
@@ -28,6 +30,7 @@ public class UserService {
                 .fullName(request.getFullName())
                 .build();
         user.setRoles(rolesRepository.findByroleName("USER"));
+
         userRepository.save(user);
         return user.getUserName();
     }
