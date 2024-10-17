@@ -10,6 +10,8 @@ import NotFound from "./app/page/error/NotFound";
 import { authRouter } from "./app/router/authRouter";
 import { productRouter } from "./app/router/productRouter";
 import { PrimeReactProvider } from 'primereact/api';
+import { salesCounter } from "./app/router/salesCounter";
+import { saleRouter } from "./app/router/saleRouter";
 
 export const spinner = (
   <div className="progress-spinner text-center">
@@ -26,6 +28,8 @@ function App() {
     authRouter,
     indexRouter,
     productRouter,
+    salesCounter,
+    saleRouter,
     { path: "err-network", element: <Error500 /> }, //500
     { path: "*", element: <NotFound /> }, //404
   ]);
