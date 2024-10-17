@@ -3,6 +3,8 @@ package com.example.demo.dto.response;
 import com.example.demo.dto.request.AuthenticationRequest;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jwt.JWTClaimsSet;
@@ -32,26 +34,29 @@ import java.util.StringJoiner;
 @Service
 public class AuthenticationResponse {
     private String token;
-
+    private User user;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Autowired
     UserService userService;
-
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Autowired
     PasswordEncoder passwordEncoder;
     @NonFinal
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Value("${jwt.signerKey}")
     protected String SIGNER_KEY;
 
-    public String authentication(AuthenticationRequest request) throws Exception {
+    public AuthenticationResponse authentication(AuthenticationRequest request) throws Exception {
         User user = userService.findByUserName(request.getUserName());
 
         boolean authencation = passwordEncoder.matches(request.getPassWord(), user.getPassWord());
         if (!authencation) {
             throw new Exception("Tài khoản hoặc mật khẩu không chính xác");
         }
-
-
-        return token = generateToken(user);
+        return AuthenticationResponse.builder()
+                .token(generateToken(user))
+                .user(user)
+                .build();
 
 
     }
@@ -87,7 +92,7 @@ public class AuthenticationResponse {
 
         StringJoiner stringJoiner = new StringJoiner(" ");
         if (!user.equals(null)) ;
-        stringJoiner.add("ROLE_"+user.getRoles().getRoleName());
+        stringJoiner.add("ROLE_" + user.getRoles().getRoleName());
         if (!CollectionUtils.isEmpty(user.getRoles().getShopMenus())) ;
         user.getRoles().getShopMenus().forEach(shopMenu -> stringJoiner.add(shopMenu.getMenuName()));
         return stringJoiner.toString();

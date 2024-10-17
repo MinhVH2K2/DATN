@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.request.UserRequest;
+import com.example.demo.model.Roles;
 import com.example.demo.model.User;
 import com.example.demo.repository.RolesRepository;
 import com.example.demo.repository.UserRepository;
@@ -17,6 +18,8 @@ public class UserService {
     @Autowired
     RolesRepository rolesRepository;
 
+    @Autowired
+    RolesRepository rolesRepository;
     public String addUser(UserRequest request) throws Exception {
         if (userRepository.existsByuserName(request.getUserName()))
             throw new Exception("Người dùng đã tồn tại");
@@ -27,7 +30,7 @@ public class UserService {
                 .fullName(request.getFullName())
                 .build();
         user.setRoles(rolesRepository.findByroleName("USER"));
-        userRepository.save(user);
+
         userRepository.save(user);
         return user.getUserName();
     }

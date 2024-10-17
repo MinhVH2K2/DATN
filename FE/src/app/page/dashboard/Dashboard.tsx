@@ -363,7 +363,6 @@ export default function Dashboard() {
                       <li className="dropdown-header text-start">
                         <h6>Filter</h6>
                       </li>
-
                       <li>
                         <a className="dropdown-item" href="#">
                           Today
