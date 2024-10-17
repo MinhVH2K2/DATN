@@ -20,12 +20,12 @@ export default function Aside() {
 
       <li className="nav-item">
         <a className="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i className="bi bi-menu-button-wide"></i><span>Components</span><i className="bi bi-chevron-down ms-auto"></i>
+          <i className="bi bi-menu-button-wide"></i><span>Product</span><i className="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="components-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="components-alerts.html">
-              <i className="bi bi-circle"></i><span>Alerts</span>
+            <a onClick={()=>{navigate('products')}} >
+              <i className="bi bi-circle"></i><span>Product2</span>
             </a>
           </li>
           <li>
@@ -228,7 +228,7 @@ export default function Aside() {
       {/* <!-- End Register Page Nav --> */}
 
       <li className="nav-item">
-        <a className="nav-link collapsed" href="pages-login.html">
+        <a className="nav-link collapsed" onClick={()=>{navigate('login')}}>
           <i className="bi bi-box-arrow-in-right"></i>
           <span>Login</span>
         </a>

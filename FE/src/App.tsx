@@ -7,6 +7,9 @@ import { Navigate, useRoutes } from "react-router-dom";
 import NotPermission from "./app/page/error/NotPermission";
 import Error500 from "./app/page/error/Error500";
 import NotFound from "./app/page/error/NotFound";
+import { authRouter } from "./app/router/authRouter";
+import { productRouter } from "./app/router/productRouter";
+import { PrimeReactProvider } from 'primereact/api';
 
 export const spinner = (
   <div className="progress-spinner text-center">
@@ -20,7 +23,9 @@ function App() {
   let router = useRoutes([
     { path: "not-permission", element: <NotPermission /> }, //403
     { path: "/", element: <Navigate to="/dashboard" replace /> },
+    authRouter,
     indexRouter,
+    productRouter,
     { path: "err-network", element: <Error500 /> }, //500
     { path: "*", element: <NotFound /> }, //404
   ]);
