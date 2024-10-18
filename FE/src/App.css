@@ -86,3 +86,43 @@
 .shadow-none {
   box-shadow: none;
 }
+
+.flex-grow-1 {
+  flex-grow: 1 !important;
+}
+
+.flex-grow-2 {
+  flex-grow: 2 !important;
+}
+
+.flex-grow-3 {
+  flex-grow: 3 !important;
+}
+
+.flex-grow-4 {
+  flex-grow: 4 !important;
+}
+
+.flex-grow-5 {
+  flex-grow: 5 !important;
+}
+
+.flex-grow-6 {
+  flex-grow: 6 !important;
+}
+
+.flex-grow-7 {
+  flex-grow: 7 !important;
+}
+
+.flex-grow-8 {
+  flex-grow: 8 !important;
+}
+
+.flex-grow-9 {
+  flex-grow: 9 !important;
+}
+
+.flex-grow-10 {
+  flex-grow: 10 !important;
+}
