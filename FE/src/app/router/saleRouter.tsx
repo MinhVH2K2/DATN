@@ -3,5 +3,5 @@ import SalesScreen from "../page/sales/SalesCounter";
 
 export const saleRouter: any = {
   path: "/sales",
-  element: <Sale/>, 
+  element: <SalesScreen/>, 
 };

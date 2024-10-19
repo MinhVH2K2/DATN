@@ -17,7 +17,33 @@ interface Invoice {
 function SalesScreen() {
   const [show, setShow] = useState(false); 
   const handleShow = () => setShow(true); 
-  const handleClose = () => setShow(false); 
+  const handleClose = () => setShow(false);
+  const [products, setProducts] = useState<Product[]>([
+    {
+      id: 1,
+      name: "Product A",
+      quantity: 10,
+      price: 20.0,
+    },
+    {
+      id: 2,
+      name: "Product b",
+      quantity: 11,
+      price: 20.0,
+    },
+    {
+      id: 3,
+      name: "Product c",
+      quantity: 14,
+      price: 20.0,
+    },
+    {
+      id: 4,
+      name: "Product d",
+      quantity: 15,
+      price: 20.0,
+    },
+  ]);
   const [invoices, setInvoices] = useState<Invoice[]>([
     {
       id: 1,
@@ -102,6 +128,29 @@ function SalesScreen() {
                               <Form.Control type="text" placeholder="Tên sản phẩm" />
                             </Form.Group>
                           </Form>
+                          <table className="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Product Name</th>
+                          <th scope="col">Quantity</th>
+                          <th scope="col">Price</th>                          
+                          <th scope="col"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {products.map((product) => (
+                          <tr key={product.id}>
+                            <td>{product.name}</td>
+                            <td>{product.quantity}</td>
+                            <td>${product.price.toFixed(2)}</td>
+                            
+                            <Button variant="secondary" style={{ backgroundColor: '#4CAF50', color: 'white', padding: '5px 10px', borderRadius: '5px' }} >
+                            +
+                          </Button>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                         </Modal.Body>
                         <Modal.Footer>
                           <Button variant="secondary" onClick={handleClose}>
