@@ -2,8 +2,10 @@ import {
   AutoComplete,
   AutoCompleteCompleteEvent,
 } from "primereact/autocomplete";
+import { InputText } from "primereact/inputtext";
 import { TabPanel, TabView } from "primereact/tabview";
 import React, { useState } from "react";
+import { Dropdown } from 'primereact/dropdown';
 
 export default function CounterSale() {
   // Autocomplete
@@ -22,6 +24,12 @@ export default function CounterSale() {
 
   const removeOrder = () => {
     console.log("remove order");
+  };
+  const [open, setOpen] = useState(false);
+
+  // Hàm để mở/đóng menu
+  const toggleMenu = () => {
+    setOpen(!open);
   };
 
   return (
@@ -53,13 +61,13 @@ export default function CounterSale() {
                 <button className="btn btn-light fs-5">
                   <span onClick={selectOrder}>Hoa don 2</span>
                   <a onClick={removeOrder} className="z-1 ms-2 text-dark">
-                    <i className="bi bi-x"></i>
-                  </a>
+                    <i className="bi bi-x"></i>                                   
+                  </a>                 
                 </button>
               </div>
               <div>
                 <button className="btn btn-primary text-white fs-5 p-1">
-                <i className="bi bi-plus-circle"></i>
+                <i className="bi bi-plus-circle"></i> 
                 </button>
               </div>
             </div>
@@ -84,8 +92,56 @@ export default function CounterSale() {
               <i className="bi bi-x-diamond-fill"></i>
             </button>
           </div>
+          <div className="dropdown justify-content-end align-items-center mt-1">
+            <button className="menu-button" onClick={toggleMenu}>
+              <i className="fa fa-bars"></i> {/* Icon nút menu */}
+            </button>
+
+            {open && (
+              <ul className="menu-list">
+                <li className="menu-item">
+                  <i className="fa fa-file"></i>
+                  Xem báo cáo cuối ngày
+                </li>
+                <li className="menu-item">
+                  <i className="fa fa-shopping-bag"></i>
+                  Xử lý đặt hàng
+                </li>
+                <li className="menu-item">
+                  <i className="fa fa-reply"></i>
+                  Chọn hóa đơn trả hàng
+                </li>
+                <li className="menu-item">
+                  <i className="fa fa-receipt"></i>
+                  Lập phiếu thu
+                </li>
+                <li className="menu-item">
+                  <i className="fa fa-upload"></i>
+                  Import file
+                </li>
+                <li className="menu-item">
+                  <i className="fa fa-eye"></i>
+                  Tùy chọn hiển thị
+                </li>
+                <li className="menu-item">
+                  <i className="fa fa-keyboard"></i>
+                  Phím tắt
+                </li>
+                <li className="menu-item">
+                  <i className="fa fa-cog"></i>
+                  Quản lý
+                </li>
+                <li className="menu-item">
+                  <i className="fa fa-sign-out"></i>
+                  Đăng xuất
+                </li>
+              </ul>
+            )}
         </div>
-        <div className="w-100 flex-grow-10">123</div>
+        </div>
+        <div className="w-100 flex-grow-10">
+                123
+        </div>
         <div className="bg-info w-100">123</div>
       </div>
     </>

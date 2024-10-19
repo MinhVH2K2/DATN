@@ -126,3 +126,78 @@
 .flex-grow-10 {
   flex-grow: 10 !important;
 }
+.hover-text {
+  display: none;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+}
+.hover-button:hover + .hover-text {
+  display: block;
+}
+
+/* Container của dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Nút menu với icon */
+.menu-button {
+  background-color: #007bff; /* Màu xanh */
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Danh sách menu */
+.menu-list {
+  position: absolute;
+  top: 50px; /* Vị trí hiển thị menu */
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  width: 200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+/* Item của menu */
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  border-bottom: 1px solid #ddd;
+}
+
+.menu-item i {
+  margin-right: 10px; /* Khoảng cách giữa icon và text */
+}
+
+/* Hover menu item */
+.menu-item:hover {
+  background-color: #f5f5f5;
+}
+
+/* Định dạng cho item cuối cùng (không có border dưới) */
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+/* Ẩn menu khi chưa bật */
+.menu-list {
+  display: none;
+}
+
+.dropdown:hover .menu-list {
+  display: block;
+}
+
+
