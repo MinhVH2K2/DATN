@@ -178,7 +178,7 @@ export default function CounterSale() {
                 </div>
               </div>
               {/* Products in category */}
-              <div className="d-flex h-100 w-100">
+              <div className="d-flex">
                 <div
                   style={{ width: "25%", height: "120px" }}
                   className="d-flex border rounded-3 bg-white m-3 shadow-sm p-2"
