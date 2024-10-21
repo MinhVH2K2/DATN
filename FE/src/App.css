@@ -238,6 +238,49 @@
   transition: all 0.3s ease;
 }
 
+.cs-order {
+  border: 1px solid #d1d5db; /* Màu xám nhạt để tạo sự tinh tế */
+  border-radius: .5rem;
+  cursor: pointer;
+  background-color: #f9fafb; /* Màu nền xám nhạt */
+  margin-right: 10px;
+  padding: .4rem .5rem .4rem .8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 500;
+  transition: all 0.3s ease; /* Thêm hiệu ứng mượt khi hover */
+  white-space: nowrap; 
+}
+
+.cs-order:hover {
+  background-color: #f3f4f6; /* Thêm màu nền nhẹ khi hover */
+  border-color: #a0aec0; /* Tăng độ nổi bật của viền khi hover */
+}
+
+.cs-order.active {
+  border: 1px solid #f97316; /* Màu cam sáng để thu hút sự chú ý */
+  color: #f97316;
+  cursor: pointer;
+  padding: .4rem .5rem .4rem .8rem;
+  margin-right: 10px;
+  border-radius: .5rem;
+  background-color: #fff7ed; /* Nền cam nhạt hài hòa với viền */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  white-space: nowrap; 
+}
+
+.cs-order:hover .fa-xmark {
+  color: red; /* Thay đổi màu khi hover */
+  transform: scale(1.2); /* Tăng kích thước khi hover */
+  transition: all 0.2s ease; /* Hiệu ứng chuyển tiếp mượt mà */
+}
 
 .shadow-1 {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
