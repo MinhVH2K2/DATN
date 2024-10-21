@@ -5,7 +5,7 @@ import {
 import { InputText } from "primereact/inputtext";
 import { TabPanel, TabView } from "primereact/tabview";
 import React, { useState } from "react";
-import { Dropdown } from 'primereact/dropdown';
+import { Dropdown } from "primereact/dropdown";
 
 export default function CounterSale() {
   // Autocomplete
@@ -41,6 +41,10 @@ export default function CounterSale() {
         {/* Header counter sale */}
         <div className="d-flex bg-primary w-100">
           <div style={{ width: "70%" }} className="d-flex">
+            <div className="ms-2 p-2 fs-3 fw-bold">
+              <span className="text-warning">Heaven</span>
+              <span className="text-white">Shop</span>
+            </div>
             <div className="p-2">
               <AutoComplete
                 value={value}
@@ -50,7 +54,7 @@ export default function CounterSale() {
                 onChange={(e) => setValue(e.value)}
               />
             </div>
-            <div className="d-flex justify-content-between p-2 w-100">
+            {/* <div className="d-flex justify-content-between p-2 w-100">
               <div>
                 <button className="btn btn-primary fs-5 rounded-3">
                   <span onClick={selectOrder}>Hoa don 1</span>
@@ -70,7 +74,7 @@ export default function CounterSale() {
                 <i className="bi bi-plus-circle"></i> 
                 </button>
               </div>
-            </div>
+            </div> */}
           </div>
           <div
             style={{ width: "30%" }}
@@ -92,7 +96,7 @@ export default function CounterSale() {
               <i className="bi bi-x-diamond-fill"></i>
             </button>
           </div>
-          <div className="dropdown justify-content-end align-items-center mt-1">
+          <div className="dropdown justify-content-end align-items-center mt-1 me-3">
             <button className="menu-button" onClick={toggleMenu}>
               <i className="fa fa-bars"></i> {/* Icon nút menu */}
             </button>
@@ -137,12 +141,30 @@ export default function CounterSale() {
                 </li>
               </ul>
             )}
+          </div>
         </div>
+        <div className="flex-grow-10">
+          <div className="d-flex h-100">
+            {/* Category */}
+            <div
+              style={{ width: "10%" }}
+              className="h-100 px-2 py-3 shadow-2 border-right"
+            >
+              <div className="cs-card shadow-1 active">
+                  Danh muc 1
+              </div>
+              <div className="cs-card shadow-1">
+                  Danh muc 2
+              </div>
+            </div>
+            <div style={{ width: "60%" }} className="h-100">
+              2
+            </div>
+            <div style={{ width: "30%" }} className="h-100 shadow-1">
+              3
+            </div>
+          </div>
         </div>
-        <div className="w-100 flex-grow-10">
-                123
-        </div>
-        <div className="bg-info w-100">123</div>
       </div>
     </>
   );
