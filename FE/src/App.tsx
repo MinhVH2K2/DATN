@@ -10,6 +10,7 @@ import NotFound from "./app/page/error/NotFound";
 import { authRouter } from "./app/router/authRouter";
 import { productRouter } from "./app/router/productRouter";
 import CounterSale from "./app/page/sales/CounterSale";
+import { discountsRouter } from "./app/router/discountsRouter";
 
 export const spinner = (
   <div className="progress-spinner text-center">
@@ -26,6 +27,7 @@ function App() {
     authRouter,
     indexRouter,
     productRouter,
+    discountsRouter,
     // salesCounter,
     // saleRouter,
     { path: "counter-sale", element: <CounterSale /> }, //500

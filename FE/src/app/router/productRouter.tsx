@@ -10,5 +10,4 @@ export const productRouter: any = {
     { path: "products", element: <Product /> },
     { path: "product-add", element: <ProductAdd /> } 
   ]
- 
 };

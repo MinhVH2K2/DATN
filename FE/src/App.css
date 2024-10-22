@@ -191,10 +191,10 @@
   border-bottom: none;
 }
 
-/* Ẩn menu khi chưa bật */
+/* Ẩn menu khi chưa bật
 .menu-list {
   display: none;
-}
+} */
 
 .dropdown:hover .menu-list {
   display: block;

@@ -1,12 +1,23 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
         
 
 export default function Product() {
    const navigate = useNavigate();
    const [products, setProducts] = useState([]);
+   useEffect(() => {
+      axios.get('http://localhost:8081/product/getall')  // API từ Spring Boot
+        .then(response => {
+          setProducts(response.data);
+        })
+        .catch(error => {
+          console.log('There was an error fetching the products!', error);
+        });
+    }, []);
+    console.log(products);
   return (
     <>
         <div className="container">
