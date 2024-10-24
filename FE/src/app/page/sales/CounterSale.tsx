@@ -54,27 +54,6 @@ export default function CounterSale() {
                 onChange={(e) => setValue(e.value)}
               />
             </div>
-            {/* <div className="d-flex justify-content-between p-2 w-100">
-              <div>
-                <button className="btn btn-primary fs-5 rounded-3">
-                  <span onClick={selectOrder}>Hoa don 1</span>
-                  <a onClick={removeOrder} className="z-1 ms-2 text-white">
-                    <i className="bi bi-x"></i>
-                  </a>
-                </button>
-                <button className="btn btn-light fs-5">
-                  <span onClick={selectOrder}>Hoa don 2</span>
-                  <a onClick={removeOrder} className="z-1 ms-2 text-dark">
-                    <i className="bi bi-x"></i>                                   
-                  </a>                 
-                </button>
-              </div>
-              <div>
-                <button className="btn btn-primary text-white fs-5 p-1">
-                <i className="bi bi-plus-circle"></i> 
-                </button>
-              </div>
-            </div> */}
           </div>
           <div
             style={{ width: "30%" }}
@@ -178,100 +157,112 @@ export default function CounterSale() {
                 </div>
               </div>
               {/* Products in category */}
-              <div className="d-flex">
-                <div
-                  style={{ width: "25%", height: "120px" }}
-                  className="d-flex border rounded-3 bg-white m-3 shadow-sm p-2"
-                >
-                  <img
-                    style={{ width: "30%" }}
-                    src="https://product.hstatic.net/200000182297/product/3090418p1499dt_al621021932303010470p399dt_z103321512314910201p699dt_2__48b20874535c43eb804bc2f87f51a9e7_master.jpg"
-                    alt=""
-                  />
-                  <div className="d-flex flex-column justify-content-between align-items-center ms-2 fw-semibold">
-                    <p style={{ fontSize: "18px" }} className="m-0">
-                      Ao da nau
-                    </p>
-                    <div className="d-flex">
-                      <p className="m-0 text-danger">1.000.000đ</p>
-                      <del
-                        style={{ fontSize: "12px" }}
-                        className="ms-1 mt-0 mb-0 me-0 text-secondary"
-                      >
-                        1.000.000đ
-                      </del>
+              <div className="row" style={{ padding: "1.8rem" }}>
+                {/* product 1 */}
+                <div className="p-1 col-lg-3 pointer">
+                  <div
+                    style={{ height: "120px" }}
+                    className="d-flex border rounded-3 bg-white shadow-sm p-2"
+                  >
+                    <img
+                      style={{ width: "30%" }}
+                      src="https://product.hstatic.net/200000182297/product/3090418p1499dt_al621021932303010470p399dt_z103321512314910201p699dt_2__48b20874535c43eb804bc2f87f51a9e7_master.jpg"
+                      alt=""
+                    />
+                    <div className="d-flex flex-column justify-content-between align-items-center ms-2 fw-semibold">
+                      <p style={{ fontSize: "18px" }} className="m-0">
+                        Ao da nau
+                      </p>
+                      <div className="d-flex">
+                        <p className="m-0 text-danger">1.000.000đ</p>
+                        <del
+                          style={{ fontSize: "12px" }}
+                          className="ms-1 mt-0 mb-0 me-0 text-secondary"
+                        >
+                          1.000.000đ
+                        </del>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div
-                  style={{ width: "25%", height: "120px" }}
-                  className="d-flex border rounded-3 bg-white m-3 shadow-sm p-2"
-                >
-                  <img
-                    style={{ width: "30%" }}
-                    src="https://product.hstatic.net/200000182297/product/10_e5d080b216404e03b73eb068db0cb014_master.jpg"
-                    alt=""
-                  />
-                  <div className="d-flex flex-column justify-content-between align-items-center ms-2 fw-semibold">
-                    <p style={{ fontSize: "18px" }} className="m-0">
-                      Ao da nau
-                    </p>
-                    <div className="d-flex">
-                      <p className="m-0 text-danger">1.000.000đ</p>
-                      <del
-                        style={{ fontSize: "12px" }}
-                        className="ms-1 mt-0 mb-0 me-0 text-secondary"
-                      >
-                        1.000.000đ
-                      </del>
+                {/* product 2 */}
+                <div className="p-1 col-lg-3 pointer">
+                  <div
+                    style={{ height: "120px" }}
+                    className="d-flex border rounded-3 bg-white shadow-sm p-2"
+                  >
+                    <img
+                      style={{ width: "30%" }}
+                      src="https://product.hstatic.net/200000182297/product/3090418p1499dt_al621021932303010470p399dt_z103321512314910201p699dt_2__48b20874535c43eb804bc2f87f51a9e7_master.jpg"
+                      alt=""
+                    />
+                    <div className="d-flex flex-column justify-content-between align-items-center ms-2 fw-semibold">
+                      <p style={{ fontSize: "18px" }} className="m-0">
+                        Ao da nau
+                      </p>
+                      <div className="d-flex">
+                        <p className="m-0 text-danger">1.000.000đ</p>
+                        <del
+                          style={{ fontSize: "12px" }}
+                          className="ms-1 mt-0 mb-0 me-0 text-secondary"
+                        >
+                          1.000.000đ
+                        </del>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div
-                  style={{ width: "25%", height: "120px" }}
-                  className="d-flex border rounded-3 bg-white m-3 shadow-sm p-2"
-                >
-                  <img
-                    style={{ width: "30%" }}
-                    src="https://product.hstatic.net/200000182297/product/4_9b9b62ea47b54830a0af05cef65ba88b_master.jpg"
-                    alt=""
-                  />
-                  <div className="d-flex flex-column justify-content-between align-items-center ms-2 fw-semibold">
-                    <p style={{ fontSize: "18px" }} className="m-0">
-                      Ao da nau
-                    </p>
-                    <div className="d-flex">
-                      <p className="m-0 text-danger">1.000.000đ</p>
-                      <del
-                        style={{ fontSize: "12px" }}
-                        className="ms-1 mt-0 mb-0 me-0 text-secondary"
-                      >
-                        1.000.000đ
-                      </del>
+                {/* product 3 */}
+                <div className="p-1 col-lg-3 pointer">
+                  <div
+                    style={{ height: "120px" }}
+                    className="d-flex border rounded-3 bg-white shadow-sm p-2"
+                  >
+                    <img
+                      style={{ width: "30%" }}
+                      src="https://product.hstatic.net/200000182297/product/3090418p1499dt_al621021932303010470p399dt_z103321512314910201p699dt_2__48b20874535c43eb804bc2f87f51a9e7_master.jpg"
+                      alt=""
+                    />
+                    <div className="d-flex flex-column justify-content-between align-items-center ms-2 fw-semibold">
+                      <p style={{ fontSize: "18px" }} className="m-0">
+                        Ao da nau
+                      </p>
+                      <div className="d-flex">
+                        <p className="m-0 text-danger">1.000.000đ</p>
+                        <del
+                          style={{ fontSize: "12px" }}
+                          className="ms-1 mt-0 mb-0 me-0 text-secondary"
+                        >
+                          1.000.000đ
+                        </del>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div
-                  style={{ width: "25%", height: "120px" }}
-                  className="d-flex border rounded-3 bg-white m-3 shadow-sm p-2"
-                >
-                  <img
-                    style={{ width: "30%" }}
-                    src="https://product.hstatic.net/200000182297/product/3_13a51c6c04d04f818f70f02e784db963_master.jpg"
-                    alt=""
-                  />
-                  <div className="d-flex flex-column justify-content-between align-items-center ms-2 fw-semibold">
-                    <p style={{ fontSize: "18px" }} className="m-0">
-                      Ao da nau
-                    </p>
-                    <div className="d-flex">
-                      <p className="m-0 text-danger">1.000.000đ</p>
-                      <del
-                        style={{ fontSize: "12px" }}
-                        className="ms-1 mt-0 mb-0 me-0 text-secondary"
-                      >
-                        1.000.000đ
-                      </del>
+                {/* product 4 */}
+                <div className="p-1 col-lg-3 pointer">
+                  <div
+                    style={{ height: "120px" }}
+                    className="d-flex border rounded-3 bg-white shadow-sm p-2"
+                  >
+                    <img
+                      style={{ width: "30%" }}
+                      src="https://product.hstatic.net/200000182297/product/3090418p1499dt_al621021932303010470p399dt_z103321512314910201p699dt_2__48b20874535c43eb804bc2f87f51a9e7_master.jpg"
+                      alt=""
+                    />
+                    <div className="d-flex flex-column justify-content-between align-items-center ms-2 fw-semibold">
+                      <p style={{ fontSize: "18px" }} className="m-0">
+                        Ao da nau
+                      </p>
+                      <div className="d-flex">
+                        <p className="m-0 text-danger">1.000.000đ</p>
+                        <del
+                          style={{ fontSize: "12px" }}
+                          className="ms-1 mt-0 mb-0 me-0 text-secondary"
+                        >
+                          1.000.000đ
+                        </del>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -286,7 +277,7 @@ export default function CounterSale() {
                   <button className="btn btn-light border fw-semibold">
                     <i className="fa fa-plus me-2"></i>
                     Add customer
-                    </button>
+                  </button>
                   <div>
                     <button className="btn btn-light border">
                       <i className="fa fa-plus"></i>
@@ -301,15 +292,22 @@ export default function CounterSale() {
                       </a>
                     </div>
                     {/* name size color product */}
-                    <div style={{maxWidth: '40%'}}>
-                      <p className="fw-semibold m-0">Ten san pham that dai xem co bi loi khong</p>
+                    <div style={{ maxWidth: "40%" }}>
+                      <p className="fw-semibold m-0">
+                        Ten san pham that dai xem co bi loi khong
+                      </p>
                       <div className="d-flex align-items-center fw-semibold">
                         <div className="color-product bg-primary"></div>/Size: M
                       </div>
                     </div>
                     <div className="number-input">
                       <button className="minus fw-bold">-</button>
-                      <input className="fw-semibold" type="number" id="inputNumber" value="2" />
+                      <input
+                        className="fw-semibold"
+                        type="number"
+                        id="inputNumber"
+                        value="2"
+                      />
                       <button className="plus fw-bold">+</button>
                     </div>
                     <div className="text-center">
