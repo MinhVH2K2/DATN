@@ -154,7 +154,7 @@ export default function CounterSale() {
               <div className="cs-card shadow-1">Danh muc 2</div>
             </div>
             <div
-              style={{ width: "60%", backgroundColor: "#f1f3f5" }}
+              style={{ width: "55%", backgroundColor: "#f1f3f5" }}
               className="h-100"
             >
               {/* Category name */}
@@ -194,7 +194,12 @@ export default function CounterSale() {
                     </p>
                     <div className="d-flex">
                       <p className="m-0 text-danger">1.000.000đ</p>
-                      <del style={{fontSize: '12px'}} className="ms-1 mt-0 mb-0 me-0 text-secondary">1.000.000đ</del>
+                      <del
+                        style={{ fontSize: "12px" }}
+                        className="ms-1 mt-0 mb-0 me-0 text-secondary"
+                      >
+                        1.000.000đ
+                      </del>
                     </div>
                   </div>
                 </div>
@@ -213,7 +218,12 @@ export default function CounterSale() {
                     </p>
                     <div className="d-flex">
                       <p className="m-0 text-danger">1.000.000đ</p>
-                      <del style={{fontSize: '12px'}} className="ms-1 mt-0 mb-0 me-0 text-secondary">1.000.000đ</del>
+                      <del
+                        style={{ fontSize: "12px" }}
+                        className="ms-1 mt-0 mb-0 me-0 text-secondary"
+                      >
+                        1.000.000đ
+                      </del>
                     </div>
                   </div>
                 </div>
@@ -232,7 +242,12 @@ export default function CounterSale() {
                     </p>
                     <div className="d-flex">
                       <p className="m-0 text-danger">1.000.000đ</p>
-                      <del style={{fontSize: '12px'}} className="ms-1 mt-0 mb-0 me-0 text-secondary">1.000.000đ</del>
+                      <del
+                        style={{ fontSize: "12px" }}
+                        className="ms-1 mt-0 mb-0 me-0 text-secondary"
+                      >
+                        1.000.000đ
+                      </del>
                     </div>
                   </div>
                 </div>
@@ -251,14 +266,65 @@ export default function CounterSale() {
                     </p>
                     <div className="d-flex">
                       <p className="m-0 text-danger">1.000.000đ</p>
-                      <del style={{fontSize: '12px'}} className="ms-1 mt-0 mb-0 me-0 text-secondary">1.000.000đ</del>
+                      <del
+                        style={{ fontSize: "12px" }}
+                        className="ms-1 mt-0 mb-0 me-0 text-secondary"
+                      >
+                        1.000.000đ
+                      </del>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div style={{ width: "30%" }} className="h-100 border-start">
-              3
+            <div
+              style={{ width: "35%" }}
+              className="d-flex flex-column justify-content-between h-100 border-start"
+            >
+              <div>
+                <div className="d-flex justify-content-between border-bottom p-2">
+                  <button className="btn border fw-semibold">
+                    <i className="fa fa-plus me-2"></i>
+                    Add customer
+                    </button>
+                  <div>
+                    <button className="btn border">
+                      <i className="fa fa-plus"></i>
+                    </button>
+                  </div>
+                </div>
+                <div className="p-2">
+                  <div className="border rounded-3 d-flex justify-content-between p-2">
+                    <div>
+                      <a className="pointer">
+                        <i className="fa fa-trash text-danger"></i>
+                      </a>
+                    </div>
+                    {/* name size color product */}
+                    <div style={{maxWidth: '40%'}}>
+                      <p className="fw-semibold m-0">Ten san pham that dai xem co bi loi khong</p>
+                      <div className="d-flex align-items-center fw-semibold">
+                        <div className="color-product bg-primary"></div>/Size: M
+                      </div>
+                    </div>
+                    <div className="number-input">
+                      <button className="minus fw-bold">-</button>
+                      <input className="fw-semibold" type="number" id="inputNumber" value="2" />
+                      <button className="plus fw-bold">+</button>
+                    </div>
+                    <div className="text-center">
+                      <p className="fw-semibold">1.000.000đ</p>
+                      <del>
+                        <small>900.000đ</small>
+                      </del>
+                    </div>
+                    <div>
+                      <p className="fw-semibold">2.000.000đ</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-secondary">Thanh toan</div>
             </div>
           </div>
         </div>
