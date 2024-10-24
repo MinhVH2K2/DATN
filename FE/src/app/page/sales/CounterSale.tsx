@@ -283,12 +283,12 @@ export default function CounterSale() {
             >
               <div>
                 <div className="d-flex justify-content-between border-bottom p-2">
-                  <button className="btn border fw-semibold">
+                  <button className="btn btn-light border fw-semibold">
                     <i className="fa fa-plus me-2"></i>
                     Add customer
                     </button>
                   <div>
-                    <button className="btn border">
+                    <button className="btn btn-light border">
                       <i className="fa fa-plus"></i>
                     </button>
                   </div>
@@ -313,13 +313,13 @@ export default function CounterSale() {
                       <button className="plus fw-bold">+</button>
                     </div>
                     <div className="text-center">
-                      <p className="fw-semibold">1.000.000đ</p>
+                      <p className="fw-semibold">900.000đ</p>
                       <del>
-                        <small>900.000đ</small>
+                        <small>1.000.000đ</small>
                       </del>
                     </div>
                     <div>
-                      <p className="fw-semibold">2.000.000đ</p>
+                      <p className="fw-semibold">1.800.000đ</p>
                     </div>
                   </div>
                 </div>
