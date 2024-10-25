@@ -45,7 +45,7 @@ export default function CounterSale() {
               <span className="text-warning">Heaven</span>
               <span className="text-white">Shop</span>
             </div>
-            <div className="p-2">
+            <div className="d-flex align-items-center p-2">
               <AutoComplete
                 value={value}
                 suggestions={items}
@@ -53,31 +53,19 @@ export default function CounterSale() {
                 completeMethod={search}
                 onChange={(e) => setValue(e.value)}
               />
+              <a className="pointer text-white ms-3 fs-2">
+                {/* <i className="fa fa-qrcode"></i> */}
+                <i className="bi bi-upc-scan"></i>
+              </a>
             </div>
           </div>
           <div
             style={{ width: "30%" }}
             className="d-flex justify-content-end align-items-center me-3"
-          >
-            <button className="btn text-white">
-              <i className="bi bi-x-diamond-fill"></i>
-            </button>
-            <button className="btn text-white">
-              <i className="bi bi-x-diamond-fill"></i>
-            </button>
-            <button className="btn text-white">
-              <i className="bi bi-x-diamond-fill"></i>
-            </button>
-            <button className="btn text-white">
-              <i className="bi bi-x-diamond-fill"></i>
-            </button>
-            <button className="btn text-white">
-              <i className="bi bi-x-diamond-fill"></i>
-            </button>
-          </div>
-          <div className="dropdown justify-content-end align-items-center mt-1 me-3">
-            <button className="menu-button" onClick={toggleMenu}>
-              <i className="fa fa-bars"></i> {/* Icon nút menu */}
+          ></div>
+          <div className="dropdown d-flex justify-content-end align-items-center mt-1 me-3">
+            <button className="btn text-white" onClick={toggleMenu}>
+              <i className="fa fa-bars fs-5"></i> {/* Icon nút menu */}
             </button>
 
             {open && (
@@ -159,7 +147,7 @@ export default function CounterSale() {
               {/* Products in category */}
               <div className="row" style={{ padding: "1.8rem" }}>
                 {/* product 1 */}
-                <div className="p-1 col-lg-3 pointer">
+                <div className="p-1 col-xl-3 col-lg-4 col-md-6 pointer">
                   <div
                     style={{ height: "120px" }}
                     className="d-flex border rounded-3 bg-white shadow-sm p-2"
@@ -179,14 +167,14 @@ export default function CounterSale() {
                           style={{ fontSize: "12px" }}
                           className="ms-1 mt-0 mb-0 me-0 text-secondary"
                         >
-                          1.000.000đ
+                          800.000đ
                         </del>
                       </div>
                     </div>
                   </div>
                 </div>
                 {/* product 2 */}
-                <div className="p-1 col-lg-3 pointer">
+                <div className="p-1 col-xl-3 col-lg-4 col-md-6 pointer pointer">
                   <div
                     style={{ height: "120px" }}
                     className="d-flex border rounded-3 bg-white shadow-sm p-2"
@@ -213,7 +201,7 @@ export default function CounterSale() {
                   </div>
                 </div>
                 {/* product 3 */}
-                <div className="p-1 col-lg-3 pointer">
+                <div className="p-1 col-xl-3 col-lg-4 col-md-6 pointer pointer">
                   <div
                     style={{ height: "120px" }}
                     className="d-flex border rounded-3 bg-white shadow-sm p-2"
@@ -240,7 +228,7 @@ export default function CounterSale() {
                   </div>
                 </div>
                 {/* product 4 */}
-                <div className="p-1 col-lg-3 pointer">
+                <div className="p-1 col-xl-3 col-lg-4 col-md-6 pointer pointer">
                   <div
                     style={{ height: "120px" }}
                     className="d-flex border rounded-3 bg-white shadow-sm p-2"
@@ -322,7 +310,28 @@ export default function CounterSale() {
                   </div>
                 </div>
               </div>
-              <div className="bg-secondary">Thanh toan</div>
+              <div
+                style={{ backgroundColor: "rgb(241, 243, 245)" }}
+                className="p-3 border m-3 rounded-3"
+              >
+                <div className="d-flex justify-content-between">
+                  <p className="fw-semibold fs-4">Sub-total:</p>
+                  <p className="fw-semibold fs-4 text-danger">2.000.000đ</p>
+                </div>
+                <div className="d-flex">
+                  <div className="w-50 me-2">
+                    <textarea
+                      className="form-control"
+                      placeholder="Ghi chú đơn hàng"
+                    ></textarea>
+                  </div>
+                  <div className="w-50">
+                    <button className="btn btn-primary w-100 h-100 fs-4 fw-semibold">
+                      Proceed
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
