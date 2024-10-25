@@ -262,14 +262,37 @@ export default function CounterSale() {
             >
               <div>
                 <div className="d-flex justify-content-between border-bottom p-2">
-                  <button className="btn btn-light border fw-semibold">
-                    <i className="fa fa-plus me-2"></i>
-                    Add customer
-                  </button>
                   <div>
+                    <button className="btn btn-light border fw-semibold me-2">
+                      <i className="fa fa-plus me-2"></i>
+                      Add customer
+                    </button>
                     <button className="btn btn-light border">
                       <i className="fa fa-plus"></i>
                     </button>
+                  </div>
+                  <div className="d-flex align-items-center fw-semibold">
+                    <div className="form-check form-check-inline">
+                      <input
+                        checked
+                        className="form-check-input pointer"
+                        type="radio"
+                        name="inlineRadioOptions"
+                        id="inlineRadio1"
+                        value="option1"
+                      />
+                      <label className="form-check-label">Tại quầy</label>
+                    </div>
+                    <div className="form-check form-check-inline">
+                      <input
+                        className="form-check-input pointer"
+                        type="radio"
+                        name="inlineRadioOptions"
+                        id="inlineRadio2"
+                        value="option2"
+                      />
+                      <label className="form-check-label">Đơn giao</label>
+                    </div>
                   </div>
                 </div>
                 <div className="p-2">
