@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { LoginRequest } from "../../model/LoginModel";
 import { AuthService } from "../../service/AuthService";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
     // DTO lấy giá trị ở input
@@ -26,11 +27,16 @@ export default function Login() {
     const handleLogin = ()=>{
         console.log(loginModel);
         AuthService.getInstance().login(loginModel).then(res=>{
+          localStorage.setItem('authToken', res.data.data.token);                     
             console.log(res);
+            navigate('/dashboard')
         }).catch(e=>{
             console.log(e);
         })
     }
+    const navigate = useNavigate();
+
+  
 
   return (
     <>

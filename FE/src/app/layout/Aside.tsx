@@ -38,8 +38,8 @@ export default function Aside() {
         </a>
         <ul id="forms-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a onClick={()=>{navigate('salesCounter')}}>
-              <i className="bi bi-circle"></i><span>Sales Counter </span>
+            <a onClick={()=>{navigate('counter-sale')}}>
+              <i className="bi bi-circle"></i><span> Counter Sales </span>
             </a>
           </li>          
         </ul>

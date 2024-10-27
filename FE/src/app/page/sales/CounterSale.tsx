@@ -4,13 +4,18 @@ import {
 } from "primereact/autocomplete";
 import { InputText } from "primereact/inputtext";
 import { TabPanel, TabView } from "primereact/tabview";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dropdown } from "primereact/dropdown";
+import axios from "axios";
+import { CategoriRequest } from "../../model/CategoriModel";
+import { Dialog } from "primereact/dialog";
 
 export default function CounterSale() {
   // Autocomplete
   const [value, setValue] = useState<string>("");
   const [items, setItems] = useState<string[]>([]);
+  const [activeCategory, setActiveCategory] = useState(null);
+  const [visible, setVisible] = useState(false);
 
   const search = (event: AutoCompleteCompleteEvent) => {
     setItems(
@@ -31,6 +36,26 @@ export default function CounterSale() {
   const toggleMenu = () => {
     setOpen(!open);
   };
+  const [CategoriModel, setCategoriModel] = useState<CategoriRequest[]>([]);
+   
+   useEffect(() => {
+      const token = localStorage.getItem('authToken');
+      axios.get('http://localhost:8081/categori/getAll-categori',{
+         headers: {
+            Authorization: `Bearer ${token}` // Thêm token vào headers
+         }
+      })  // API từ Spring Boot
+        .then(response => {
+          setCategoriModel(response.data);
+         console.log(CategoriModel);
+        })
+        .catch(error => {
+          console.log('There was an error fetching the products!', error);
+        });
+    }, []);
+    const handleActiveCategori = (id : any) => {
+      setActiveCategory(id);
+   };
 
   return (
     <>
@@ -117,8 +142,15 @@ export default function CounterSale() {
               style={{ width: "10%" }}
               className="h-100 px-2 py-3 shadow-2 border-end"
             >
-              <div className="cs-card shadow-1 active">Danh muc 1</div>
-              <div className="cs-card shadow-1">Danh muc 2</div>
+              {CategoriModel.map((category) => (
+            <div 
+            key={category.categoriesId}
+            className={`cs-card shadow-1 ${activeCategory === category.categoriesId ? "active" : ""}`}
+            onClick={() => handleActiveCategori(category.categoriesId)}
+            >
+               {category.categoriesName}
+            </div>
+         ))}
             </div>
             <div
               style={{ width: "55%", backgroundColor: "#f1f3f5" }}
@@ -146,8 +178,16 @@ export default function CounterSale() {
               </div>
               {/* Products in category */}
               <div className="row" style={{ padding: "1.8rem" }}>
-                {/* product 1 */}
-                <div className="p-1 col-xl-3 col-lg-4 col-md-6 pointer">
+              <Dialog header="Header" visible={visible} maximizable style={{ width: '50vw' }} onHide={() => {if (!visible) return; setVisible(false); }}>
+                <p className="m-0">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+              </Dialog>
+                {/* product 1 */}                
+                <div className="p-1 col-xl-3 col-lg-4 col-md-6 pointer" onClick={() => setVisible(true)}>
                   <div
                     style={{ height: "120px" }}
                     className="d-flex border rounded-3 bg-white shadow-sm p-2"

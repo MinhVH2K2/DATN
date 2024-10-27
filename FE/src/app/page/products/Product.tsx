@@ -8,16 +8,23 @@ import axios from 'axios';
 export default function Product() {
    const navigate = useNavigate();
    const [products, setProducts] = useState([]);
+   
    useEffect(() => {
-      axios.get('http://localhost:8081/product/getall')  // API từ Spring Boot
+      const token = localStorage.getItem('authToken');
+      axios.get('http://localhost:8081/product/getall',{
+         headers: {
+            Authorization: `Bearer ${token}` // Thêm token vào headers
+         }
+      })  // API từ Spring Boot
         .then(response => {
-          setProducts(response.data);
+          setProducts(response.data.data.content);
+         // console.log(response.data.data.content);
         })
         .catch(error => {
           console.log('There was an error fetching the products!', error);
         });
     }, []);
-    console.log(products);
+    
   return (
     <>
         <div className="container">
@@ -61,10 +68,10 @@ export default function Product() {
                         </div>                     
                         <div className="card">
                               <DataTable value={products} tableStyle={{ minWidth: '50rem' }}>
-                                 <Column field="code" header="Code"></Column>
-                                 <Column field="name" header="Name"></Column>
-                                 <Column field="category" header="Category"></Column>
-                                 <Column field="quantity" header="Quantity"></Column>
+                                 <Column field="productId" header="Code"></Column>
+                                 <Column field="productName" header="Name"></Column>
+                                 <Column field="description" header="mota"></Column>
+                                 <Column field="weight" header="weight"></Column>
                               </DataTable>
         </div>
                         <div className="border-top d-md-flex justify-content-between align-items-center px-6 py-6">
