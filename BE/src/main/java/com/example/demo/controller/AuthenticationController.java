@@ -28,10 +28,7 @@ public class AuthenticationController {
             return new ResponseDataSuccsess<>(HttpStatus.BAD_REQUEST.value() , e.getMessage());
         }
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> e04795b (update)
 //    @PostMapping("/login")
 //    public ResponseEntity<ResponseData> login(@RequestBody AuthenticationRequest request) throws Exception {
 //        ResponseData responseData = new ResponseData();

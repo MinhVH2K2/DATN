@@ -119,10 +119,10 @@ public class ProductServiceImpl implements ProductService {
         Specification<Products> hasName = Specification.where((root, query, criteriaBuilder) ->
                 criteriaBuilder.like(root.get("productName"),"%" + nameProducts + "%")
         );
-        Specification<Products> hasId = Specification.where((root, query, criteriaBuilder) ->
-                criteriaBuilder.equal(root.get("productId"), id)
-        );
-        Specification<Products> finalSpec = spec.and(hasName).and(hasId);
+//        Specification<Products> hasId = Specification.where((root, query, criteriaBuilder) ->
+//                criteriaBuilder.equal(root.get("productId"), id)
+//        );
+        Specification<Products> finalSpec = spec.and(hasName);
 
         Page<Products> lists = productRepository.findAll(finalSpec, pageable);
 
