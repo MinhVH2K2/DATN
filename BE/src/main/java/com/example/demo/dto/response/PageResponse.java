@@ -8,7 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PageResponse<T> {
-
     private int pageNo;
     private int pageSize;
     private int totalPage;

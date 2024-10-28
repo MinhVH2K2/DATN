@@ -11,6 +11,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+<<<<<<< HEAD
+=======
+
+>>>>>>> e04795b (update)
 public class ResponseDataSuccsess <T> {
     private int status;
     private String message;
@@ -18,8 +22,14 @@ public class ResponseDataSuccsess <T> {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private T data;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> e04795b (update)
     public ResponseDataSuccsess(int status, String message) {
         this.status = status;
         this.message = message;
     }
 }
+
+

@@ -87,4 +87,19 @@ public class ProductController {
         }
         return new ResponseDataSuccsess<>(HttpStatus.OK.value(), "thành công");
     }
+    @GetMapping("/getAllProductByMutipleColums")
+    public ResponseDataSuccsess<?> getAllProductByMutipleColums(
+            @RequestParam(required = false, defaultValue = "0") int pageNo,
+            @RequestParam(required=false, defaultValue ="5") int pageSize,
+            @RequestParam(required=false) String categories,
+            @RequestParam(required=false) String nameProducts,
+             @RequestParam(required=false) String id
+    ){
+        try {
+            return new ResponseDataSuccsess<>(HttpStatus.OK.value(), "Find all product", productService.getAllProductByMutipleColums(pageNo,pageSize,categories,nameProducts,id));
+        } catch (Exception e) {
+            return new ResponseDataSuccsess<>(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+
+        }
+    }
 }
