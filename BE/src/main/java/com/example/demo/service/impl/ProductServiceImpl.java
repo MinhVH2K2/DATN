@@ -116,20 +116,21 @@ public class ProductServiceImpl implements ProductService {
                     return criteriaBuilder.like(joinTable.get("categoriesName"), "%" + categories + "%");
                 }
         );
-        Specification<Products> hasName = Specification.where((root, query, criteriaBuilder) ->
-                criteriaBuilder.like(root.get("productName"),"%" + nameProducts + "%")
-        );
+//        Specification<Products> hasName = Specification.where((root, query, criteriaBuilder) ->
+//                criteriaBuilder.like(root.get("productName"),"%" + nameProducts + "%")
+//        );
 //        Specification<Products> hasId = Specification.where((root, query, criteriaBuilder) ->
 //                criteriaBuilder.equal(root.get("productId"), id)
 //        );
-        Specification<Products> finalSpec = spec.and(hasName);
+//        Specification<Products> finalSpec = spec.and(hasName);
 
-        Page<Products> lists = productRepository.findAll(finalSpec, pageable);
+        Page<Products> lists = productRepository.findAll(spec, pageable);
 
        List<Products> productsList= lists.stream().map(list -> Products.builder()
                .productId(list.getProductId())
                .productName(list.getProductName())
                .categories(list.getCategories())
+               .productDetails(list.getProductDetails())
                .build()).toList();
 
        return PageResponse.builder()
