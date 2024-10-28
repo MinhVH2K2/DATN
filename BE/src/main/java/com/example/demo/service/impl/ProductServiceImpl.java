@@ -108,35 +108,47 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
-    public PageResponse<?> getAllProductByMutipleColums(int pageNo, int pageSize, String categories , String nameProducts ,String id) {
+    public PageResponse<?> getAllProductByMutipleColums(int pageNo, int pageSize, String categories, String nameProducts, String id) {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
         Specification<Products> spec = Specification.where((root, query, criteriaBuilder) ->
                 {
-                    Join<Products, Categories> joinTable = root.join("categories", JoinType.INNER);
-                    return criteriaBuilder.like(joinTable.get("categoriesName"), "%" + categories + "%");
+                    if (categories == null) {
+                        return criteriaBuilder.conjunction(); // Trả về conjunction để không lọc gì nếu categories là null
+                    } else {
+                        Join<Products, Categories> joinTable = root.join("categories", JoinType.INNER);
+                        return criteriaBuilder.like(joinTable.get("categoriesName"), "%" + categories + "%");
+                    }
                 }
+
         );
         Specification<Products> hasName = Specification.where((root, query, criteriaBuilder) ->
-                criteriaBuilder.like(root.get("productName"),"%" + nameProducts + "%")
+                {
+                    if (nameProducts == null) {
+                        return criteriaBuilder.conjunction(); // Trả về conjunction để không lọc gì nếu nameproducts là null
+                    } else {
+                        return criteriaBuilder.like(root.get("productName"), "%" + nameProducts + "%");
+                    }
+                }
+                // criteriaBuilder.like(root.get("productName"),"%" + nameProducts + "%")
         );
-        Specification<Products> hasId = Specification.where((root, query, criteriaBuilder) ->
-                criteriaBuilder.equal(root.get("productId"), id)
-        );
-        Specification<Products> finalSpec = spec.and(hasName).and(hasId);
+//        Specification<Products> hasId = Specification.where((root, query, criteriaBuilder) ->
+//                criteriaBuilder.equal(root.get("productId"), id)
+//        );
+        Specification<Products> finalSpec = spec.and(hasName);
 
         Page<Products> lists = productRepository.findAll(finalSpec, pageable);
 
-       List<Products> productsList= lists.stream().map(list -> Products.builder()
-               .productId(list.getProductId())
-               .productName(list.getProductName())
-               .categories(list.getCategories())
-               .build()).toList();
+        List<Products> productsList = lists.stream().map(list -> Products.builder()
+                .productId(list.getProductId())
+                .productName(list.getProductName())
+                .categories(list.getCategories())
+                .build()).toList();
 
-       return PageResponse.builder()
-               .pageNo(pageNo)
-               .pageSize(pageSize)
-               .totalPage(lists.getTotalPages())
-               .data(productsList)
-               .build();
+        return PageResponse.builder()
+                .pageNo(pageNo)
+                .pageSize(pageSize)
+                .totalPage(lists.getTotalPages())
+                .data(productsList)
+                .build();
     }
 }
