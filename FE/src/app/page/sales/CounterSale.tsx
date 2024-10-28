@@ -2,21 +2,38 @@ import {
   AutoComplete,
   AutoCompleteCompleteEvent,
 } from "primereact/autocomplete";
-import { InputText } from "primereact/inputtext";
-import { TabPanel, TabView } from "primereact/tabview";
 import React, { useEffect, useState } from "react";
-import { Dropdown } from "primereact/dropdown";
 import axios from "axios";
-import { CategoriRequest } from "../../model/CategoriModel";
 import { Dialog } from "primereact/dialog";
-
+import { Button } from "primereact/button";
+import { CategoriModel } from "../../model/ProductModel";
+import { OrderModel } from "../../model/OrderMoldel";
 export default function CounterSale() {
   // Autocomplete
   const [value, setValue] = useState<string>("");
   const [items, setItems] = useState<string[]>([]);
   const [activeCategory, setActiveCategory] = useState(null);
+  const [activeOrder, setActiveOrder] = useState(null);
   const [visible, setVisible] = useState(false);
-
+  const [order, setOrder] = useState<OrderModel[]>([
+    new OrderModel("1", "1")
+  ]);
+  const addNewOrder = () => {
+    const newOrder = new OrderModel((order.length + 1).toString(), "newUserId"); // tạo Order mới
+    setOrder([...order, newOrder]); // thêm Order mới vào danh sách
+    console.log(order);
+};
+  const deleteOrder = (orderId: string) => {
+    const updatedOrders = order.filter((o) => o.orderId !== orderId);
+  setOrder(updatedOrders);
+};
+  
+  const footerContent = (
+    <div className="d-flex justify-content-center">
+        <Button label="Đóng" icon="pi pi-times" onClick={() => setVisible(false)} className="p-button-text" />
+        <Button label="Xác nhận" icon="pi pi-check" onClick={() => setVisible(false)} autoFocus />
+    </div>
+);
   const search = (event: AutoCompleteCompleteEvent) => {
     setItems(
       [...Array(10).fill(0)].map((_, index) => event.query + "-" + index)
@@ -36,7 +53,7 @@ export default function CounterSale() {
   const toggleMenu = () => {
     setOpen(!open);
   };
-  const [CategoriModel, setCategoriModel] = useState<CategoriRequest[]>([]);
+  const [CategoriModel, setCategoriModel] = useState<CategoriModel[]>([]);
    
    useEffect(() => {
       const token = localStorage.getItem('authToken');
@@ -56,6 +73,9 @@ export default function CounterSale() {
     const handleActiveCategori = (id : any) => {
       setActiveCategory(id);
    };
+   const handleActiveOrder = (id : any) => {
+    setActiveOrder(id);
+ };
 
   return (
     <>
@@ -151,26 +171,24 @@ export default function CounterSale() {
                {category.categoriesName}
             </div>
          ))}
-            </div>
+            </div>           
             <div
               style={{ width: "55%", backgroundColor: "#f1f3f5" }}
               className="h-100"
-            >
+            >             
               {/* Category name */}
               <div className="px-3 pt-3">
                 <div className="d-flex justify-content-between w-100 bg-white rounded-3 px-4 py-3 border fw-semibold overflow-x-auto shadow-sm">
-                  <div className="d-flex">
-                    <div className="cs-order active">
-                      <span className="me-2">Hoa don 1</span>
-                      <i className="fa fa-xmark"></i>
-                    </div>
-                    <div className="cs-order">
-                      <span className="me-2">Hoa don 2</span>
-                      <i className="fa fa-xmark"></i>
-                    </div>
+                  <div className="d-flex">                   
+                    {order.map((o) => (
+                        <div key={o.orderId} className={`cs-order ${activeOrder === o.orderId ? "active" : ""}`}>
+                            <span className="me-2" onClick={()=> handleActiveOrder(o.orderId)}>Hóa đơn {o.orderId}</span>
+                            <i className="fa fa-xmark" onClick={() => deleteOrder(o.orderId!)}></i>
+                        </div>
+                    ))}
                   </div>
                   <div className="d-flex justify-content-center align-items-center">
-                    <a className="pointer">
+                    <a onClick={addNewOrder} className="pointer">
                       <i className="fa fa-plus-circle fs-2"></i>
                     </a>
                   </div>
@@ -178,13 +196,42 @@ export default function CounterSale() {
               </div>
               {/* Products in category */}
               <div className="row" style={{ padding: "1.8rem" }}>
-              <Dialog header="Header" visible={visible} maximizable style={{ width: '50vw' }} onHide={() => {if (!visible) return; setVisible(false); }}>
-                <p className="m-0">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </p>
+              <Dialog header="Header" visible={visible} footer={footerContent} style={{ width: '35vw' }} 
+               onHide={() => {if (!visible) return; setVisible(false); }}>
+                <div className="d-flex">
+                  <div className="d-flex mt-2" style={{width: "17%"}}>
+                    <p>Color:</p>
+                  </div>
+                  <div className="circle" style={{backgroundColor: "red"}}></div>
+                </div>
+                <div className="d-flex mt-2" >
+                  <div className="d-flex mt-2" style={{width: "17%"}}>
+                    <p>Size:</p>
+                  </div>
+                  <div className="sizes">
+                    <div className="size">S</div>
+                    <div className="size">M</div>
+                    <div className="size">L</div>
+                    <div className="size">XL</div>
+                    <div className="size">2XL</div>                   
+                  </div>
+                </div>
+                <div className="d-flex">
+                  <div className="d-flex mt-2" style={{width: "17%"}}>
+                    <p>Số lượng:</p>
+                  </div>
+                  <div className="number-input">
+                      <button className="minus fw-bold">-</button>
+                      <input
+                        className="fw-semibold"
+                        type="number"
+                        id="inputNumber"
+                        value="0"
+                      />
+                      <button className="plus fw-bold">+</button>
+                    </div>
+                </div>
+                
               </Dialog>
                 {/* product 1 */}                
                 <div className="p-1 col-xl-3 col-lg-4 col-md-6 pointer" onClick={() => setVisible(true)}>
