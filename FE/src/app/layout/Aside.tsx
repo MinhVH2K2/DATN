@@ -171,6 +171,12 @@ export default function Aside() {
       </li>
       {/* <!-- End Blank Page Nav --> */}
 
+      <li className="nav-item">
+        <a className="nav-link collapsed" href="pages-blank.html">
+          <i className="bi bi-file-earmark"></i>
+          <span>Counter sale</span>
+        </a>
+      </li>
     </ul>
 
   </aside>

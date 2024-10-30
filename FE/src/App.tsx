@@ -26,11 +26,9 @@ function App() {
     { path: "/", element: <Navigate to="/dashboard" replace /> },
     authRouter,
     indexRouter,
-    productRouter,
-    discountsRouter,
-    // salesCounter,
-    // saleRouter,
-    { path: "counter-sale", element: <CounterSale /> }, //500
+    // productRouter,
+    // discountsRouter,
+    // { path: "counter-sale", element: <CounterSale /> },
     { path: "err-network", element: <Error500 /> }, //500
     { path: "*", element: <NotFound /> }, //404
   ]);

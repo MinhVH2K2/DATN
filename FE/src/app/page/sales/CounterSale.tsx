@@ -15,25 +15,33 @@ export default function CounterSale() {
   const [activeCategory, setActiveCategory] = useState(null);
   const [activeOrder, setActiveOrder] = useState(null);
   const [visible, setVisible] = useState(false);
-  const [order, setOrder] = useState<OrderModel[]>([
-    new OrderModel("1", "1")
-  ]);
+  const [order, setOrder] = useState<OrderModel[]>([new OrderModel("1", "1")]);
   const addNewOrder = () => {
     const newOrder = new OrderModel((order.length + 1).toString(), "newUserId"); // tạo Order mới
     setOrder([...order, newOrder]); // thêm Order mới vào danh sách
     console.log(order);
-};
+  };
   const deleteOrder = (orderId: string) => {
     const updatedOrders = order.filter((o) => o.orderId !== orderId);
-  setOrder(updatedOrders);
-};
-  
+    setOrder(updatedOrders);
+  };
+
   const footerContent = (
     <div className="d-flex justify-content-center">
-        <Button label="Đóng" icon="pi pi-times" onClick={() => setVisible(false)} className="p-button-text" />
-        <Button label="Xác nhận" icon="pi pi-check" onClick={() => setVisible(false)} autoFocus />
+      <Button
+        label="Đóng"
+        icon="pi pi-times"
+        onClick={() => setVisible(false)}
+        className="p-button-text"
+      />
+      <Button
+        label="Xác nhận"
+        icon="pi pi-check"
+        onClick={() => setVisible(false)}
+        autoFocus
+      />
     </div>
-);
+  );
   const search = (event: AutoCompleteCompleteEvent) => {
     setItems(
       [...Array(10).fill(0)].map((_, index) => event.query + "-" + index)
@@ -54,187 +62,129 @@ export default function CounterSale() {
     setOpen(!open);
   };
   const [CategoriModel, setCategoriModel] = useState<CategoriModel[]>([]);
-   
-   useEffect(() => {
-      const token = localStorage.getItem('authToken');
-      axios.get('http://localhost:8081/categori/getAll-categori',{
-         headers: {
-            Authorization: `Bearer ${token}` // Thêm token vào headers
-         }
-      })  // API từ Spring Boot
-        .then(response => {
-          setCategoriModel(response.data);
-         console.log(CategoriModel);
-        })
-        .catch(error => {
-          console.log('There was an error fetching the products!', error);
-        });
-    }, []);
-    const handleActiveCategori = (id : any) => {
-      setActiveCategory(id);
-   };
-   const handleActiveOrder = (id : any) => {
+
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    axios
+      .get("http://localhost:8081/categori/getAll-categori", {
+        headers: {
+          Authorization: `Bearer ${token}`, // Thêm token vào headers
+        },
+      }) // API từ Spring Boot
+      .then((response) => {
+        setCategoriModel(response.data);
+        console.log(CategoriModel);
+      })
+      .catch((error) => {
+        console.log("There was an error fetching the products!", error);
+      });
+  }, []);
+  const handleActiveCategori = (id: any) => {
+    setActiveCategory(id);
+  };
+  const handleActiveOrder = (id: any) => {
     setActiveOrder(id);
- };
+  };
 
   return (
     <>
-      <div
-        style={{ height: "100vh", width: "100vw" }}
-        className="d-flex flex-column"
+      <Dialog
+        header="Header"
+        visible={visible}
+        footer={footerContent}
+        style={{ width: "35vw" }}
+        onHide={() => {
+          if (!visible) return;
+          setVisible(false);
+        }}
       >
-        {/* Header counter sale */}
-        <div className="d-flex bg-primary w-100">
-          <div style={{ width: "70%" }} className="d-flex">
-            <div className="ms-2 p-2 fs-3 fw-bold">
-              <span className="text-warning">Heaven</span>
-              <span className="text-white">Shop</span>
-            </div>
-            <div className="d-flex align-items-center p-2">
-              <AutoComplete
-                value={value}
-                suggestions={items}
-                inputStyle={{ width: "448px", borderRadius: ".5rem" }}
-                completeMethod={search}
-                onChange={(e) => setValue(e.value)}
-              />
-              <a className="pointer text-white ms-3 fs-2">
-                {/* <i className="fa fa-qrcode"></i> */}
-                <i className="bi bi-upc-scan"></i>
-              </a>
-            </div>
+        <div className="d-flex">
+          <div className="d-flex mt-2" style={{ width: "17%" }}>
+            <p>Color:</p>
           </div>
-          <div
-            style={{ width: "30%" }}
-            className="d-flex justify-content-end align-items-center me-3"
-          ></div>
-          <div className="dropdown d-flex justify-content-end align-items-center mt-1 me-3">
-            <button className="btn text-white" onClick={toggleMenu}>
-              <i className="fa fa-bars fs-5"></i> {/* Icon nút menu */}
-            </button>
-
-            {open && (
-              <ul className="menu-list">
-                <li className="menu-item">
-                  <i className="fa fa-file"></i>
-                  Xem báo cáo cuối ngày
-                </li>
-                <li className="menu-item">
-                  <i className="fa fa-shopping-bag"></i>
-                  Xử lý đặt hàng
-                </li>
-                <li className="menu-item">
-                  <i className="fa fa-reply"></i>
-                  Chọn hóa đơn trả hàng
-                </li>
-                <li className="menu-item">
-                  <i className="fa fa-receipt"></i>
-                  Lập phiếu thu
-                </li>
-                <li className="menu-item">
-                  <i className="fa fa-upload"></i>
-                  Import file
-                </li>
-                <li className="menu-item">
-                  <i className="fa fa-eye"></i>
-                  Tùy chọn hiển thị
-                </li>
-                <li className="menu-item">
-                  <i className="fa fa-keyboard"></i>
-                  Phím tắt
-                </li>
-                <li className="menu-item">
-                  <i className="fa fa-cog"></i>
-                  Quản lý
-                </li>
-                <li className="menu-item">
-                  <i className="fa fa-sign-out"></i>
-                  Đăng xuất
-                </li>
-              </ul>
-            )}
+          <div className="circle" style={{ backgroundColor: "red" }}></div>
+        </div>
+        <div className="d-flex mt-2">
+          <div className="d-flex mt-2" style={{ width: "17%" }}>
+            <p>Size:</p>
+          </div>
+          <div className="sizes">
+            <div className="size">S</div>
+            <div className="size">M</div>
+            <div className="size">L</div>
+            <div className="size">XL</div>
+            <div className="size">2XL</div>
           </div>
         </div>
+        <div className="d-flex">
+          <div className="d-flex mt-2" style={{ width: "17%" }}>
+            <p>Số lượng:</p>
+          </div>
+          <div className="number-input">
+            <button className="minus fw-bold">-</button>
+            <input
+              className="fw-semibold"
+              type="number"
+              id="inputNumber"
+              value="0"
+            />
+            <button className="plus fw-bold">+</button>
+          </div>
+        </div>
+      </Dialog>
+
+      <div style={{ height: "89vh" }} className="d-flex flex-column">
         <div className="flex-grow-10">
           <div className="d-flex h-100">
             {/* Category */}
             <div
-              style={{ width: "10%" }}
-              className="h-100 px-2 py-3 shadow-2 border-end"
+              // style={{ width: "60%", backgroundColor: "#f1f3f5" }}
+              style={{ width: "60%" }}
+              className="h-100 border-end overflow-hidden pe-2"
             >
-              {CategoriModel.map((category) => (
-            <div 
-            key={category.categoriesId}
-            className={`cs-card shadow-1 ${activeCategory === category.categoriesId ? "active" : ""}`}
-            onClick={() => handleActiveCategori(category.categoriesId)}
-            >
-               {category.categoriesName}
-            </div>
-         ))}
-            </div>           
-            <div
-              style={{ width: "55%", backgroundColor: "#f1f3f5" }}
-              className="h-100"
-            >             
               {/* Category name */}
-              <div className="px-3 pt-3">
-                <div className="d-flex justify-content-between w-100 bg-white rounded-3 px-4 py-3 border fw-semibold overflow-x-auto shadow-sm">
-                  <div className="d-flex">                   
-                    {order.map((o) => (
-                        <div key={o.orderId} className={`cs-order ${activeOrder === o.orderId ? "active" : ""}`}>
-                            <span className="me-2" onClick={()=> handleActiveOrder(o.orderId)}>Hóa đơn {o.orderId}</span>
-                            <i className="fa fa-xmark" onClick={() => deleteOrder(o.orderId!)}></i>
-                        </div>
-                    ))}
-                  </div>
+              <div className="px-3 pt-3 bg-white rounded-3 px-4 py-3 border fw-semibold shadow-sm">
+                <div className="d-flex justify-content-between mb-2">
+                  <h4>Hóa đơn chờ</h4>
                   <div className="d-flex justify-content-center align-items-center">
                     <a onClick={addNewOrder} className="pointer">
                       <i className="fa fa-plus-circle fs-2"></i>
                     </a>
                   </div>
                 </div>
+                <div className="w-100 overflow-x-auto">
+                  <div className="d-flex">
+                    {order.map((o) => (
+                      <div
+                        key={o.orderId}
+                        className={`cs-order ${
+                          activeOrder === o.orderId ? "active" : ""
+                        }`}
+                      >
+                        <span
+                          className="me-2"
+                          onClick={() => handleActiveOrder(o.orderId)}
+                        >
+                          Hóa đơn {o.orderId}
+                        </span>
+                        <i
+                          className="fa fa-xmark"
+                          onClick={() => deleteOrder(o.orderId!)}
+                        ></i>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
               {/* Products in category */}
-              <div className="row" style={{ padding: "1.8rem" }}>
-              <Dialog header="Header" visible={visible} footer={footerContent} style={{ width: '35vw' }} 
-               onHide={() => {if (!visible) return; setVisible(false); }}>
-                <div className="d-flex">
-                  <div className="d-flex mt-2" style={{width: "17%"}}>
-                    <p>Color:</p>
-                  </div>
-                  <div className="circle" style={{backgroundColor: "red"}}></div>
-                </div>
-                <div className="d-flex mt-2" >
-                  <div className="d-flex mt-2" style={{width: "17%"}}>
-                    <p>Size:</p>
-                  </div>
-                  <div className="sizes">
-                    <div className="size">S</div>
-                    <div className="size">M</div>
-                    <div className="size">L</div>
-                    <div className="size">XL</div>
-                    <div className="size">2XL</div>                   
-                  </div>
-                </div>
-                <div className="d-flex">
-                  <div className="d-flex mt-2" style={{width: "17%"}}>
-                    <p>Số lượng:</p>
-                  </div>
-                  <div className="number-input">
-                      <button className="minus fw-bold">-</button>
-                      <input
-                        className="fw-semibold"
-                        type="number"
-                        id="inputNumber"
-                        value="0"
-                      />
-                      <button className="plus fw-bold">+</button>
-                    </div>
-                </div>
-                
-              </Dialog>
-                {/* product 1 */}                
-                <div className="p-1 col-xl-3 col-lg-4 col-md-6 pointer" onClick={() => setVisible(true)}>
+              <div className="row bg-white mt-3" style={{ padding: ".5rem" }}>
+                {/* product list  */}
+                {/* product 1 */}
+                <h4>Danh sách sản phẩm</h4>
+                <div
+                  className="p-1 col-xl-3 col-lg-4 col-md-6 pointer"
+                  onClick={() => setVisible(true)}
+                >
                   <div
                     style={{ height: "120px" }}
                     className="d-flex border rounded-3 bg-white shadow-sm p-2"
@@ -344,8 +294,8 @@ export default function CounterSale() {
               </div>
             </div>
             <div
-              style={{ width: "35%" }}
-              className="d-flex flex-column justify-content-between h-100 border-start"
+              style={{ width: "40%" }}
+              className="d-flex flex-column justify-content-between"
             >
               <div>
                 <div className="d-flex justify-content-between border-bottom p-2">
