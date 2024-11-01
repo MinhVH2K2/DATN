@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
-import { CategoriModel } from "../../model/ProductModel";
+import { CategoriModel, ColorModel, ProductDetailModel, ProductModel, SizeModel } from "../../model/ProductModel";
 import { OrderModel } from "../../model/OrderMoldel";
 export default function CounterSale() {
   // Autocomplete
@@ -16,15 +16,91 @@ export default function CounterSale() {
   const [activeOrder, setActiveOrder] = useState(null);
   const [visible, setVisible] = useState(false);
   const [order, setOrder] = useState<OrderModel[]>([new OrderModel("1", "1")]);
+  const [ProductDetails, setProductDetails] = useState<ProductDetailModel[]>([]);
+  const [selectedColor, setSelectedColor] = useState<ColorModel | undefined>(undefined);
+  const [selectedSize, setSelectedSize] = useState<SizeModel | undefined>(undefined);
+  const [selectedProductDetail, setSelectedProductDetail] = useState<ProductDetailModel>(); // State để lưu trữ ProductDetail được chọn
+  const [Products, setProducts] = useState<ProductModel[]>([]);
   const addNewOrder = () => {
     const newOrder = new OrderModel((order.length + 1).toString(), "newUserId"); // tạo Order mới
-    setOrder([...order, newOrder]); // thêm Order mới vào danh sách
-    console.log(order);
+    setOrder([...order, newOrder]); // thêm Order mới vào danh sách  
   };
-  const deleteOrder = (orderId: string) => {
+
+  const deleteOrder = (orderId: string) => {   
     const updatedOrders = order.filter((o) => o.orderId !== orderId);
     setOrder(updatedOrders);
   };
+
+  const search = (event: AutoCompleteCompleteEvent) => {
+    setItems(
+      [...Array(10).fill(0)].map((_, index) => event.query + "-" + index)
+    );
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    axios
+      .get("http://localhost:8081/product/getall", {
+        headers: {
+          Authorization: `Bearer ${token}`, // Thêm token vào headers
+        },
+      }) // API từ Spring Boot
+      .then((response) => {
+        setProducts(response.data.data.content);
+        // console.log(response.data.data.content);
+      })
+      .catch((error) => {
+        console.log("There was an error fetching the products!", error);
+      });
+  }, [activeOrder]);
+    const handleActiveOrder = (id: any) => {
+    setActiveOrder(id);
+  };
+  const handleGetProductDetail = (productDetails: any) => {
+    setVisible(true);
+    setProductDetails(productDetails);
+  };
+  
+  useEffect(() => {
+    if (selectedColor && selectedSize) {
+      const foundProductDetail = ProductDetails.find(
+        (productDetail) =>
+          productDetail.colors?.colerId === selectedColor.colerId &&
+          productDetail.sizes?.sizesId === selectedSize.sizesId
+      );
+      setSelectedProductDetail(foundProductDetail);
+    }
+  }, [selectedColor, selectedSize, ProductDetails]);
+
+  const handleConfirm = () => {
+    console.log("Selected Product Detail:", selectedProductDetail); 
+    // console.log("Selected Color:", selectedColor);
+    // console.log("Selected Size:", selectedSize);
+    setVisible(false);
+    
+  };
+  
+
+  const uniqueColors = Array.from(
+    new Set(ProductDetails.map((product) => product.colors?.colorCode))
+  ).map((colorCode) => {
+    return ProductDetails.find((product) => product.colors?.colorCode === colorCode)?.colors;
+  });
+
+  const uniqueSizes = Array.from(
+    new Set(ProductDetails.map((product) => product.sizes?.sizesName))
+  ).map((sizeName) => {
+    return ProductDetails.find((product) => product.sizes?.sizesName === sizeName)?.sizes;
+  });
+  const availableSizes = selectedColor
+  ? ProductDetails.filter((product) => product.colors?.colorCode === selectedColor.colorCode)
+      .map((product) => product.sizes)
+  : uniqueSizes;
+
+  const availableColors = selectedSize
+    ? ProductDetails.filter((product) => product.sizes?.sizesName === selectedSize.sizesName)
+        .map((product) => product.colors)
+    : uniqueColors;
 
   const footerContent = (
     <div className="d-flex justify-content-center">
@@ -37,100 +113,90 @@ export default function CounterSale() {
       <Button
         label="Xác nhận"
         icon="pi pi-check"
-        onClick={() => setVisible(false)}
+        onClick={handleConfirm}   
         autoFocus
       />
     </div>
   );
-  const search = (event: AutoCompleteCompleteEvent) => {
-    setItems(
-      [...Array(10).fill(0)].map((_, index) => event.query + "-" + index)
-    );
-  };
-
-  const selectOrder = () => {
-    console.log("select order");
-  };
-
-  const removeOrder = () => {
-    console.log("remove order");
-  };
-  const [open, setOpen] = useState(false);
-
-  // Hàm để mở/đóng menu
-  const toggleMenu = () => {
-    setOpen(!open);
-  };
-  const [CategoriModel, setCategoriModel] = useState<CategoriModel[]>([]);
-
-  useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    axios
-      .get("http://localhost:8081/categori/getAll-categori", {
-        headers: {
-          Authorization: `Bearer ${token}`, // Thêm token vào headers
-        },
-      }) // API từ Spring Boot
-      .then((response) => {
-        setCategoriModel(response.data);
-        console.log(CategoriModel);
-      })
-      .catch((error) => {
-        console.log("There was an error fetching the products!", error);
-      });
-  }, []);
-  const handleActiveCategori = (id: any) => {
-    setActiveCategory(id);
-  };
-  const handleActiveOrder = (id: any) => {
-    setActiveOrder(id);
-  };
 
   return (
     <>
       <Dialog
-        header="Header"
+        header= "Chọn sản phẩm"
         visible={visible}
         footer={footerContent}
-        style={{ width: "35vw" }}
+        style={{ width: "35vw",textAlign: "center"}}
         onHide={() => {
           if (!visible) return;
           setVisible(false);
         }}
       >
         <div className="d-flex">
-          <div className="d-flex mt-2" style={{ width: "17%" }}>
-            <p>Color:</p>
-          </div>
-          <div className="circle" style={{ backgroundColor: "red" }}></div>
-        </div>
-        <div className="d-flex mt-2">
-          <div className="d-flex mt-2" style={{ width: "17%" }}>
-            <p>Size:</p>
-          </div>
-          <div className="sizes">
-            <div className="size">S</div>
-            <div className="size">M</div>
-            <div className="size">L</div>
-            <div className="size">XL</div>
-            <div className="size">2XL</div>
-          </div>
+        <div className="d-flex mt-2" style={{ width: "17%" }}>
+          <p>Color:</p>
         </div>
         <div className="d-flex">
-          <div className="d-flex mt-2" style={{ width: "17%" }}>
-            <p>Số lượng:</p>
-          </div>
-          <div className="number-input">
-            <button className="minus fw-bold">-</button>
-            <input
-              className="fw-semibold"
-              type="number"
-              id="inputNumber"
-              value="0"
-            />
-            <button className="plus fw-bold">+</button>
-          </div>
+          {availableColors.map((color) => (
+            <div
+              key={color?.colerId}
+              className={`circle ${selectedColor === color ? "selected" : ""}`}
+              style={{
+                backgroundColor: color?.colorCode,
+                border: selectedColor === color ? "2px solid blue" : "1px solid gray",
+              }}
+              onClick={() => {
+                setSelectedColor(color);   
+                setSelectedSize(undefined);            
+              }}
+            >
+              <p>{color?.colorName}</p>
+            </div>
+          ))}
         </div>
+      </div>
+      <div className="d-flex mt-2">
+        <div className="d-flex mt-2" style={{ width: "17%" }}>
+          <p>Size:</p>
+        </div>
+        <div className="d-flex">
+          {availableSizes.map((size) => (
+            <div
+              key={size?.sizesId}
+              className={`size ${selectedSize === size ? "selected" : ""}`}
+              style={{
+                border: selectedSize === size ? "2px solid blue" : "1px solid gray",
+              }}
+              onClick={() => {
+                setSelectedSize(size);
+                // setSelectedColor(undefined); 
+              }}
+            >
+              {size?.sizesName}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="d-flex">
+        <div className="d-flex mt-2" style={{ width: "17%" }}>
+          <p>Số lượng:</p>
+        </div>
+        <div className="number-input">
+          <button className="minus fw-bold">-</button>
+          <input
+            className="fw-semibold"
+            type="number"
+            id="inputNumber"
+            value="0"
+            // onChange={(e) =>
+            //   setSelectedProductDetail({
+            //     ...selectedProductDetail,
+            //     quantity: e.target.value,
+            //   })
+            // }
+          />
+          <button className="plus fw-bold">+</button>
+        </div>
+      </div>        
       </Dialog>
 
       <div style={{ height: "89vh" }} className="d-flex flex-column">
@@ -176,14 +242,16 @@ export default function CounterSale() {
                   </div>
                 </div>
               </div>
-              {/* Products in category */}
+              
               <div className="row bg-white mt-3" style={{ padding: ".5rem" }}>
-                {/* product list  */}
-                {/* product 1 */}
+                {/* product list  */}                
                 <h4>Danh sách sản phẩm</h4>
-                <div
-                  className="p-1 col-xl-3 col-lg-4 col-md-6 pointer"
-                  onClick={() => setVisible(true)}
+                  {/* product 1 */}
+                {Products.map((product) => (                  
+                  <div
+                  key={product.productId}
+                  className="p-1 col-xl-3 col-lg-4 col-md-6 pointer"                 
+                  onClick={() => handleGetProductDetail(product.productDetails)}
                 >
                   <div
                     style={{ height: "120px" }}
@@ -191,106 +259,27 @@ export default function CounterSale() {
                   >
                     <img
                       style={{ width: "30%" }}
-                      src="https://product.hstatic.net/200000182297/product/3090418p1499dt_al621021932303010470p399dt_z103321512314910201p699dt_2__48b20874535c43eb804bc2f87f51a9e7_master.jpg"
+                      src= {product.thumbnail}
                       alt=""
                     />
                     <div className="d-flex flex-column justify-content-between align-items-center ms-2 fw-semibold">
                       <p style={{ fontSize: "18px" }} className="m-0">
-                        Ao da nau
+                        {product.productName}
                       </p>
                       <div className="d-flex">
-                        <p className="m-0 text-danger">1.000.000đ</p>
+                        <p className="m-0 text-danger">{product.discountPrice}</p>
                         <del
                           style={{ fontSize: "12px" }}
                           className="ms-1 mt-0 mb-0 me-0 text-secondary"
                         >
-                          800.000đ
+                          {product.unitPrice}
                         </del>
                       </div>
                     </div>
                   </div>
-                </div>
-                {/* product 2 */}
-                <div className="p-1 col-xl-3 col-lg-4 col-md-6 pointer pointer">
-                  <div
-                    style={{ height: "120px" }}
-                    className="d-flex border rounded-3 bg-white shadow-sm p-2"
-                  >
-                    <img
-                      style={{ width: "30%" }}
-                      src="https://product.hstatic.net/200000182297/product/3090418p1499dt_al621021932303010470p399dt_z103321512314910201p699dt_2__48b20874535c43eb804bc2f87f51a9e7_master.jpg"
-                      alt=""
-                    />
-                    <div className="d-flex flex-column justify-content-between align-items-center ms-2 fw-semibold">
-                      <p style={{ fontSize: "18px" }} className="m-0">
-                        Ao da nau
-                      </p>
-                      <div className="d-flex">
-                        <p className="m-0 text-danger">1.000.000đ</p>
-                        <del
-                          style={{ fontSize: "12px" }}
-                          className="ms-1 mt-0 mb-0 me-0 text-secondary"
-                        >
-                          1.000.000đ
-                        </del>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {/* product 3 */}
-                <div className="p-1 col-xl-3 col-lg-4 col-md-6 pointer pointer">
-                  <div
-                    style={{ height: "120px" }}
-                    className="d-flex border rounded-3 bg-white shadow-sm p-2"
-                  >
-                    <img
-                      style={{ width: "30%" }}
-                      src="https://product.hstatic.net/200000182297/product/3090418p1499dt_al621021932303010470p399dt_z103321512314910201p699dt_2__48b20874535c43eb804bc2f87f51a9e7_master.jpg"
-                      alt=""
-                    />
-                    <div className="d-flex flex-column justify-content-between align-items-center ms-2 fw-semibold">
-                      <p style={{ fontSize: "18px" }} className="m-0">
-                        Ao da nau
-                      </p>
-                      <div className="d-flex">
-                        <p className="m-0 text-danger">1.000.000đ</p>
-                        <del
-                          style={{ fontSize: "12px" }}
-                          className="ms-1 mt-0 mb-0 me-0 text-secondary"
-                        >
-                          1.000.000đ
-                        </del>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {/* product 4 */}
-                <div className="p-1 col-xl-3 col-lg-4 col-md-6 pointer pointer">
-                  <div
-                    style={{ height: "120px" }}
-                    className="d-flex border rounded-3 bg-white shadow-sm p-2"
-                  >
-                    <img
-                      style={{ width: "30%" }}
-                      src="https://product.hstatic.net/200000182297/product/3090418p1499dt_al621021932303010470p399dt_z103321512314910201p699dt_2__48b20874535c43eb804bc2f87f51a9e7_master.jpg"
-                      alt=""
-                    />
-                    <div className="d-flex flex-column justify-content-between align-items-center ms-2 fw-semibold">
-                      <p style={{ fontSize: "18px" }} className="m-0">
-                        Ao da nau
-                      </p>
-                      <div className="d-flex">
-                        <p className="m-0 text-danger">1.000.000đ</p>
-                        <del
-                          style={{ fontSize: "12px" }}
-                          className="ms-1 mt-0 mb-0 me-0 text-secondary"
-                        >
-                          1.000.000đ
-                        </del>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                </div> 
+                ))}
+                
               </div>
             </div>
             <div
@@ -369,6 +358,7 @@ export default function CounterSale() {
                     </div>
                   </div>
                 </div>
+                
               </div>
               <div
                 style={{ backgroundColor: "rgb(241, 243, 245)" }}
