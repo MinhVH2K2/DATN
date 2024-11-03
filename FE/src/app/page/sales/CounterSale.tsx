@@ -7,34 +7,34 @@ import axios from "axios";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import { CategoriModel, ColorModel, ProductDetailModel, ProductModel, SizeModel } from "../../model/ProductModel";
-import { OrderModel } from "../../model/OrderMoldel";
+import { OrderItemModel, OrderModel } from "../../model/OrderMoldel";
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from "../../store/store";
+import { addOrder, addOrderItem, removeOrder,removeOrderItem } from "../../reducer/orderSlice";
 export default function CounterSale() {
-  // Autocomplete
-  const [value, setValue] = useState<string>("");
-  const [items, setItems] = useState<string[]>([]);
-  const [activeCategory, setActiveCategory] = useState(null);
-  const [activeOrder, setActiveOrder] = useState(null);
+  const dispatch = useDispatch();
+  const order = useSelector((state: RootState) => state.order);
+  const [count, setCount] = useState<number>(1);
+  const [value, setValue] = useState<number>(1);
+  const [activeOrder, setActiveOrder] = useState<number>(0);
   const [visible, setVisible] = useState(false);
-  const [order, setOrder] = useState<OrderModel[]>([new OrderModel("1", "1")]);
   const [ProductDetails, setProductDetails] = useState<ProductDetailModel[]>([]);
   const [selectedColor, setSelectedColor] = useState<ColorModel | undefined>(undefined);
   const [selectedSize, setSelectedSize] = useState<SizeModel | undefined>(undefined);
   const [selectedProductDetail, setSelectedProductDetail] = useState<ProductDetailModel>(); // State để lưu trữ ProductDetail được chọn
   const [Products, setProducts] = useState<ProductModel[]>([]);
+  const [productName, setProductName] = useState<string | undefined>();
+  
   const addNewOrder = () => {
-    const newOrder = new OrderModel((order.length + 1).toString(), "newUserId"); // tạo Order mới
-    setOrder([...order, newOrder]); // thêm Order mới vào danh sách  
+    const newOrder = new OrderModel((order.orders.length + 1), "newUserId"); // tạo Order mới
+    dispatch(addOrder(newOrder));
   };
-
-  const deleteOrder = (orderId: string) => {   
-    const updatedOrders = order.filter((o) => o.orderId !== orderId);
-    setOrder(updatedOrders);
+  
+  const deleteOrder = (orderId: number) => {   
+    dispatch(removeOrder(orderId));
   };
-
-  const search = (event: AutoCompleteCompleteEvent) => {
-    setItems(
-      [...Array(10).fill(0)].map((_, index) => event.query + "-" + index)
-    );
+  const handleRemoveOrderItem  = (orderItemId: number) => {   
+    dispatch(removeOrderItem({orderId: activeOrder,orderItemId}));
   };
 
   useEffect(() => {
@@ -52,13 +52,13 @@ export default function CounterSale() {
       .catch((error) => {
         console.log("There was an error fetching the products!", error);
       });
-  }, [activeOrder]);
+  }, [activeOrder,order]);
     const handleActiveOrder = (id: any) => {
     setActiveOrder(id);
   };
-  const handleGetProductDetail = (productDetails: any) => {
-    setVisible(true);
+  const handleGetProductDetail = (productDetails: any) => {  
     setProductDetails(productDetails);
+    setVisible(true);
   };
   
   useEffect(() => {
@@ -72,15 +72,15 @@ export default function CounterSale() {
     }
   }, [selectedColor, selectedSize, ProductDetails]);
 
-  const handleConfirm = () => {
-    console.log("Selected Product Detail:", selectedProductDetail); 
-    // console.log("Selected Color:", selectedColor);
-    // console.log("Selected Size:", selectedSize);
-    setVisible(false);
-    
+  const handleMinus = () => {
+    if (value > 1){setValue(value-1);}     
+  };
+  const handlePlus = () => {
+    if (selectedProductDetail?.quantity && value < selectedProductDetail.quantity) {
+      setValue(value + 1);     
+    }     
   };
   
-
   const uniqueColors = Array.from(
     new Set(ProductDetails.map((product) => product.colors?.colorCode))
   ).map((colorCode) => {
@@ -102,6 +102,24 @@ export default function CounterSale() {
         .map((product) => product.colors)
     : uniqueColors;
 
+  const handleConfirm = () => {
+      console.log("Selected Product Detail:", selectedProductDetail); 
+      setCount(count+1);
+      const newItem: OrderItemModel = {
+        orderItemId: count, 
+        orderId: activeOrder,
+        productDetailId: selectedProductDetail,
+        productName: productName,
+        quantity: value,
+        unitPrice: 50,
+        discountPrice: 0,
+        totalPrice: 100,
+    };
+      dispatch(addOrderItem({ orderId:activeOrder, item: newItem }));   
+      setVisible(false);
+      setValue(0);  
+      console.log(order);
+    };
   const footerContent = (
     <div className="d-flex justify-content-center">
       <Button
@@ -122,7 +140,7 @@ export default function CounterSale() {
   return (
     <>
       <Dialog
-        header= "Chọn sản phẩm"
+        header= {productName}
         visible={visible}
         footer={footerContent}
         style={{ width: "35vw",textAlign: "center"}}
@@ -181,21 +199,19 @@ export default function CounterSale() {
           <p>Số lượng:</p>
         </div>
         <div className="number-input">
-          <button className="minus fw-bold">-</button>
+          <button className="minus fw-bold" onClick={handleMinus}>-</button>
           <input
             className="fw-semibold"
             type="number"
             id="inputNumber"
-            value="0"
-            // onChange={(e) =>
-            //   setSelectedProductDetail({
-            //     ...selectedProductDetail,
-            //     quantity: e.target.value,
-            //   })
-            // }
+            value={value}                    
           />
-          <button className="plus fw-bold">+</button>
+          <button className="plus fw-bold" onClick={handlePlus}>+</button>
         </div>
+      </div>
+      <div className="d-flex mt-2">
+        <p className="">Số lượng tồn: </p>
+        <span className="ms-5 ">{selectedProductDetail?.quantity}</span>
       </div>        
       </Dialog>
 
@@ -220,7 +236,7 @@ export default function CounterSale() {
                 </div>
                 <div className="w-100 overflow-x-auto">
                   <div className="d-flex">
-                    {order.map((o) => (
+                    {order.orders.map((o) => (
                       <div
                         key={o.orderId}
                         className={`cs-order ${
@@ -251,7 +267,9 @@ export default function CounterSale() {
                   <div
                   key={product.productId}
                   className="p-1 col-xl-3 col-lg-4 col-md-6 pointer"                 
-                  onClick={() => handleGetProductDetail(product.productDetails)}
+                  onClick={() =>{ handleGetProductDetail(product.productDetails);
+                                  setProductName(product.productName);
+                  }}
                 >
                   <div
                     style={{ height: "120px" }}
@@ -321,43 +339,55 @@ export default function CounterSale() {
                     </div>
                   </div>
                 </div>
-                <div className="p-2">
-                  <div className="border rounded-3 d-flex justify-content-between p-2">
-                    <div>
-                      <a className="pointer">
-                        <i className="fa fa-trash text-danger"></i>
-                      </a>
-                    </div>
-                    {/* name size color product */}
-                    <div style={{ maxWidth: "40%" }}>
-                      <p className="fw-semibold m-0">
-                        Ten san pham that dai xem co bi loi khong
-                      </p>
-                      <div className="d-flex align-items-center fw-semibold">
-                        <div className="color-product bg-primary"></div>/Size: M
+              
+                {order.orders[activeOrder-1]?.orderItems?.map((orderItem) => (
+                  <div className="p-2" key={orderItem.orderItemId}>
+                    <div className="border rounded-3 d-flex justify-content-between p-2">
+                      <div>
+                        <a className="pointer" onClick={()=>{handleRemoveOrderItem(orderItem.orderItemId ||0)}}>
+                          <i className="fa fa-trash text-danger" ></i>
+                        </a>
+                      </div>
+                      {/* name size color product */}
+                      <div style={{ maxWidth: "40%" }}>
+                        <p className="fw-semibold m-0">
+                          {orderItem.productName || "Tên sản phẩm không khả dụng"}
+                        </p>
+                        <div className="d-flex align-items-center fw-semibold">
+                          <div
+                            className="color-product" 
+                            style={{
+                              background: orderItem.productDetailId?.colors?.colorCode || "transparent",
+                            }}
+                          ></div>
+                          /Size: {orderItem.productDetailId?.sizes?.sizesName || "N/A"}
+                        </div>
+                      </div>
+                      <div className="number-input">
+                        <button className="minus fw-bold">-</button>
+                        <input
+                          className="fw-semibold"
+                          type="number"
+                          id="inputNumber"
+                          value={orderItem.quantity || 1} // Giá trị mặc định là 1 nếu quantity bị null
+                        />
+                        <button className="plus fw-bold">+</button>
+                      </div>
+                      <div className="text-center">
+                        <p className="fw-semibold">{orderItem.unitPrice || 0} đ</p>
+                        <del>
+                          <small>{orderItem.discountPrice || 0} đ</small>
+                        </del>
+                      </div>
+                      <div>                      
+                        <p className="fw-semibold">                    
+                        {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format((orderItem.unitPrice || 0) * (orderItem.quantity || 0))}
+                        </p>
                       </div>
                     </div>
-                    <div className="number-input">
-                      <button className="minus fw-bold">-</button>
-                      <input
-                        className="fw-semibold"
-                        type="number"
-                        id="inputNumber"
-                        value="2"
-                      />
-                      <button className="plus fw-bold">+</button>
-                    </div>
-                    <div className="text-center">
-                      <p className="fw-semibold">900.000đ</p>
-                      <del>
-                        <small>1.000.000đ</small>
-                      </del>
-                    </div>
-                    <div>
-                      <p className="fw-semibold">1.800.000đ</p>
-                    </div>
                   </div>
-                </div>
+                ))}
+
                 
               </div>
               <div

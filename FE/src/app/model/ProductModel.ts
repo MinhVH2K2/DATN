@@ -87,14 +87,14 @@ export class BrandModel {
 // }
 export class ProductDetailModel {
     productDetailId?: string;
-    productId?: string;
+    products?: string;
     colors?: ColorModel;
     sizes?: SizeModel;
     imageUrl?: string;
     quantity?: number;
     constructor(productDetailId?: string, productId?: string, colors?: ColorModel, sizeModel?: SizeModel, imageUrl?: string, quantity?: number) {
         this.productDetailId = productDetailId;
-        this.productId = productId;
+        this.products = productId;
         this.colors = colors;
         this.sizes = sizeModel;
         this.imageUrl = imageUrl;
