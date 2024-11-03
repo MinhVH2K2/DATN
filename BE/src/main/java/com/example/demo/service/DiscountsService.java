@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.response.DiscountResponse;
 import com.example.demo.model.Discounts;
 import com.example.demo.repository.DiscountsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +18,15 @@ public class DiscountsService {
     @Autowired
     private DiscountsRepository discountsRepo;
 
-    public Page<Discounts> findAllDiscounts(Pageable pageable) {
-        Page<Discounts> discountsPage = discountsRepo.findAll(pageable);
-
-        if (discountsPage.isEmpty()) {
-            throw new RuntimeException("No discounts found.");
-        }
-        return discountsPage;
+    public DiscountResponse<Discounts> findAllDiscount(Pageable pageable) {
+        Page<Discounts> pageDiscounts = discountsRepo.findAll(pageable);
+        DiscountResponse<Discounts> response = DiscountResponse.<Discounts>builder()
+                .pageNo(pageDiscounts.getNumber()).pageSize(pageDiscounts.getSize())
+                .totalElements(pageDiscounts.getTotalElements())
+                .totalPages(pageDiscounts.getTotalPages())
+                .data(pageDiscounts.getContent())
+                .build();
+        return response;
     }
 
     public ResponseEntity<Discounts> createDiscount(Discounts discounts) {
@@ -91,7 +94,6 @@ public class DiscountsService {
                     .body("Failed to delete discount. Please try again later.");
         }
     }
-
 
 
 }

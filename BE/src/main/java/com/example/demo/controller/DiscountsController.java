@@ -1,9 +1,11 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.response.DiscountResponse;
 import com.example.demo.model.Discounts;
 import com.example.demo.service.DiscountsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +19,10 @@ public class DiscountsController {
     private DiscountsService discountService;
 
     @GetMapping("/all-discounts")
-    public Page<Discounts> getAllDiscounts(Pageable pageable) {
-        return discountService.findAllDiscounts(pageable);
+    public ResponseEntity<DiscountResponse<Discounts>> getAllDiscounts(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        DiscountResponse<Discounts> discountsResponse = discountService.findAllDiscount(pageable);
+        return new ResponseEntity<>(discountsResponse, HttpStatus.OK);
     }
 
     @PostMapping("/add-discounts")

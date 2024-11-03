@@ -29,6 +29,7 @@
     "react-router-dom": "^6.21.3",
     "react-scripts": "5.0.1",
     "react-toastify": "^9.1.1",
+    "sale-fe": "file:",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
@@ -55,5 +56,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "postcss.config.js",
+  "devDependencies": {
+    "tailwindcss": "^3.4.14"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

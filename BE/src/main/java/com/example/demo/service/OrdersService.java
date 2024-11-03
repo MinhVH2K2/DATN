@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.response.Order2Response;
 import com.example.demo.dto.response.OrderResponse;
 import com.example.demo.dto.response.OrdersResponse;
 import com.example.demo.dto.response.PageResponse;
@@ -99,4 +100,7 @@ public class OrdersService {
         return savedOrder;
     }
 
+    public Page<Orders> getAll(Pageable pageable) {
+        return ordersRepository.findAll(pageable);
+    }
 }
