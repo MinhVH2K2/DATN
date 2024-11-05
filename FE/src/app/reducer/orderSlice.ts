@@ -35,12 +35,26 @@ const orderSlice = createSlice({
         },
         removeOrderItem: (state, action: PayloadAction<{ orderId: number; orderItemId: number }>) => {
             const { orderId, orderItemId } = action.payload;
-            const order = state.orders.find(order => order.orderId === orderId); // Tìm đơn hàng bằng orderId
+            const order = state.orders.find(order => order.orderId === orderId); 
         
             if (order && order.orderItems) {
                 order.orderItems = order.orderItems.filter(item => item.orderItemId !== orderItemId);
             }         
         },
+        // updateOrderItem(state, action: PayloadAction<{ orderId: number; orderItemId: number; quantity: number }>) {
+        //     const { orderId, orderItemId, quantity } = action.payload;
+        //     const orderIndex = state.orders.findIndex(order => order.orderId === orderId);           
+        //     if (orderIndex !== -1) {
+        //         const order = state.orders[orderIndex];
+        //         const itemIndex = order.orderItems?.findIndex(item => item.orderItemId === orderItemId);
+        //         if (itemIndex !== -1) {
+        //             order.orderItems?[itemIndex] = {
+        //                 ...order.orderItems[itemIndex],
+        //                 quantity: quantity 
+        //             };
+        //         }
+        //     }
+        // },       
     },
 });
 

@@ -29,7 +29,7 @@ export default function Login() {
         AuthService.getInstance().login(loginModel).then(res=>{
           localStorage.setItem('authToken', res.data.data.token);                     
             console.log(res);
-            navigate('/dashboard')
+            navigate('/counter-sale')
         }).catch(e=>{
             console.log(e);
         })

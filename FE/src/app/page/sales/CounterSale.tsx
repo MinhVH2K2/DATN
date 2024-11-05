@@ -1,12 +1,8 @@
-import {
-  AutoComplete,
-  AutoCompleteCompleteEvent,
-} from "primereact/autocomplete";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
-import { CategoriModel, ColorModel, ProductDetailModel, ProductModel, SizeModel } from "../../model/ProductModel";
+import { ColorModel, ProductDetailModel, ProductModel, SizeModel } from "../../model/ProductModel";
 import { OrderItemModel, OrderModel } from "../../model/OrderMoldel";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from "../../store/store";
@@ -16,7 +12,9 @@ export default function CounterSale() {
   const order = useSelector((state: RootState) => state.order);
   const [count, setCount] = useState<number>(1);
   const [value, setValue] = useState<number>(1);
+  const [subtotal, setSubtotal] = useState<number>(0);
   const [activeOrder, setActiveOrder] = useState<number>(0);
+  const [unitPrice, setUnitPrice] = useState<number>(0);
   const [visible, setVisible] = useState(false);
   const [ProductDetails, setProductDetails] = useState<ProductDetailModel[]>([]);
   const [selectedColor, setSelectedColor] = useState<ColorModel | undefined>(undefined);
@@ -32,17 +30,18 @@ export default function CounterSale() {
   
   const deleteOrder = (orderId: number) => {   
     dispatch(removeOrder(orderId));
+    if (orderId === activeOrder) setActiveOrder(0);
   };
   const handleRemoveOrderItem  = (orderItemId: number) => {   
-    dispatch(removeOrderItem({orderId: activeOrder,orderItemId}));
+    dispatch(removeOrderItem({orderId: activeOrder,orderItemId})); 
+    setValue(value+1);
   };
-
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     axios
       .get("http://localhost:8081/product/getall", {
         headers: {
-          Authorization: `Bearer ${token}`, // Thêm token vào headers
+          Authorization: `Bearer ${token}`, 
         },
       }) // API từ Spring Boot
       .then((response) => {
@@ -57,7 +56,7 @@ export default function CounterSale() {
     setActiveOrder(id);
   };
   const handleGetProductDetail = (productDetails: any) => {  
-    setProductDetails(productDetails);
+    setProductDetails(productDetails);       
     setVisible(true);
   };
   
@@ -70,7 +69,16 @@ export default function CounterSale() {
       );
       setSelectedProductDetail(foundProductDetail);
     }
-  }, [selectedColor, selectedSize, ProductDetails]);
+  }, [selectedColor, selectedSize, ProductDetails, subtotal])
+
+  useEffect(() => {
+    if (order.orders[activeOrder - 1]?.orderItems) {
+      const calculatedSubtotal = order.orders[activeOrder - 1].orderItems?.reduce(
+        (sum, item) => sum + (item.totalPrice||0),0
+      );
+      setSubtotal(calculatedSubtotal||0);
+    }
+  }, [value, activeOrder,selectedProductDetail]);
 
   const handleMinus = () => {
     if (value > 1){setValue(value-1);}     
@@ -111,13 +119,14 @@ export default function CounterSale() {
         productDetailId: selectedProductDetail,
         productName: productName,
         quantity: value,
-        unitPrice: 50,
+        unitPrice: unitPrice,
         discountPrice: 0,
-        totalPrice: 100,
+        totalPrice: unitPrice * value
     };
       dispatch(addOrderItem({ orderId:activeOrder, item: newItem }));   
+      setValue(0); 
+      setSubtotal(0); 
       setVisible(false);
-      setValue(0);  
       console.log(order);
     };
   const footerContent = (
@@ -269,6 +278,7 @@ export default function CounterSale() {
                   className="p-1 col-xl-3 col-lg-4 col-md-6 pointer"                 
                   onClick={() =>{ handleGetProductDetail(product.productDetails);
                                   setProductName(product.productName);
+                                  setUnitPrice(product.unitPrice||0);
                   }}
                 >
                   <div
@@ -285,12 +295,15 @@ export default function CounterSale() {
                         {product.productName}
                       </p>
                       <div className="d-flex">
-                        <p className="m-0 text-danger">{product.discountPrice}</p>
+                        <p className="m-0 text-danger">
+                        {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format((product.unitPrice||0))} 
+                          {/* {product.unitPrice} */}
+                        </p>
                         <del
                           style={{ fontSize: "12px" }}
                           className="ms-1 mt-0 mb-0 me-0 text-secondary"
                         >
-                          {product.unitPrice}
+                          {/* {product.unitPrice} */}
                         </del>
                       </div>
                     </div>
@@ -373,15 +386,19 @@ export default function CounterSale() {
                         />
                         <button className="plus fw-bold">+</button>
                       </div>
-                      <div className="text-center">
-                        <p className="fw-semibold">{orderItem.unitPrice || 0} đ</p>
+                      <div className="text-center fw-semibold d-flex flex-column ">
+                        <span>
+                          {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format((orderItem.unitPrice||0))} 
+                        </span>                      
+                        {/* <p className="fw-semibold">{orderItem.unitPrice || 0} đ</p> */}
                         <del>
-                          <small>{orderItem.discountPrice || 0} đ</small>
+                        {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format((orderItem.discountPrice||0))}
+                          {/* <small>{orderItem.discountPrice || 0} đ</small> */}
                         </del>
                       </div>
                       <div>                      
                         <p className="fw-semibold">                    
-                        {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format((orderItem.unitPrice || 0) * (orderItem.quantity || 0))}
+                        {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format((orderItem.totalPrice||0))}
                         </p>
                       </div>
                     </div>
@@ -396,7 +413,8 @@ export default function CounterSale() {
               >
                 <div className="d-flex justify-content-between">
                   <p className="fw-semibold fs-4">Sub-total:</p>
-                  <p className="fw-semibold fs-4 text-danger">2.000.000đ</p>
+                  <p className="fw-semibold fs-4 text-danger"> 
+                    {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format((subtotal||0))}</p>
                 </div>
                 <div className="d-flex">
                   <div className="w-50 me-2">
