@@ -1,0 +1,17 @@
+spring.application.name=datn
+spring.datasource.url=jdbc:mysql://localhost:3306/heavenshop
+spring.datasource.username=root
+spring.datasource.password=123
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+#If your MySql version 5 then use MySQL5Dialect
+
+# Enable spring data repos
+spring.data.jpa.repositories.enabled=true
+spring.jpa.show-sql=true
+spring.jpa.database=mysql
+spring.jpa.hibernate.ddl-auto=none
+
+jwt.signerKey=WBDdwNNIp8JAoDnc5vjr/+jrOswAxvZzvj5ZAJFeDP1eQf1PwUfKJoKLXrXYvtrw
+
+server.port=8081    
+
