@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./src/css/tailwind.css" ;
+// import "bootstrap/dist/css/bootstrap.min.css";
 
 type Discount = {
   discountId: string;
@@ -66,9 +65,54 @@ export default function Discounts() {
 
   return (
     <div className="container py-4">
-      <h2 className="bg-slate-600">Discounts</h2>
-      
-      <table className="table-column">
+      <h1 className="text-4xl text-center pb-4">Thông Tin Discount</h1>
+
+      <div>
+        <form className="mb-4">
+          <div className="row">
+            <div className="col-6">
+              <div className="mb-3">
+                <label className="form-label">Discount Value</label>
+                <input type="number" className="form-control" required />
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label">Discount Type</label>
+                <input type="text" className="form-control" required />
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label">Start Date</label>
+                <input type="date" className="form-control" required />
+              </div>
+            </div>
+
+            <div className="col-6">
+              <div className="mb-3">
+                <label className="form-label">End Date</label>
+                <input type="date" className="form-control" required />
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label">Status</label>
+                <input type="text" className="form-control" required />
+              </div>
+
+              {/* <div className="mb-3">
+              <label className="form-label">Description</label>
+              <input type="text" className="form-control" required />
+            </div> */}
+            </div>
+            <div className="col-6">
+              <button type="submit" className="btn btn-primary w-20">
+                Create Discount
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <table className="table-column w-full grid">
         <thead>
           <tr>
             <th>Description</th>

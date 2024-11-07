@@ -11,9 +11,8 @@ import { authRouter } from "./app/router/authRouter";
 import { productRouter } from "./app/router/productRouter";
 import { salesCounter } from "./app/router/salesCounter";
 import { saleRouter } from "./app/router/saleRouter";
-// Remove this line if you don't need it
 import { discountsRouter } from "./app/router/discountsRouter";
-
+import "./index.css"
 export const spinner = (
   <div className="progress-spinner text-center">
     <div className="swm-loader"></div>
