@@ -12,7 +12,10 @@ import { productRouter } from "./app/router/productRouter";
 import { PrimeReactProvider } from 'primereact/api';
 import { salesCounter } from "./app/router/salesCounter";
 import { saleRouter } from "./app/router/saleRouter";
-
+import { saleOnline } from "./app/router/saleOnlineRouter";
+import {collection} from "./app/router/collectionRouter";
+import {productDetail} from "./app/router/productDetail";
+import { cartShopping } from "./app/router/cartShoppingRouter";
 export const spinner = (
   <div className="progress-spinner text-center">
     <div className="swm-loader"></div>
@@ -30,6 +33,11 @@ function App() {
     productRouter,
     salesCounter,
     saleRouter,
+    saleOnline,
+    collection,
+    productDetail,
+    cartShopping,
+  
     { path: "err-network", element: <Error500 /> }, //500
     { path: "*", element: <NotFound /> }, //404
   ]);

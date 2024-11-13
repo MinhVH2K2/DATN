@@ -141,7 +141,11 @@ public class ProductServiceImpl implements ProductService {
         List<Products> productsList = lists.stream().map(list -> Products.builder()
                 .productId(list.getProductId())
                 .productName(list.getProductName())
+                .productIng(list.getProductIng())
                 .categories(list.getCategories())
+                .unitPrice(list.getUnitPrice())
+                .description(list.getDescription())
+                .productDetails(list.getProductDetails())
                 .build()).toList();
 
         return PageResponse.builder()
