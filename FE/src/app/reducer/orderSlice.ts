@@ -41,23 +41,31 @@ const orderSlice = createSlice({
                 order.orderItems = order.orderItems.filter(item => item.orderItemId !== orderItemId);
             }         
         },
-        // updateOrderItem(state, action: PayloadAction<{ orderId: number; orderItemId: number; quantity: number }>) {
-        //     const { orderId, orderItemId, quantity } = action.payload;
-        //     const orderIndex = state.orders.findIndex(order => order.orderId === orderId);           
-        //     if (orderIndex !== -1) {
-        //         const order = state.orders[orderIndex];
-        //         const itemIndex = order.orderItems?.findIndex(item => item.orderItemId === orderItemId);
-        //         if (itemIndex !== -1) {
-        //             order.orderItems?[itemIndex] = {
-        //                 ...order.orderItems[itemIndex],
-        //                 quantity: quantity 
-        //             };
-        //         }
-        //     }
-        // },       
+        updateOrderItem(state, action: PayloadAction<{ orderId: number; orderItemId: number; quantity: number }>) {
+            const { orderId, orderItemId, quantity } = action.payload;
+            const orderIndex = state.orders.findIndex(order => order.orderId === orderId);
+        
+            if (orderIndex !== -1) {
+                const order = state.orders[orderIndex];
+                if (order.orderItems) {
+                    const itemIndex = order.orderItems.findIndex(item => item.orderItemId === orderItemId);
+        
+                    if (itemIndex !== -1) {
+                        const selectedItem = order.orderItems[itemIndex];
+                        order.orderItems[itemIndex] = {
+                            ...selectedItem,
+                            quantity: quantity,
+                            totalPrice: (selectedItem.unitPrice || 0) * quantity,
+                        };
+                    }
+                }
+            }
+        },
+        
+              
     },
 });
 
-export const { addOrder, updateOrder, removeOrder, addOrderItem, removeOrderItem } = orderSlice.actions;
+export const { addOrder, updateOrder, removeOrder, addOrderItem, removeOrderItem, updateOrderItem } = orderSlice.actions;
 
 export default orderSlice.reducer;

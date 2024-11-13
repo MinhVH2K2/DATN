@@ -48,12 +48,12 @@ export class MarterialModel {
 }
 export class ColorModel{
     colerId?: string;
-    colorName?: string;
+    corlorName?: string;
     colorCode?: string;
     constructor(colerId?: string, corlorName?: string, colorCode?: string){
         this.colerId = colerId;
         this.colorCode = colorCode;
-        this.colorName = corlorName;
+        this.corlorName = corlorName;
     };
 }
 export class SizeModel{
