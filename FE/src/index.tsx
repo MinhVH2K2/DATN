@@ -8,6 +8,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {  HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
+<<<<<<< HEAD
+=======
+import '@fortawesome/fontawesome-free/css/all.min.css';
+>>>>>>> 37c46b033526ccd1b349e77086d69c03aab5a91c
 import i18n from './app/config/translation/i18n';
 import store from './app/store/store';
 const root = ReactDOM.createRoot(

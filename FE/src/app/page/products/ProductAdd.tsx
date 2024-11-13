@@ -1,12 +1,31 @@
+import axios from 'axios';
 import { Dropdown } from 'primereact/dropdown';
 import { FloatLabel } from 'primereact/floatlabel'
 import { InputText } from 'primereact/inputtext'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {  useNavigate } from 'react-router-dom';
 
 export default function () {
     const navigate = useNavigate();
     const [value, setValue] = useState('');
+    const [categori, setCategori] = useState([]);
+   
+   useEffect(() => {
+      const token = localStorage.getItem('authToken');
+      axios.get('http://localhost:8081/categori/getAll-categori',{
+         headers: {
+            Authorization: `Bearer ${token}` // Thêm token vào headers
+         }
+      })  // API từ Spring Boot
+        .then(response => {
+          setCategori(response.data);
+         console.log(response.data);
+        })
+        .catch(error => {
+          console.log('There was an error fetching the products!', error);
+        });
+    }, []);
+
   return (
     <div className='container'>
         <div>
@@ -34,7 +53,7 @@ export default function () {
                 <div className='col-6'>
                         <p>Categori</p>
                         <div className="card flex justify-content-center">
-                    <Dropdown  optionLabel="name" 
+                    <Dropdown  options={categori} optionLabel="categoriesName" 
                         placeholder="Select a Categori" className="w-full md:w-14rem" />
                     </div>
                     <p>Material</p>

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.6.0",
     "@popperjs/core": "^2.11.8",
     "@reduxjs/toolkit": "^1.9.2",
     "@testing-library/jest-dom": "^5.17.0",
@@ -21,7 +22,6 @@
     "js-cookie": "^3.0.5",
     "js-cookies": "^1.0.4",
     "lucide-react": "^0.438.0",
-    "postcss": "^8.4.44",
     "primeicons": "^7.0.0",
     "primereact": "^10.8.3",
     "react": "^18.3.1",
@@ -61,6 +61,11 @@
     ]
   },
   "devDependencies": {
+<<<<<<< HEAD
+=======
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+>>>>>>> 37c46b033526ccd1b349e77086d69c03aab5a91c
     "tailwindcss": "^3.4.14"
   }
 }
