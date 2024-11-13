@@ -86,3 +86,305 @@
 .shadow-none {
   box-shadow: none;
 }
+
+.flex-grow-1 {
+  flex-grow: 1 !important;
+}
+
+.flex-grow-2 {
+  flex-grow: 2 !important;
+}
+
+.flex-grow-3 {
+  flex-grow: 3 !important;
+}
+
+.flex-grow-4 {
+  flex-grow: 4 !important;
+}
+
+.flex-grow-5 {
+  flex-grow: 5 !important;
+}
+
+.flex-grow-6 {
+  flex-grow: 6 !important;
+}
+
+.flex-grow-7 {
+  flex-grow: 7 !important;
+}
+
+.flex-grow-8 {
+  flex-grow: 8 !important;
+}
+
+.flex-grow-9 {
+  flex-grow: 9 !important;
+}
+
+.flex-grow-10 {
+  flex-grow: 10 !important;
+}
+.hover-text {
+  display: none;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+}
+.hover-button:hover + .hover-text {
+  display: block;
+}
+
+/* Container của dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Nút menu với icon */
+.menu-button {
+  background-color: #007bff; /* Màu xanh */
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Danh sách menu */
+.menu-list {
+  position: absolute;
+  top: 50px; /* Vị trí hiển thị menu */
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  width: 200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+/* Item của menu */
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  border-bottom: 1px solid #ddd;
+}
+
+.menu-item i {
+  margin-right: 10px; /* Khoảng cách giữa icon và text */
+}
+
+/* Hover menu item */
+.menu-item:hover {
+  background-color: #f5f5f5;
+}
+
+/* Định dạng cho item cuối cùng (không có border dưới) */
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+/* Ẩn menu khi chưa bật
+.menu-list {
+  display: none;
+} */
+
+.dropdown:hover .menu-list {
+  display: block;
+}
+
+.cs-card {
+  border: 1px solid #d1d5db; /* Màu xám nhạt để tạo sự tinh tế */
+  border-radius: .5rem;
+  cursor: pointer;
+  padding: .3rem;
+  background-color: #f9fafb; /* Màu nền xám nhạt */
+  margin-bottom: 10px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 500;
+  transition: all 0.3s ease; /* Thêm hiệu ứng mượt khi hover */
+}
+
+.cs-card:hover {
+  background-color: #f3f4f6; /* Thêm màu nền nhẹ khi hover */
+  border-color: #a0aec0; /* Tăng độ nổi bật của viền khi hover */
+}
+
+.cs-card.active {
+  border: 1px solid #f97316; /* Màu cam sáng để thu hút sự chú ý */
+  color: #f97316;
+  cursor: pointer;
+  margin-bottom: 10px;
+  border-radius: .5rem;
+  padding: .3rem;
+  background-color: #fff7ed; /* Nền cam nhạt hài hòa với viền */
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.cs-order {
+  border: 1px solid #d1d5db; /* Màu xám nhạt để tạo sự tinh tế */
+  border-radius: .5rem;
+  cursor: pointer;
+  background-color: #f9fafb; /* Màu nền xám nhạt */
+  margin-right: 10px;
+  padding: .4rem .5rem .4rem .8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 500;
+  transition: all 0.3s ease; /* Thêm hiệu ứng mượt khi hover */
+  white-space: nowrap; 
+}
+
+.cs-order:hover {
+  background-color: #f3f4f6; /* Thêm màu nền nhẹ khi hover */
+  border-color: #a0aec0; /* Tăng độ nổi bật của viền khi hover */
+}
+
+.cs-order.active {
+  border: 1px solid #f97316; /* Màu cam sáng để thu hút sự chú ý */
+  color: #f97316;
+  cursor: pointer;
+  padding: .4rem .5rem .4rem .8rem;
+  margin-right: 10px;
+  border-radius: .5rem;
+  background-color: #fff7ed; /* Nền cam nhạt hài hòa với viền */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  white-space: nowrap; 
+}
+
+.cs-order:hover .fa-xmark {
+  color: red; /* Thay đổi màu khi hover */
+  transform: scale(1.2); /* Tăng kích thước khi hover */
+  transition: all 0.2s ease; /* Hiệu ứng chuyển tiếp mượt mà */
+}
+
+.shadow-1 {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.shadow-2 {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.shadow-3 {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+.shadow-4 {
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.22), 0 10px 10px rgba(0, 0, 0, 0.2);
+}
+
+.shadow-5 {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
+
+.color-product {
+  height: 1rem;
+  width: 1rem;
+}
+
+.number-input {
+  display: flex;
+  align-items: center;
+}
+
+.number-input input[type="number"] {
+  width: 50px;
+  text-align: center;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  outline: none;
+  font-size: 18px;
+  -moz-appearance: textfield; /* Loại bỏ mũi tên trên Firefox */
+}
+
+.number-input input[type="number"]::-webkit-outer-spin-button,
+.number-input input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0; /* Loại bỏ mũi tên trên Chrome */
+}
+
+.number-input button {
+  width: 30px;
+  height: 30px;
+  background-color: #ccc;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 5px;
+  transition: background-color 0.3s;
+}
+
+.number-input button:active {
+  background-color: #aaa;
+}
+
+.number-input button:focus {
+  outline: none;
+}
+
+.number-input button:hover {
+  background-color: #bbb;
+}
+.circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin: 0 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sizes {
+  display: flex;
+  gap: 10px; 
+}
+
+.size {
+  width: 40px;
+  height: 40px;
+  margin: 0 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.selected {
+  border: 2px solid #000;   
+}
+
+.aside-item:hover {
+  color: #4154f1 !important;
+  cursor: pointer;
+  background-color: #eceef877 ;
+}

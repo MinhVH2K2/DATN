@@ -8,7 +8,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-
+// import '@fortawesome/fontawesome-free/css/all.min.css';
 import i18n from './app/config/translation/i18n';
 import store from './app/store/store';
 

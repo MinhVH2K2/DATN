@@ -40,6 +40,9 @@ public class ProductDetail {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @ManyToOne
     @JoinColumn(name = "corlor_id")
     private Colors colors;

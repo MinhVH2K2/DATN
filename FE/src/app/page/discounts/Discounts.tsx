@@ -28,8 +28,8 @@ export default function Discounts() {
 
   const auToken =
     localStorage.getItem("authToken") ||
-    "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW5obmUzIiwiZXhwIjoxNzMwMTk2NzQ1LCJpYXQiOjE3MzAxOTMxNDUsInNjb3BlIjoiUk9MRV9VU0VSIn0.IhqZQvSM7Kspv9U3y2RVaEu29Nx8g8SwlD_3M2VRC33uwfz9fPPHrkES4cJovvLTzCnEzkM15coISfv7bp0xEw";
-
+    "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW5obmUzIiwiZXhwIjoxNzMwOTgwNTk2LCJpYXQiOjE3MzA5NzY5OTYsInNjb3BlIjoiUk9MRV9VU0VSIn0.s4iKoHAKqT6hv5OIBvi8WX08p8k8CUB1pP8S_JsKV2a7HNK96qv38XAB1KQTA2FOaKNTmomLKrkxqOHKZvaenQ";
+    
   useEffect(() => {
     const fetchDiscounts = async () => {
       try {
@@ -97,13 +97,12 @@ export default function Discounts() {
                 <label className="form-label">Status</label>
                 <input type="text" className="form-control" required />
               </div>
-
               {/* <div className="mb-3">
               <label className="form-label">Description</label>
               <input type="text" className="form-control" required />
             </div> */}
             </div>
-            <div className="col-6">
+            <div className="">
               <button type="submit" className="btn btn-primary w-20">
                 Create Discount
               </button>
@@ -111,57 +110,58 @@ export default function Discounts() {
           </div>
         </form>
       </div>
-
-      <table className="table-column w-full grid">
-        <thead>
-          <tr>
-            <th>Description</th>
-            <th>Value</th>
-            <th>Type</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {discounts.length > 0 ? (
-            discounts.map((discount) => (
-              <tr key={discount.discountId}>
-                <td>{discount.description}</td>
-                <td>{discount.discountValue}%</td>
-                <td>{discount.discountType}</td>
-                <td>{discount.startDate}</td>
-                <td>{discount.endDate}</td>
-                <td>{discount.status}</td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan={6} className="text-center">
-                No discounts available
-              </td>
+      <div className="">
+        <table className="table w-full pb-5">
+          <thead>
+            <tr className="text-md px-6 py-3">
+              <th>Description</th>
+              <th>Value</th>
+              <th>Type</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Status</th>
             </tr>
-          )}
-        </tbody>
-      </table>
-      <div className="d-flex justify-content-between">
-        <button
-          className="btn btn-primary"
-          onClick={handlePreviousPage}
-          disabled={page === 0}
-        >
-          Previous
-        </button>
-        <span>
-          Page {page + 1} of {totalPages}
-        </span>
-        <button
-          className="btn btn-primary"
-          onClick={handleNextPage}
-          disabled={page >= totalPages - 1}
-        >
-          Next
-        </button>
+          </thead>
+          <tbody>
+            {discounts.length > 0 ? (
+              discounts.map((discount) => (
+                <tr key={discount.discountId} className="text-md px-6 py-3">
+                  <td>{discount.description}</td>
+                  <td>{discount.discountValue}%</td>
+                  <td>{discount.discountType}</td>
+                  <td>{discount.startDate}</td>
+                  <td>{discount.endDate}</td>
+                  <td>{discount.status}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={6} className="text-center">
+                  No discounts available
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+        <div className="d-flex justify-content-between pt-3">
+          <button
+            className="btn btn-primary"
+            onClick={handlePreviousPage}
+            disabled={page === 0}
+          >
+            Previous
+          </button>
+          <span>
+            Page {page + 1} of {totalPages}
+          </span>
+          <button
+            className="btn btn-primary"
+            onClick={handleNextPage}
+            disabled={page >= totalPages - 1}
+          >
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );

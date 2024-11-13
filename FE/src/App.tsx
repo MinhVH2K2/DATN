@@ -9,10 +9,8 @@ import Error500 from "./app/page/error/Error500";
 import NotFound from "./app/page/error/NotFound";
 import { authRouter } from "./app/router/authRouter";
 import { productRouter } from "./app/router/productRouter";
-import { salesCounter } from "./app/router/salesCounter";
-import { saleRouter } from "./app/router/saleRouter";
 import { discountsRouter } from "./app/router/discountsRouter";
-import "./index.css"
+import "./index.css";
 export const spinner = (
   <div className="progress-spinner text-center">
     <div className="swm-loader"></div>
@@ -28,9 +26,7 @@ function App() {
     authRouter,
     indexRouter,
     productRouter,
-    salesCounter,
-    saleRouter,
-    discountsRouter , 
+    discountsRouter,
     { path: "err-network", element: <Error500 /> }, //500
     { path: "*", element: <NotFound /> }, //404
   ]);

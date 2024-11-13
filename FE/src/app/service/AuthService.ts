@@ -13,7 +13,7 @@ export class AuthService {
     }
 
     public login(request: LoginRequest) {
-        const url = ApiUrlUtil.buildQueryString(process.env.REACT_APP_MAIN_URL + '/login');
+        const url = ApiUrlUtil.buildQueryString(process.env.REACT_APP_MAIN_URL + '/log-in');
         return axios.post(url, request);
     }
 

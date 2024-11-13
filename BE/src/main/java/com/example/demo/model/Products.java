@@ -46,6 +46,9 @@ public class Products {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "thumbnail")
+    private String thumbnail;
+
     @Column(name = "discount_price")
     private Double discountPrice;
 
@@ -83,7 +86,6 @@ public class Products {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Categories categories;
-
 
     @OneToMany(mappedBy ="products" , cascade = CascadeType.ALL)
     private List<ProductDetail> productDetails ;
