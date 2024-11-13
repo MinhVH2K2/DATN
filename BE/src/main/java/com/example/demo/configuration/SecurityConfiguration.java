@@ -40,9 +40,6 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(
-
-              
-
                 request -> request.requestMatchers(HttpMethod.POST, "/adduser", "/log-in", "/login").permitAll()
 
                         .anyRequest().authenticated());
@@ -71,6 +68,7 @@ public class SecurityConfiguration {
         bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
         return bean;
     }
+
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(10);

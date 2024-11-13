@@ -1,11 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import spinnerReducer from '../reducer/spinnerSlice';
-import orderReducer from '../reducer/orderSlice';
-
+import producrReducer from '../reducer/productSlice';
+import cartReducer from '../reducer/cartSlice';
 const store = configureStore({
   reducer: {
     spinner: spinnerReducer,
-    order: orderReducer,
+    products: producrReducer,
+    carts :cartReducer,
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({ serializableCheck: false });
