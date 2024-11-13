@@ -21,21 +21,38 @@ public class UserController {
             userService.addUser(request);
             return new ResponseDataSuccsess<>(HttpStatus.OK.value(), request.getUserName());
         } catch (Exception e) {
-            return new ResponseDataSuccsess<>(HttpStatus.BAD_REQUEST.value() , e.getMessage());
+            return new ResponseDataSuccsess<>(HttpStatus.BAD_REQUEST.value(), e.getMessage());
 
         }
     }
-    @GetMapping("getuserbyusername")
 
+    @GetMapping("getuserbyusername")
     public ResponseDataSuccsess<?> addUser(@RequestParam String userName) {
         var authen = SecurityContextHolder.getContext().getAuthentication();
         System.out.println("Username :" + authen.getName());
         authen.getAuthorities().forEach(grantedAuthority -> System.out.println("Roles :" + grantedAuthority.getAuthority()));
         try {
-            return new ResponseDataSuccsess<>(HttpStatus.OK.value(),"Find user by name",userService.findByUserName(userName));
+            return new ResponseDataSuccsess<>(HttpStatus.OK.value(), "Find user by name", userService.findByUserName(userName));
         } catch (Exception e) {
-            return new ResponseDataSuccsess<>(HttpStatus.BAD_REQUEST.value() , e.getMessage());
+            return new ResponseDataSuccsess<>(HttpStatus.BAD_REQUEST.value(), e.getMessage());
 
         }
-}
+    }
+
+    @GetMapping("getalluser")
+    public ResponseDataSuccsess<?> getAllUser(
+            @RequestParam(required = false, defaultValue = "0") int pageNo,
+            @RequestParam(required=false, defaultValue ="5") int pageSize,
+            @RequestParam(required=false) String fullName,
+            @RequestParam(required=false) String status
+    )
+
+    {
+        try {
+            return new ResponseDataSuccsess<>(HttpStatus.OK.value(), "Find all user", userService.getAllUser(pageNo,pageSize,fullName,status));
+        } catch (Exception e) {
+            return new ResponseDataSuccsess<>(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+
+        }
+    }
 }

@@ -5,11 +5,12 @@ import com.example.demo.model.Products;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Products, String> {
+public interface ProductRepository extends JpaRepository<Products, String>, JpaSpecificationExecutor<Products> {
     @Query(value = "select products.product_id , products.product_name ,products.description,products.discount_price , products.unit_price ,\n" +
             "products.is_discount , products.is_special , products.weight , products.created_date , products.updated_date , brands.brand_id ,\n" +
             "brands.brand_name ,brands.logo , marterial.material_id , marterial.material_name , categories.category_id , categories.category_name ,\n" +

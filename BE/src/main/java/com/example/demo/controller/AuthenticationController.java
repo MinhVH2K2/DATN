@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.ResponseData;
 import com.example.demo.dto.request.AuthenticationRequest;
 import com.example.demo.dto.response.AuthenticationResponse;
 import com.example.demo.dto.response.ResponseDataSuccsess;
@@ -29,6 +28,7 @@ public class AuthenticationController {
             return new ResponseDataSuccsess<>(HttpStatus.BAD_REQUEST.value() , e.getMessage());
         }
     }
+
 //    @PostMapping("/login")
 //    public ResponseEntity<ResponseData> login(@RequestBody AuthenticationRequest request) throws Exception {
 //        ResponseData responseData = new ResponseData();

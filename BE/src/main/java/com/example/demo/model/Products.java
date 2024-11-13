@@ -49,6 +49,9 @@ public class Products {
     @Column(name = "discount_price")
     private Double discountPrice;
 
+    @Column(name = "thumbnail")
+    private String productIng;
+
     @Column(name = "unit_price")
     private Double unitPrice;
 
