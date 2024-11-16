@@ -36,15 +36,41 @@ export default function Aside() {
             className="nav-content collapse "
             data-bs-parent="#sidebar-nav"
           >
-            <li
-              className="aside-item"
-              onClick={() => {
-                navigate("products");
-              }}
-            >
+            <li className="aside-item" onClick={() => { navigate("products"); }}>
               <a>
                 <i className="bi bi-circle"></i>
                 <span>Product</span>
+              </a>
+            </li>
+            <li className="aside-item" onClick={() => { navigate("categoris-page");}}>
+              <a>
+                <i className="bi bi-circle"></i>
+                <span>Categoris</span>
+              </a>
+            </li>
+
+            <li className="aside-item" onClick={() => { navigate("Color-page");}}>
+              <a>
+                <i className="bi bi-circle"></i>
+                <span>Color</span>
+              </a>
+            </li>
+            <li className="aside-item" onClick={() => { navigate("brands-page");}}>
+              <a>
+                <i className="bi bi-circle"></i>
+                <span>Brands</span>
+              </a>
+            </li>
+            <li className="aside-item" onClick={() => { navigate("sizes-page");}}>
+              <a>
+                <i className="bi bi-circle"></i>
+                <span>Sizes</span>
+              </a>
+            </li>
+            <li className="aside-item" onClick={() => { navigate("marterial-page");}}>
+              <a>
+                <i className="bi bi-circle"></i>
+                <span>Marterial</span>
               </a>
             </li>
           </ul>

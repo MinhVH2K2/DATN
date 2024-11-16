@@ -29,7 +29,7 @@ public class ColorsServiceImpl implements ColorsService {
         int random = new Random().nextInt(10000);
         try {
             Colors colors1 = Colors.builder()
-                    .colorCode("color" + random)
+                    .colorCode(colors.getColorCode())
                     .corlorName(colors.getCorlorName())
                     .build();
             colorsRepository.save(colors1);

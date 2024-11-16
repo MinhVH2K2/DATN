@@ -28,7 +28,7 @@ public class SizesController {
 
     @GetMapping("/getAll-sizes")
     public ResponseEntity<?> getAll(@RequestParam("p") Optional<Integer> p) {
-        Pageable pageable = PageRequest.of(p.orElse(0), 5);
+        Pageable pageable = PageRequest.of(p.orElse(0), 10000);
         return new ResponseEntity<>(sizesService.getAll(pageable).getContent(), HttpStatus.OK);
     }
 

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/categori")
@@ -51,13 +52,13 @@ public class CategoriController {
     }
 
     @DeleteMapping("/delete-categori/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable String id) {
         Boolean check = categoriesService.deleteCategories(id);
         return new ResponseEntity<>(check == false ? "thất bại " : "thành công", check == false ? HttpStatus.BAD_REQUEST : HttpStatus.OK);
     }
 
     @GetMapping("/finbyid-categori/{id}")
-    public ResponseEntity<?> finById(@PathVariable Long id) {
+    public ResponseEntity<?> finById(@PathVariable String id) {
         Optional<Categories> categori = categoriesService.finbyId(id);
         if (categori.isPresent()) {
             return new ResponseEntity<>(categori.get(), HttpStatus.OK);

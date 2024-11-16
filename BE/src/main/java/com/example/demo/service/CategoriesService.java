@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public interface CategoriesService {
 
@@ -15,7 +16,7 @@ public interface CategoriesService {
 
     Boolean updateCategories(Categories categories);
 
-    Boolean deleteCategories(Long id);
+    Boolean deleteCategories(String id);
 
-    Optional<Categories> finbyId(Long id);
+    Optional<Categories> finbyId(String id);
 }

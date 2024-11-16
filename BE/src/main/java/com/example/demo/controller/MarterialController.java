@@ -22,14 +22,14 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/Marterial")
-public class MarterialController {
+public class    MarterialController {
 
     @Autowired
     private MarterialService marterialService;
 
     @GetMapping("/getAll-marterial")
     public ResponseEntity<?> getAll(@RequestParam("p") Optional<Integer> p) {
-        Pageable pageable = PageRequest.of(p.orElse(0), 5);
+        Pageable pageable = PageRequest.of(p.orElse(0), 10000);
         return new ResponseEntity<>(marterialService.getAll(pageable).getContent(), HttpStatus.OK);
     }
 

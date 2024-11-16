@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CategoriesServiceImpl implements CategoriesService {
@@ -54,7 +55,7 @@ public class CategoriesServiceImpl implements CategoriesService {
     }
 
     @Override
-    public Boolean deleteCategories(Long id) {
+    public Boolean deleteCategories(String id) {
         try {
             categoriesRepositori.deleteById(id);
             return true;
@@ -66,7 +67,7 @@ public class CategoriesServiceImpl implements CategoriesService {
     }
 
     @Override
-    public Optional<Categories> finbyId(Long id) {
+    public Optional<Categories> finbyId(String id) {
         return categoriesRepositori.findById(id);
     }
 }

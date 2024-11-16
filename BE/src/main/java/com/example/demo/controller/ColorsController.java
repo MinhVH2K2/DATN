@@ -29,7 +29,7 @@ public class ColorsController {
 
     @GetMapping("/getAll-corler")
     public ResponseEntity<?> getAll(@RequestParam("p") Optional<Integer> number) {
-        Pageable pageable = PageRequest.of(number.orElse(0), 5);
+        Pageable pageable = PageRequest.of(number.orElse(0), 1000);
         return new ResponseEntity<>(colorsService.getAll(pageable).getContent(), HttpStatus.OK);
     }
 
