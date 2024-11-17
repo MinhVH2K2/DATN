@@ -25,7 +25,6 @@ export default function Login() {
     }
 
     const handleLogin = ()=>{
-        console.log(loginModel);
         AuthService.getInstance().login(loginModel).then(res=>{
           localStorage.setItem('authToken', res.data.data.token);                     
             console.log(res);

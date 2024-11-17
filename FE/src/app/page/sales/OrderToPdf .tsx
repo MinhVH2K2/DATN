@@ -28,8 +28,8 @@ const OrderToPdf = ({ order }: { order: OrderModel }) => {
         <h2>Thông tin Đơn hàng</h2>
         <p><strong>Mã đơn hàng:</strong> {order.orderId}</p>
         <p><strong>Ngày tạo:</strong> {order.createdDate?.toString()}</p>
-        <p><strong>Tên khách hàng:</strong> {order.userId}</p>       
-        <p><strong>Số điện thoại:</strong></p>
+        <p><strong>Tên khách hàng:</strong> {order.customer?.fullName}</p>       
+        <p><strong>Số điện thoại:</strong>{order.customer?.phoneNumber}</p>
         
 
         <h3>Chi tiết sản phẩm</h3>
@@ -48,8 +48,8 @@ const OrderToPdf = ({ order }: { order: OrderModel }) => {
             {order.orderItems?.map((item, index) => (
               <tr key={index}>
                 <td style={{ border: '1px solid #000', padding: '8px' }}>{item.productName}</td>
-                <td style={{ border: '1px solid #000', padding: '8px' }}>{item.productDetailId?.colors?.corlorName}</td>
-                <td style={{ border: '1px solid #000', padding: '8px' }}>{item.productDetailId?.sizes?.sizesName}</td>
+                <td style={{ border: '1px solid #000', padding: '8px' }}>{item.productDetail?.colors?.corlorName}</td>
+                <td style={{ border: '1px solid #000', padding: '8px' }}>{item.productDetail?.sizes?.sizesName}</td>
                 <td style={{ border: '1px solid #000', padding: '8px', textAlign: 'center' }}>{item.quantity}</td>
                 <td style={{ border: '1px solid #000', padding: '8px', textAlign: 'right' }}>
                   {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.unitPrice||0)}

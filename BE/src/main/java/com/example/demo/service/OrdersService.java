@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.request.OrderRequest;
 import com.example.demo.dto.response.OrderResponse;
 import com.example.demo.dto.response.OrdersResponse;
 import com.example.demo.dto.response.PageResponse;
@@ -40,16 +41,15 @@ public class OrdersService {
         List<OrderResponse> orderResponseList = pageOrders.getContent().stream()
                 .map(order -> OrderResponse.builder()
                         .orderId(order.getOrderId())
-                        .userId(order.getUserId())
-                        .discountId(order.getDiscountId())
+                        .customer(order.getCustomer())
+                        .discounts(order.getDiscounts())
                         .totalPrice(order.getTotalPrice())
                         .status(order.getStatus())
                         .createdDate(order.getCreatedDate())
                         .createdBy(order.getCreatedBy())
-                        .updatedDate(order.getUpdatedDate())
-                        .updatedBy(order.getUpdatedBy())
+//                        .updatedDate(order.getUpdatedDate())
+//                        .updatedBy(order.getUpdatedBy())
                         .orderItems(order.getOrderItems())
-                        .discounts(order.getDiscounts())
                         .build())
                 .collect(Collectors.toList());
 
@@ -66,36 +66,42 @@ public class OrdersService {
 
 
     @Transactional
-    public Orders createOrder(Orders order, List<OrderItems> orderItemsData) {
+    public Orders createOrder(OrderRequest order, List<OrderItems> orderItemsData) {
         if (orderItemsData == null || orderItemsData.isEmpty()) {
             throw new IllegalArgumentException("Order items data cannot be null or empty");
         }
 
-        Orders savedOrder = ordersRepository.save(order);
+        Orders savedOrder = new Orders();
+        savedOrder.setCustomer(order.getCustomer());
+        savedOrder.setDiscounts(order.getDiscounts());
+        savedOrder.setTotalPrice(order.getTotalPrice());
+        savedOrder.setStatus(order.getStatus());
+        savedOrder.setCreatedDate(order.getCreatedDate());
+        savedOrder.setCreatedBy(order.getCreatedBy());
+        savedOrder.setOrderItems(order.getOrderItems());
         List<OrderItems> orderItems = new ArrayList<>();
-        order.setOrderItems(orderItems);
-
-        BigDecimal totalPrice = BigDecimal.ZERO;
+        savedOrder.setOrderItems(orderItems);
+        Orders orders = ordersRepository.save(savedOrder);
+//
+//        BigDecimal totalPrice = BigDecimal.ZERO;
         for (OrderItems itemData : orderItemsData) {
             OrderItems orderItem = new OrderItems();
-            orderItem.setOrders(savedOrder);
-            orderItem.setOrderId(savedOrder.getOrderId());
-            orderItem.setProductDetailId(itemData.getProductDetailId());
+            orderItem.setOrders(orders);
+            orderItem.setProductDetail(itemData.getProductDetail());
             orderItem.setQuantity(itemData.getQuantity());
             orderItem.setUnitPrice(itemData.getUnitPrice());
             orderItem.setDiscountPrice(itemData.getDiscountPrice());
-
             BigDecimal totalItemPrice = itemData.getUnitPrice()
                     .multiply(BigDecimal.valueOf(itemData.getQuantity()))
                     .subtract(itemData.getDiscountPrice() != null ? itemData.getDiscountPrice() : BigDecimal.ZERO);
             orderItem.setTotalPrice(totalItemPrice);
 
             orderItems.add(orderItem);
-            totalPrice = totalPrice.add(totalItemPrice);
+//            totalPrice = totalPrice.add(totalItemPrice);
             orderItemsRepository.save(orderItem); // Ensure each orderItem is saved
         }
-        savedOrder.setTotalPrice(totalPrice);
-        ordersRepository.save(savedOrder);
+//        savedOrder.setTotalPrice(totalPrice);
+
         return savedOrder;
     }
 

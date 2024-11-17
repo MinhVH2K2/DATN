@@ -6,13 +6,14 @@ import { ColorModel, ProductDetailModel, ProductModel, SizeModel } from "../../m
 import { DiscountModel, OrderItemModel, OrderModel } from "../../model/OrderMoldel";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from "../../store/store";
-import { addOrder, addOrderItem, removeOrder,removeOrderItem, updateOrder, updateOrderItem } from "../../reducer/orderSlice";
-import Product from "../products/Product";
+import { addOrder, addOrderItem,removeOrderItem, updateOrder, updateOrderItem } from "../../reducer/orderSlice";
 import OrderToPdf from "./OrderToPdf ";
+import { UserModel } from "../../model/LoginModel";
 export default function CounterSale() {
   const dispatch = useDispatch();
   const order = useSelector((state: RootState) => state.order);
   const [count, setCount] = useState<number>(1);
+  const [index, setIndex] = useState<number>(0);
   const [countOrder, setCountOrder] = useState<number>(1);
   const [value, setValue] = useState<number>(1);
   const [subtotal, setSubtotal] = useState<number>(0);
@@ -23,29 +24,27 @@ export default function CounterSale() {
   const [ProductDetails, setProductDetails] = useState<ProductDetailModel[]>([]);
   const [selectedColor, setSelectedColor] = useState<ColorModel | undefined>(undefined);
   const [selectedSize, setSelectedSize] = useState<SizeModel | undefined>(undefined);
-  const [selectedProductDetail, setSelectedProductDetail] = useState<ProductDetailModel>(); // State để lưu trữ ProductDetail được chọn
+  const [selectedProductDetail, setSelectedProductDetail] = useState<ProductDetailModel>(); 
   const [Products, setProducts] = useState<ProductModel[]>([]);
   const [productName, setProductName] = useState<string | undefined>();
-
   const [customerPaidAmount, setCustomerPaidAmount] = useState<number | ''>('');
   const [changeAmount, setChangeAmount] = useState<number>(0);
   const [paymentMethod, setPaymentMethod] = useState('');
   const [discounts, setDiscounts] = useState<DiscountModel[]>([]);
-  const [selectedDiscount, setSelectedDiscount] = useState<DiscountModel | null>(null);
-
-  const orderPending = order.orders.filter(order => order.status=== 0);
+  const [selectedDiscount, setSelectedDiscount] = useState<DiscountModel | null>();
+  const [customers , setCustomers] = useState<UserModel[]>([]);
+  const [selectedCustomer, setSelectedCustomer] = useState<UserModel | null>();
+  const token = localStorage.getItem("authToken");
+  const orderPending = order.orders.filter(order => order.status=== "0");
+  useEffect(() => {
+    const index = order.orders.findIndex(order => order.orderId === activeOrder); 
+    setIndex(index);
+  },[activeOrder]);
   const addNewOrder = () => {
-    const currentDate = new Date();
-    const formattedDate = `${currentDate.getDate().toString().padStart(2, '0')}/${
-      (currentDate.getMonth() + 1).toString().padStart(2, '0')
-    }/${currentDate.getFullYear()} ${currentDate.getHours().toString().padStart(2, '0')}:${
-      currentDate.getMinutes().toString().padStart(2, '0')
-    }`;
     const newOrder: OrderModel = {
       orderId: countOrder,
-      userId: "Khách vãng lai",
-      status: 0 ,
-      createdDate: formattedDate,
+      status: "0" ,
+      createdDate: new Date(),
       createdBy: "Admin",
     }// tạo Order mới
     dispatch(addOrder(newOrder));
@@ -60,7 +59,7 @@ export default function CounterSale() {
     const index = order.orders.findIndex(order => order.orderId === activeOrder); 
       let selectedItem = order.orders[index] ;
       selectedItem = {...selectedItem,       
-        status: -1
+        status: "-1"
       } ;
     dispatch(updateOrder(selectedItem));
      
@@ -70,7 +69,6 @@ export default function CounterSale() {
     setValue(value-1);
   };
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
     axios
       .get("http://localhost:8081/product/getall", {
         headers: {
@@ -85,12 +83,28 @@ export default function CounterSale() {
         console.log("There was an error fetching the products!", error);
       });
   }, [activeOrder,order]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:8081/getallcustomer", {
+        headers: {
+          Authorization: `Bearer ${token}`, 
+        },
+      }) // API từ Spring Boot
+      .then((response) => {
+        setCustomers(response.data.data);
+        // console.log(response.data.data);
+        
+      })
+      .catch((error) => {
+        console.log("There was an error fetching the products!", error);
+      });
+    }, []);
     const handleActiveOrder = (id: any) => {
     setActiveOrder(id);
-    setSubtotal(0);
     setCustomerPaidAmount('');
     setChangeAmount(0);
     setValue(0);
+    setSubtotal(0);
   };
   const handleGetProductDetail = (productDetails: any) => {  
     setProductDetails(productDetails);       
@@ -108,8 +122,7 @@ export default function CounterSale() {
     }
   }, [selectedColor, selectedSize, ProductDetails, subtotal])
 
-  useEffect(() => {
-    const index = order.orders.findIndex(order => order.orderId === activeOrder); 
+  useEffect(() => {    
     if (order.orders[index]?.orderItems) {
       const calculatedSubtotal = order.orders[index].orderItems?.reduce(
         (sum, item) => sum + (item.totalPrice||0),0
@@ -117,7 +130,8 @@ export default function CounterSale() {
       const discountValue = selectedDiscount?.discountValue || 0;
       setSubtotal(calculatedSubtotal - discountValue);
     }
-  }, [value, activeOrder,selectedProductDetail,selectedDiscount]);
+    else { setSubtotal(0)};
+  }, [value, activeOrder,selectedProductDetail,selectedDiscount,index]);
 
   const handleMinus = () => {
     if (value > 1){setValue(value-1);}     
@@ -154,8 +168,8 @@ export default function CounterSale() {
       setCount(count+1);
       const newItem: OrderItemModel = {
         orderItemId: count, 
-        orderId: activeOrder,
-        productDetailId: selectedProductDetail,
+        orders: order.orders[index],
+        productDetail: selectedProductDetail,
         productName: productName,
         quantity: value,
         unitPrice: unitPrice,
@@ -170,31 +184,42 @@ export default function CounterSale() {
     };
     const handleProceed = () => {
       
-      if(activeOrder>0){
-      const index = order.orders.findIndex(order => order.orderId === activeOrder); 
+      if(index>=0){
       let selectedItem = order.orders[index] ;
       selectedItem = {...selectedItem,
-        discountId: selectedDiscount?.discountId,
+        discounts: selectedDiscount?? undefined,
         totalPrice: subtotal,
-        status: 1
+        status: "1",
+        customer: selectedCustomer?? undefined
       } ;
-      console.log( selectedItem);
-      dispatch(updateOrder(selectedItem));     
-      setVisible1(true);
+      dispatch(updateOrder(selectedItem));   
+      setVisible1(true);     
       }
       else setVisible1(false);
       
     };
-    const handleConfirmPayment = () => {
-      // const index = order.orders.findIndex(order => order.orderId === activeOrder);
-      // if (index !== -1) {
-      //   console.log(order.orders[index].orderId);
-      //   // dispatch(removeOrder(order.orders[index].orderId ?? -1));
-      //   deleteOrder(order.orders[index].orderId??= activeOrder);
-      // } else {
-      //   console.log("Order not found");
-      // }     
+
+    const handleConfirmPayment = () => {    
+      let selectedItem = order.orders[index];
+      
+      axios
+        .post("http://localhost:8081/orders/add-orders", selectedItem, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+           
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          console.log(selectedItem);
+        })
+        .catch((error) => {
+          console.log("There was an error fetching the products!", error);
+          console.log(selectedItem);
+        });
       setVisible1(false);
+      setIndex(-1);
+      setSubtotal(0);
     };
     
   
@@ -252,7 +277,19 @@ export default function CounterSale() {
       console.log('Discount not found');     
       setSelectedDiscount(null); 
     }   
-   
+  };
+  const handleCustomerChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedId = (event.target.value);
+    const customer = customers.find(c => c.id === selectedId);
+    if (customer) {     
+      if (selectedCustomer?.id !== customer.id) {
+        setSelectedCustomer(customer);       
+      }
+    } else {     
+      console.log('Customer not found');     
+      setSelectedCustomer(null); 
+    }   
+    console.log(selectedCustomer);
   };
   // Tính tổng tiền sau giảm giá
   const handleCustomerPaidChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -274,7 +311,8 @@ export default function CounterSale() {
           setVisible1(false);         
         }}
       >
-        <OrderToPdf order={order.orders[activeOrder-1]} />  
+       {index >= 0 && <OrderToPdf order={order.orders[index]} />}
+        
       </Dialog>   
       <Dialog
         header= {productName}
@@ -397,8 +435,8 @@ export default function CounterSale() {
               
               <div className="row bg-white mt-3" style={{ padding: ".5rem" }}>
               <h4>Giỏ hàng</h4> 
-              <div className="" style={{minHeight: 350}}>
-                {order.orders[activeOrder-1]?.orderItems?.map((orderItem) => (
+              <div className="" style={{minHeight: 300}}>
+                {order.orders[index]?.orderItems?.map((orderItem) => (
                   <div className="p-2" key={orderItem.orderItemId}>
                     <div className="border rounded-3 d-flex justify-content-between p-2">
                       <div>
@@ -415,10 +453,10 @@ export default function CounterSale() {
                           <div
                             className="color-product" 
                             style={{
-                              background: orderItem.productDetailId?.colors?.colorCode || "transparent",
+                              background: orderItem.productDetail?.colors?.colorCode || "transparent",
                             }}
                           ></div>
-                          /Size: {orderItem.productDetailId?.sizes?.sizesName || "N/A"}
+                          /Size: {orderItem.productDetail?.sizes?.sizesName || "N/A"}
                         </div>
                       </div>
                       <div className="number-input">
@@ -448,16 +486,26 @@ export default function CounterSale() {
                       </div>
                     </div>
                   </div>
-                ))|| <p>Giỏ hàng trống</p> }
+                )) || <p>Giỏ hàng trống</p> }
                 </div>             
              
                 {/* product list  */}                
                 <h4>Danh sách sản phẩm</h4>
+                <div className="d-flex mt-1 md-3">
+                <input className="form-control " style={{width: '50%'}}
+                  type="text"
+                  id="findProduct"
+                  value={customerPaidAmount}
+                  onChange={handleCustomerPaidChange}
+                  placeholder="Tìm sản phẩm"
+                />
+                <button className="btn btn-primary ms-2">Tìm kiếm</button>
+                </div>
                   {/* product 1 */}
                 {Products.map((product) => (                  
                   <div
                   key={product.productId}
-                  className="p-1 col-xl-3 col-lg-4 col-md-6 pointer"                 
+                  className="p-1 col-xl-3 col-lg-4 col-md-6 pointer mt-2"                 
                   onClick={() =>{ handleGetProductDetail(product.productDetails);
                                   setProductName(product.productName);
                                   setUnitPrice(product.unitPrice||0);
@@ -504,6 +552,18 @@ export default function CounterSale() {
               <h3>Thông tin hóa đơn</h3>
                 <div className="d-flex justify-content-between border-bottom p-2">
                   <div>
+                    <select className="mt-3"
+                    id="customerSelect"     
+                    onChange={handleCustomerChange}             
+                    style={{ width: '100%', padding: '8px', borderRadius: '4px', marginBottom: '15px' }}
+                  >
+                    {customers.map(customer => (
+                      <option key={customer.id} value={customer.id}>
+                        {customer.fullName} {customer.phoneNumber}
+                     
+                      </option>
+                    ))}
+                  </select>
                     <button className="btn btn-light border fw-semibold me-2">
                       <i className="fa fa-plus me-2"></i>
                       Add customer
@@ -545,7 +605,7 @@ export default function CounterSale() {
                 >
                   {discounts.map(discount => (
                     <option key={discount.discountId} value={discount.discountId}>
-                      {discount.description}
+                      {discount.description} 
                     </option>
                   ))}
                 </select>

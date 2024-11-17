@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
     @Autowired
@@ -36,5 +38,8 @@ public class UserService {
     public User findByUserName(String userName) throws Exception {
         return userRepository.findByuserName(userName).orElseThrow(() -> new Exception("Không tìm thấy người dùng"));
 
+    }
+    public List<User> getUsersByRole(String roleName) {
+        return userRepository.findByRolesRoleName(roleName);
     }
 }

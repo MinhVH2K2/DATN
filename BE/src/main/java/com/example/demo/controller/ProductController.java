@@ -35,7 +35,7 @@ public class ProductController {
 
     @GetMapping("/getall")
     public ResponseDataSuccsess<?> getAllProduct(@RequestParam("p") Optional<Integer> p) {
-        Pageable pageable = PageRequest.of(p.orElse(0), 5);
+        Pageable pageable = PageRequest.of(p.orElse(0), 50);
         return new ResponseDataSuccsess<>(HttpStatus.OK.value(), "ok", productService.getAllProduct(pageable));
     }
 

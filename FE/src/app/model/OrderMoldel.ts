@@ -1,19 +1,20 @@
+import { UserModel } from "./LoginModel";
 import { ProductDetailModel } from "./ProductModel";
 
 export class OrderModel {
     orderId?: number;
-    userId?: string;
-    discountId?: string;
+    customer?: UserModel;
+    discounts?: DiscountModel;
     totalPrice?: number;
-    status?: number;
-    createdDate?: string;
+    status?: string;
+    createdDate?: Date;
     createdBy?: string;
     orderItems?: OrderItemModel[];
-    constructor(orderId?: number, userId?: string, discountId?: string, createdDate?: string,
-         totalPrice?: number, status?: number, createdBy?: string, orderItems?: OrderItemModel[]){
+    constructor(orderId?: number, customer?: UserModel, discounts?: DiscountModel, createdDate?: Date,
+         totalPrice?: number, status?: string, createdBy?: string, orderItems?: OrderItemModel[]){
         this.orderId = orderId;
-        this.userId = userId;
-        this.discountId = discountId;
+        this.customer = customer;
+        this.discounts = discounts;
         this.totalPrice = totalPrice;
         this.status = status;
         this.createdDate = createdDate;
@@ -23,18 +24,18 @@ export class OrderModel {
 } 
 export class OrderItemModel {
     orderItemId?: number;
-    orderId?: number;
-    productDetailId?: ProductDetailModel;
+    orders?: OrderModel;
+    productDetail?: ProductDetailModel;
     productName?: string;
     quantity?: number;
     unitPrice?: number;
     discountPrice?: number;
     totalPrice?: number;
-    constructor(orderItemId?: number,orderId?: number,productDetailId?: ProductDetailModel,quantity?: number,
+    constructor(orderItemId?: number,orders?: OrderModel,productDetail?: ProductDetailModel,quantity?: number,
          unitPrice?: number, discountPrice?: number, totalPrice?: number, productName?: string,){
         this.orderItemId = orderItemId;
-        this.orderId = orderId;
-        this.productDetailId = productDetailId;
+        this.orders = orders;
+        this.productDetail = productDetail;
         this.productName = productName;
         this.quantity = quantity;
         this.unitPrice = unitPrice;

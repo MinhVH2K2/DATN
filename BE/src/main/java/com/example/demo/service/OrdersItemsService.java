@@ -21,8 +21,8 @@ public class OrdersItemsService {
     @Autowired
     private DiscountsRepository discountsRepository;
 
-    public List<OrderItems> findOrderItemsByOrderId(String orderId) {
-        return orderItemsRepository.findByOrderId(orderId);
-    }
+//    public List<OrderItems> findOrderItemsByOrderId(String orderId) {
+//        return orderItemsRepository.findByOrderId(orderId);
+//    }
 
 }
