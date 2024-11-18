@@ -7,6 +7,8 @@ import com.example.demo.model.Products;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface ProductService {
 
     Page<ProductResponse> getAll(Pageable pageable);
@@ -16,4 +18,5 @@ public interface ProductService {
     Boolean updateProduct(Products products);
 
     Boolean deleteProduct(String id);
+    List<Products> findProductByProductName(String name);
 }

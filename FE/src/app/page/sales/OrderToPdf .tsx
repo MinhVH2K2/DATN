@@ -29,7 +29,7 @@ const OrderToPdf = ({ order }: { order: OrderModel }) => {
         <p><strong>Mã đơn hàng:</strong> {order.orderId}</p>
         <p><strong>Ngày tạo:</strong> {order.createdDate?.toString()}</p>
         <p><strong>Tên khách hàng:</strong> {order.customer?.fullName}</p>       
-        <p><strong>Số điện thoại:</strong>{order.customer?.phoneNumber}</p>
+        <p><strong>Số điện thoại:</strong> {order.customer?.phoneNumber}</p>
         
 
         <h3>Chi tiết sản phẩm</h3>

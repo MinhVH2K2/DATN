@@ -34,6 +34,7 @@ export default function CounterSale() {
   const [selectedDiscount, setSelectedDiscount] = useState<DiscountModel | null>();
   const [customers , setCustomers] = useState<UserModel[]>([]);
   const [selectedCustomer, setSelectedCustomer] = useState<UserModel | null>();
+  const [nameProduct, setNameProduct] = useState<string>("");
   const token = localStorage.getItem("authToken");
   const orderPending = order.orders.filter(order => order.status=== "0");
   useEffect(() => {
@@ -45,10 +46,12 @@ export default function CounterSale() {
       orderId: countOrder,
       status: "0" ,
       createdDate: new Date(),
-      createdBy: "Admin",
+      createdBy: "Admin",    
+      customer: selectedCustomer?? undefined ,
     }// tạo Order mới
-    dispatch(addOrder(newOrder));
+    dispatch(addOrder(newOrder));   
     setCountOrder(countOrder+1);
+    console.log(selectedCustomer);
   };
   const handleUpdateOrderItem = (orderId: number, orderItemId: number, quantity: number) => {
     if(quantity > 0)  dispatch(updateOrderItem({ orderId, orderItemId, quantity }));    
@@ -70,19 +73,25 @@ export default function CounterSale() {
   };
   useEffect(() => {
     axios
-      .get("http://localhost:8081/product/getall", {
+      .get(`http://localhost:8081/product/getall/${nameProduct??""}`, {
         headers: {
           Authorization: `Bearer ${token}`, 
         },
       }) // API từ Spring Boot
       .then((response) => {
+        if (nameProduct!="") {
+          setProducts(response.data.data);
+          // console.log(response.data.data);
+        }else {
         setProducts(response.data.data.content);
         // console.log(response.data.data.content);
+        };
       })
       .catch((error) => {
         console.log("There was an error fetching the products!", error);
+        console.log(nameProduct);
       });
-  }, [activeOrder,order]);
+  }, [activeOrder,order,nameProduct]);
   useEffect(() => {
     axios
       .get("http://localhost:8081/getallcustomer", {
@@ -92,6 +101,7 @@ export default function CounterSale() {
       }) // API từ Spring Boot
       .then((response) => {
         setCustomers(response.data.data);
+        setSelectedCustomer(response.data.data[0]);
         // console.log(response.data.data);
         
       })
@@ -300,6 +310,10 @@ export default function CounterSale() {
     const calculatedChangeAmount = paidAmount - subtotal;
     setChangeAmount(calculatedChangeAmount > 0 ? calculatedChangeAmount : 0);
   };
+  const handleFindProduct = (event: React.ChangeEvent<HTMLInputElement>) =>{
+    const name = (event.target.value);
+    setNameProduct(name);
+  }
   return (
     <>
     <Dialog       
@@ -495,8 +509,8 @@ export default function CounterSale() {
                 <input className="form-control " style={{width: '50%'}}
                   type="text"
                   id="findProduct"
-                  value={customerPaidAmount}
-                  onChange={handleCustomerPaidChange}
+                  value={nameProduct}
+                  onChange={handleFindProduct}
                   placeholder="Tìm sản phẩm"
                 />
                 <button className="btn btn-primary ms-2">Tìm kiếm</button>
@@ -539,7 +553,7 @@ export default function CounterSale() {
                     </div>
                   </div>
                 </div> 
-                ))}
+                )) || <p>Khong tim thay san pham</p> }
                 
               </div>
             
@@ -564,13 +578,13 @@ export default function CounterSale() {
                       </option>
                     ))}
                   </select>
-                    <button className="btn btn-light border fw-semibold me-2">
+                    {/* <button className="btn btn-light border fw-semibold me-2">
                       <i className="fa fa-plus me-2"></i>
                       Add customer
                     </button>
                     <button className="btn btn-light border">
                       <i className="fa fa-plus"></i>
-                    </button>
+                    </button> */}
                   </div>
                   {/* <div className="d-flex align-items-center fw-semibold">
                     <div className="form-check form-check-inline">
