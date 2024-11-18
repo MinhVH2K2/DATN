@@ -6,15 +6,17 @@ export class OrderModel {
     discountId?: string;
     totalPrice?: number;
     status?: number;
+    createdDate?: string;
     createdBy?: string;
     orderItems?: OrderItemModel[];
-    constructor(orderId?: number, userId?: string, discountId?: string,
+    constructor(orderId?: number, userId?: string, discountId?: string, createdDate?: string,
          totalPrice?: number, status?: number, createdBy?: string, orderItems?: OrderItemModel[]){
         this.orderId = orderId;
         this.userId = userId;
         this.discountId = discountId;
         this.totalPrice = totalPrice;
         this.status = status;
+        this.createdDate = createdDate;
         this.createdBy = createdBy;
         this.orderItems = orderItems;
     };
@@ -40,3 +42,34 @@ export class OrderItemModel {
         this.totalPrice = totalPrice;
     }; 
 }
+export class DiscountModel {
+    discountId: string;
+    discountValue: number;
+    discountType: 'percentage' | 'fixed'; // Sử dụng union type để giới hạn các giá trị có thể có
+    startDate: Date;
+    endDate: Date;
+    status: 'active' | 'expired' | 'upcoming'; // Giới hạn giá trị trạng thái
+    description: string;
+    condition: number;
+  
+    constructor(
+      discountId: string,
+      discountValue: number,
+      discountType: 'percentage' | 'fixed',
+      startDate: Date,
+      endDate: Date,
+      status: 'active' | 'expired' | 'upcoming',
+      description: string,
+      condition: number
+    ) {
+      this.discountId = discountId;
+      this.discountValue = discountValue;
+      this.discountType = discountType;
+      this.startDate = startDate;
+      this.endDate = endDate;
+      this.status = status;
+      this.description = description;
+      this.condition = condition;
+    }
+  }
+  

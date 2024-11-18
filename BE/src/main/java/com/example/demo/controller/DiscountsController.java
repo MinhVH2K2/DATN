@@ -19,14 +19,15 @@ public class DiscountsController {
     private DiscountsService discountService;
 
     @GetMapping("/all-discounts")
-    public ResponseEntity<DiscountResponse<Discounts>> getAllDiscounts(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+    public ResponseEntity<DiscountResponse<Discounts>> getAllDiscounts(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
         Pageable pageable = PageRequest.of(page, size);
         DiscountResponse<Discounts> discountsResponse = discountService.findAllDiscount(pageable);
         return new ResponseEntity<>(discountsResponse, HttpStatus.OK);
     }
 
     @PostMapping("/add-discounts")
-    public ResponseEntity<Discounts> createDiscount(@RequestBody Discounts discounts) {
+    public ResponseEntity<?> createDiscount(@RequestBody Discounts discounts) {
+
         return discountService.createDiscount(discounts);
     }
 
