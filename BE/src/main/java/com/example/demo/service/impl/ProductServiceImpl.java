@@ -4,11 +4,8 @@ import com.example.demo.dto.response.PageResponse;
 import com.example.demo.dto.response.ProductResponse;
 import com.example.demo.model.Brands;
 import com.example.demo.model.Categories;
-import com.example.demo.model.Colors;
 import com.example.demo.model.Marterial;
-import com.example.demo.model.ProductDetail;
 import com.example.demo.model.Products;
-import com.example.demo.model.Sizes;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.service.ProductService;
 import jakarta.persistence.criteria.Join;
@@ -147,7 +144,7 @@ public class ProductServiceImpl implements ProductService {
         List<Products> productsList = lists.stream().map(list -> Products.builder()
                 .productId(list.getProductId())
                 .productName(list.getProductName())
-                .productIng(list.getProductIng())
+                .thumbnail(list.getThumbnail())
                 .categories(list.getCategories())
                 .unitPrice(list.getUnitPrice())
                 .description(list.getDescription())
@@ -159,5 +156,13 @@ public class ProductServiceImpl implements ProductService {
                 .totalPage(lists.getTotalPages())
                 .data(productsList)
                 .build();
+//    @Override
+//    public List<Products> findProductByProductName(String name) {
+//        return productRepository.findProductsByProductNameContaining(name);
+    }
+
+    @Override
+    public List<Products> findProductByProductName(String name) {
+        return productRepository.findProductsByProductNameContaining(name);
     }
 }

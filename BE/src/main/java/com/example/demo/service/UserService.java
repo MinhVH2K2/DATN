@@ -88,4 +88,7 @@ public class UserService {
         return userRepository.findByuserName(userName).orElseThrow(() -> new Exception("Không tìm thấy người dùng"));
 
     }
+    public List<User> getUsersByRole(String roleName) {
+        return userRepository.findByRolesRoleName(roleName);
+    }
 }

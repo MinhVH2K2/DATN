@@ -73,7 +73,7 @@ export default function Product() {
                                  <Column field="description" header="mota"></Column>
                                  <Column field="weight" header="weight"></Column>
                               </DataTable>
-        </div>
+                        </div>
                         <div className="border-top d-md-flex justify-content-between align-items-center px-6 py-6">
                            <span>Showing 1 to 8 of 12 entries</span>
                            <nav className="mt-2 mt-md-0">

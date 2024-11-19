@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Aside() {
   const navigate = useNavigate();
 
+  const [isProductOpen, setIsProductOpen] = useState(false);
+  const toggleProduct = () => {
+    setIsProductOpen(!isProductOpen);
+  };
   return (
-    <aside id="sidebar" className="sidebar">
+    <aside id="sidebar" className="sidebar ">
       <ul className="sidebar-nav" id="sidebar-nav">
         <li className="nav-item">
           <a
@@ -19,7 +23,6 @@ export default function Aside() {
           </a>
         </li>
         {/* <!-- End Dashboard Nav --> */}
-
         <li className="nav-item">
           <a
             className="nav-link collapsed"
@@ -87,33 +90,30 @@ export default function Aside() {
             className="nav-link collapsed"
             data-bs-target="#tables-nav"
             data-bs-toggle="collapse"
-            href="#"
+            onClick={() => {
+              navigate("order");
+            }}
           >
             <i className="bi bi-layout-text-window-reverse"></i>
-            <span>Tables</span>
-            <i className="bi bi-chevron-down ms-auto"></i>
+            <span>Order</span>
+            {/* <i className="bi bi-chevron-down ms-auto"></i> */}
           </a>
-          <ul
-            id="tables-nav"
-            className="nav-content collapse "
-            data-bs-parent="#sidebar-nav"
+        </li>
+        <li className="nav-item">
+          <a
+            className="nav-link collapsed"
+            data-bs-toggle="collapse"
+            href="discounts"
+            onClick={() => {
+              navigate("discounts");
+            }}
           >
-            <li>
-              <a href="tables-general.html">
-                <i className="bi bi-circle"></i>
-                <span>General Tables</span>
-              </a>
-            </li>
-            <li>
-              <a href="tables-data.html">
-                <i className="bi bi-circle"></i>
-                <span>Data Tables</span>
-              </a>
-            </li>
-          </ul>
+            <i className="bi bi-menu-button-wide"></i>
+            <span>Discount</span>
+            {/* <i className="bi bi-chevron-down ms-auto"></i> */}
+          </a>
         </li>
         {/* <!-- End Tables Nav --> */}
-
         <li className="nav-item">
           <a
             className="nav-link collapsed"
@@ -200,12 +200,12 @@ export default function Aside() {
         </li>
         {/* <!-- End Profile Page Nav --> */}
 
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <a className="nav-link collapsed" href="pages-faq.html">
             <i className="bi bi-question-circle"></i>
             <span>F.A.Q</span>
           </a>
-        </li>
+        </li> */}
         {/* <!-- End F.A.Q Page Nav --> */}
 
         <li className="nav-item">
@@ -237,12 +237,12 @@ export default function Aside() {
         </li>
         {/* <!-- End Login Page Nav --> */}
 
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <a className="nav-link collapsed" href="pages-error-404.html">
             <i className="bi bi-dash-circle"></i>
             <span>Error 404</span>
           </a>
-        </li>
+        </li> */}
         {/* <!-- End Error 404 Page Nav --> */}
 
         <li className="nav-item">
@@ -253,12 +253,12 @@ export default function Aside() {
         </li>
         {/* <!-- End Blank Page Nav --> */}
 
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <a className="nav-link collapsed" href="pages-blank.html">
             <i className="bi bi-file-earmark"></i>
             <span>Counter sale</span>
           </a>
-        </li>
+        </li> */}
       </ul>
     </aside>
   );

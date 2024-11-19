@@ -171,12 +171,8 @@ export default function Discounts() {
                   required
                 >
                   <option value="">Select status</option>
-                  <option
-                    value="Hoạt động"
-                    className="text-green-500">
-                    Hoạt động
-                  </option>
-                  <option value="Không hoạt động">Không hoạt động</option>
+                  <option value="active">active</option>
+                  <option value="expired">expired</option>
                 </select>
               </div>
 
@@ -216,13 +212,20 @@ export default function Discounts() {
           <tbody>
             {discounts.length > 0 ? (
               discounts.map((discount) => (
-                <tr key={discount.discountId} className={`text-md ${discount.status === "Hoạt động" ? "text-yellow-200" : "text-red-200"}`}>
+                <tr
+                  key={discount.discountId}
+                  className={`text-md ${
+                    discount.status === "Hoạt động"
+                      ? "text-yellow-200"
+                      : "text-red-200"
+                  }`}
+                >
                   <td>{discount.discountValue}%</td>
                   <td>{discount.discountType}</td>
                   <td>{discount.startDate}</td>
                   <td>{discount.endDate}</td>
                   <td>{discount.description}</td>
-                  <td>{discount.status }</td>
+                  <td>{discount.status}</td>
                 </tr>
               ))
             ) : (

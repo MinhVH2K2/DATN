@@ -36,7 +36,6 @@ function App() {
     collection,
     productDetail,
     cartShopping,
-  
     discountsRouter,
     // salesCounter,
     // saleRouter,

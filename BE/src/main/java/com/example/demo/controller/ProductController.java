@@ -33,9 +33,9 @@ public class ProductController {
         return new ResponseEntity<>(productService.getAll(pageable), HttpStatus.OK);
     }
 
-    @GetMapping("/getall")
+    @GetMapping("/getall/")
     public ResponseDataSuccsess<?> getAllProduct(@RequestParam("p") Optional<Integer> p) {
-        Pageable pageable = PageRequest.of(p.orElse(0), 5);
+        Pageable pageable = PageRequest.of(p.orElse(0), 50);
         return new ResponseDataSuccsess<>(HttpStatus.OK.value(), "ok", productService.getAllProduct(pageable));
     }
 
@@ -59,6 +59,7 @@ public class ProductController {
         return new ResponseDataSuccsess<>(HttpStatus.OK.value(), "thành công ");
 
     }
+
     @PutMapping("/update")
     public ResponseDataSuccsess<?> update(@RequestBody Products products) {
         if (
@@ -79,6 +80,7 @@ public class ProductController {
         return new ResponseDataSuccsess<>(HttpStatus.OK.value(), "thành công ");
 
     }
+
     @DeleteMapping("/delete/{id}")
     public ResponseDataSuccsess<?> delete(@PathVariable String id) {
         Boolean check = productService.deleteProduct(id);
@@ -87,19 +89,25 @@ public class ProductController {
         }
         return new ResponseDataSuccsess<>(HttpStatus.OK.value(), "thành công");
     }
+
     @GetMapping("/getAllProductByMutipleColums")
     public ResponseDataSuccsess<?> getAllProductByMutipleColums(
             @RequestParam(required = false, defaultValue = "0") int pageNo,
-            @RequestParam(required=false, defaultValue ="5") int pageSize,
-            @RequestParam(required=false) String categories,
-            @RequestParam(required=false) String nameProducts,
-             @RequestParam(required=false) String id
-    ){
+            @RequestParam(required = false, defaultValue = "5") int pageSize,
+            @RequestParam(required = false) String categories,
+            @RequestParam(required = false) String nameProducts,
+            @RequestParam(required = false) String id
+    ) {
         try {
-            return new ResponseDataSuccsess<>(HttpStatus.OK.value(), "Find all product", productService.getAllProductByMutipleColums(pageNo,pageSize,categories,nameProducts,id));
+            return new ResponseDataSuccsess<>(HttpStatus.OK.value(), "Find all product", productService.getAllProductByMutipleColums(pageNo, pageSize, categories, nameProducts, id));
         } catch (Exception e) {
             return new ResponseDataSuccsess<>(HttpStatus.BAD_REQUEST.value(), e.getMessage());
 
         }
+    }
+
+    @GetMapping("/getall/{nameProduct}")
+    public ResponseDataSuccsess<?> getProductByProductName(@PathVariable String nameProduct) {
+        return new ResponseDataSuccsess<>(HttpStatus.OK.value(), "ok", productService.findProductByProductName(nameProduct));
     }
 }
