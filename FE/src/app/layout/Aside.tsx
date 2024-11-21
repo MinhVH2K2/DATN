@@ -113,30 +113,15 @@ export default function Aside() {
             className="nav-link collapsed"
             data-bs-target="#tables-nav"
             data-bs-toggle="collapse"
-            href="#"
+            onClick={() => {
+              navigate("order");
+            }}
           >
             <i className="bi bi-layout-text-window-reverse"></i>
-            <span>Tables</span>
+            <span>Order</span>
             <i className="bi bi-chevron-down ms-auto"></i>
           </a>
-          <ul
-            id="tables-nav"
-            className="nav-content collapse "
-            data-bs-parent="#sidebar-nav"
-          >
-            <li>
-              <a href="tables-general.html">
-                <i className="bi bi-circle"></i>
-                <span>General Tables</span>
-              </a>
-            </li>
-            <li>
-              <a href="tables-data.html">
-                <i className="bi bi-circle"></i>
-                <span>Data Tables</span>
-              </a>
-            </li>
-          </ul>
+          
         </li>
         {/* <!-- End Tables Nav --> */}
 

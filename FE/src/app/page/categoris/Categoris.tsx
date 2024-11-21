@@ -16,15 +16,22 @@ import { LocateOffIcon } from 'lucide-react';
 
 export default function Categoris() {
    const navigate = useNavigate();
-   const [categori, setCategori] = useState([]);
+   const [categori, setCategori] = useState<categiris[]>([]);
    const [categorisUpdate, setCategorisUpdate] = useState([]);
    const [categorisDelete, setCategorisDelete] = useState([]);
    const [isModalOpen, setModalOpen] = useState(false);
    const [isModalOpens, setModalOpens] = useState(false);
+   const [searchCategori, setSearchCategori] = useState('');
    const [form] = Form.useForm(); // Khởi tạo form
    // phân trang 
    const [totalPage, setTotalPage] = useState(0);
    const [currentPage, setCurrentPage] = useState(0);
+
+
+   interface categiris {
+      categoriesId: String,
+      categoriesName: String
+   }
 
    useEffect(() => {
       getAllCategoris(currentPage)
@@ -145,86 +152,48 @@ export default function Categoris() {
       deleteCategory(categoriid.categoriesId);
    }
 
+   const categoriSearch = categori.filter(categoris => {
+      const lowerCasedSearchTerm = searchCategori.toLowerCase();
+      return (
+         String(categoris.categoriesId).toLowerCase().includes(lowerCasedSearchTerm) ||
+         categoris.categoriesName.toLowerCase().includes(lowerCasedSearchTerm)
+      );
+   });
+
+
    return (
       <>
-         <div className="container">
-            <div className="row mb-8">
-               <div className="col-md-12">
-                  <div className="d-md-flex justify-content-between align-items-center">
-                     <div>
-                        <h2>Categori</h2>
-                        <nav aria-label="breadcrumb">
-                           <ol className="breadcrumb mb-0">
-                              <li className="breadcrumb-item"><a href="#" className="text-inherit">Dashboard</a></li>
-                              <li className="breadcrumb-item active" aria-current="page">Categori</li>
-                           </ol>
-                        </nav>
-                     </div>
-                     <div>
-                        <Button type="primary" onClick={showModal}>
-                           Categori Add
-                        </Button>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <div className="row">
-               <div className="col-xl-12 col-12 mb-5">
-                  <div className="card h-100 card-lg">
-                     <div className="px-6 py-6">
-                        <div className="row justify-content-between">
-                           <div className="col-lg-4 col-md-6 col-12 mb-2 mb-lg-0">
-                              <form className="d-flex" role="search">
-                                 <input className="form-control" type="search" placeholder="Search Products" aria-label="Search" />
-                              </form>
-                           </div>
-                           <div className="col-lg-2 col-md-4 col-12">
-                              <select className="form-select">
-                                 <option selected>Status</option>
-                                 <option value="1">Active</option>
-                                 <option value="2">Deactive</option>
-                                 <option value="3">Draft</option>
-                              </select>
-                           </div>
-                        </div>
-                     </div>
-                     <div className="card">
-                        <DataTable value={categori} tableStyle={{ minWidth: '50rem' }}
-                        >
-                           <Column field="categoriesId" header="Code"></Column>
-                           <Column field="categoriesName" header="Name"></Column>
-                           <Column header="Action" body={(rowData) => (
-                              <>
-                                 <Button className="p-button-success" onClick={() => categoriUpdate(rowData)}>update</Button>
-                                 <Button className="p-button-danger" onClick={() => categoriDelete(rowData)}>delete</Button>
-                              </>
-                           )}></Column>
-                        </DataTable>
+         <div>
+            <h2>Categori</h2>
+            <nav aria-label="breadcrumb">
+               <ol className="breadcrumb mb-0">
+                  <li className="breadcrumb-item"><a href="#" className="text-inherit">Dashboard</a></li>
+                  <li className="breadcrumb-item active" aria-current="page">Categori</li>
+               </ol>
+            </nav>
+         </div>
+         <div>
+            <Button type="primary" onClick={showModal}>
+               Categori Add
+            </Button>
+         </div>
+         <Input
+            placeholder="Search"
+            onChange={(e) => setSearchCategori(e.target.value)}
+            style={{ marginBottom: '20px', width: '300px' }}
 
-                     </div>
-                     <ReactPaginate
-                        breakLabel="..."
-                        nextLabel="next >"
-                        onPageChange={handlePageClick}
-                        pageRangeDisplayed={5}
-                        pageCount={totalPage}
-                        previousLabel="< previous"
-                        pageClassName='page-item'
-                        pageLinkClassName='page-link'
-                        previousClassName='page-item'
-                        previousLinkClassName='page-link'
-                        nextClassName='page-item'
-                        nextLinkClassName='page-link'
-                        breakClassName='page-item'
-                        breakLinkClassName='page-link'
-                        containerClassName='pagination'
-                        activeClassName='active'
-
-                     />
-
-                  </div>
-               </div>
-            </div>
+         />
+         <div className="card">
+            <DataTable value={categoriSearch} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}>
+               <Column field="categoriesId" header="colerId" style={{ width: '25%' }} ></Column>
+               <Column field="categoriesName" header="corlorName" style={{ width: '25%' }} ></Column>
+               <Column header="Action" body={(rowData) => (
+                  <>
+                     <Button className="p-button-success" onClick={() => categoriUpdate(rowData)}>update</Button>
+                     <Button className="p-button-danger" onClick={() => categoriDelete(rowData)}>delete</Button>
+                  </>
+               )} style={{ width: '25%' }}></Column>
+            </DataTable>
          </div>
          {/* ============================================ */}
 

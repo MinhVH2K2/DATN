@@ -47,7 +47,7 @@ public class    MarterialController {
         if (marterial.getMaterialName().trim().length() == 0) {
             return new ResponseEntity<>("không được để trống ", HttpStatus.BAD_REQUEST);
         }
-        Boolean check = marterialService.createMarterial(marterial);
+        Boolean check = marterialService.updateMarterial(marterial);
         return new ResponseEntity<>(check == false ? "thất bại " : "thành công", check == true ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 

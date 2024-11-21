@@ -20,6 +20,7 @@ import java.util.List;
 @Entity
 @Table(name = "discounts")
 @Builder
+@ToString
 public class Discounts {
 
     @Id

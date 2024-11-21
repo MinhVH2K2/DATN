@@ -33,9 +33,9 @@ public class ProductController {
         return new ResponseEntity<>(productService.getAll(pageable), HttpStatus.OK);
     }
 
-    @GetMapping("/getall")
+    @GetMapping("/getall/")
     public ResponseDataSuccsess<?> getAllProduct(@RequestParam("p") Optional<Integer> p) {
-        Pageable pageable = PageRequest.of(p.orElse(0), 5);
+        Pageable pageable = PageRequest.of(p.orElse(0), 50);
         return new ResponseDataSuccsess<>(HttpStatus.OK.value(), "ok", productService.getAllProduct(pageable));
     }
 
@@ -86,5 +86,9 @@ public class ProductController {
             return new ResponseDataSuccsess<>(HttpStatus.BAD_REQUEST.value(), "thất bại ");
         }
         return new ResponseDataSuccsess<>(HttpStatus.OK.value(), "thành công");
+    }
+    @GetMapping("/getall/{nameProduct}")
+    public ResponseDataSuccsess<?> getProductByProductName (@PathVariable String nameProduct){
+        return new ResponseDataSuccsess<>(HttpStatus.OK.value(), "ok", productService.findProductByProductName(nameProduct));
     }
 }

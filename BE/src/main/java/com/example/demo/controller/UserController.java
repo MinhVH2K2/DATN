@@ -2,12 +2,15 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.request.UserRequest;
 import com.example.demo.dto.response.ResponseDataSuccsess;
+import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/")
@@ -37,5 +40,26 @@ public class UserController {
             return new ResponseDataSuccsess<>(HttpStatus.BAD_REQUEST.value() , e.getMessage());
 
         }
-}
+    }
+    @GetMapping("getallcustomer")
+    public ResponseEntity<?> getAllCustomer() {
+        try {
+            List<User> users = userService.getUsersByRole("CUSTOMER");
+            return ResponseEntity.ok(
+                    new ResponseDataSuccsess<>(
+                            HttpStatus.OK.value(),
+                            "Find user by role name",
+                            users
+                    )
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    new ResponseDataSuccsess<>(
+                            HttpStatus.BAD_REQUEST.value(),
+                            e.getMessage(),
+                            null
+                    )
+            );
+        }
+    }
 }

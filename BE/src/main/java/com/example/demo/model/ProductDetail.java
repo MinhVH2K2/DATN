@@ -55,8 +55,8 @@ public class ProductDetail {
     @JoinColumn(name = "product_id", referencedColumnName = "product_id")
     private Products products;
 
-    @OneToMany(mappedBy = "productDetail" ,cascade = CascadeType.ALL)
-    private List<ProductImages> productImages ;
+//    @OneToMany(mappedBy = "productDetail" ,cascade = CascadeType.ALL)
+//    private List<ProductImages> productImages ;
 
 
 

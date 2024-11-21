@@ -6,18 +6,18 @@ import axios from 'axios';
 import { Modal, Form, Input, Button } from 'antd';
 import { AnyListenerPredicate } from '@reduxjs/toolkit';
 const Color = () => {
-    const [color, setColor] = useState([]);
+    const [color, setColor] = useState<colors[]>([]);
     const [mamau, setMaMau] = useState('#ffffff');
     const [isModalAdd, setIsModalAdd] = useState(false);
     const [isModalUpdate, setIsModalUpdate] = useState(false);
+    const [searchColor, setSearchColor] = useState('');
     const [form] = Form.useForm();
 
 
-    // interface ColorItem {
-    //     colerId: number;        // Hoặc kiểu dữ liệu tương ứng
-    //     corlorName: string;     // Tên màu
-    //     colorCode: string;      // Mã màu
-    // }
+    interface colors {
+        corlorName: String,
+        colerId: Number
+    }
     const geitAllColo = async () => {
         const token = localStorage.getItem('authToken');
         try {
@@ -139,14 +139,27 @@ const Color = () => {
 
         isModalUpdateOff();
     }
+    const colorSearch = color.filter(colors => {
+        const lowerCasedSearchTerm = searchColor.toLowerCase();
+        return (
+            String(colors.colerId).toLowerCase().includes(lowerCasedSearchTerm) ||
+            colors.corlorName.toLowerCase().includes(lowerCasedSearchTerm)
+        );
+    });
 
 
     return <>
         <h1>Color</h1>
 
-        <Button type="primary" onClick={isModalAddOpen}>Color Add</Button>
+        <Button type="primary" onClick={isModalAddOpen} >Color Add</Button>
+        <Input
+            placeholder="Search"
+            onChange={(e) => setSearchColor(e.target.value)}
+            style={{ marginBottom: '20px', width: '300px' }}    
+
+        />
         <div className="card">
-            <DataTable value={color} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}>
+            <DataTable value={colorSearch} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}>
                 <Column field="colerId" header="colerId" style={{ width: '25%' }} ></Column>
                 <Column field="corlorName" header="corlorName" style={{ width: '25%' }} ></Column>
                 <Column field="colorCode" header="colorCode" body={colorBodyTemplate} style={{ width: '25%' }}></Column>

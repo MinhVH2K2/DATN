@@ -1,6 +1,7 @@
 import Login from "../layout/auth/Login";
 import Layout from "../layout/Layout";
 import Dashboard from "../page/dashboard/Dashboard";
+import Order from "../page/orders/Order";
 import Product from "../page/products/Product";
 import ProductAdd from "../page/products/ProductAdd";
 import CounterSale from "../page/sales/CounterSale";
@@ -22,6 +23,7 @@ export const indexRouter: any = {
     { path: "sizes-page", element: <Sizes /> },
     { path: "brands-page", element: <Brands /> },
     { path: "marterial-page", element: <Marterial /> },
-    { path: "Color-page", element: <Color /> }
+    { path: "Color-page", element: <Color /> },
+    { path: "order", element: <Order /> },
   ],
 };

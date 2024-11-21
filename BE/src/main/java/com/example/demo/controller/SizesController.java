@@ -46,7 +46,7 @@ public class SizesController {
         if (sizes.getSizesName().trim().length() == 0) {
             return new ResponseEntity<>("không được để trống ", HttpStatus.BAD_REQUEST);
         }
-        Boolean check = sizesService.createSizes(sizes);
+        Boolean check = sizesService.updateSizes(sizes);
         return new ResponseEntity<>(check == false ? "thất bại " : "thành công", check == true ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 
