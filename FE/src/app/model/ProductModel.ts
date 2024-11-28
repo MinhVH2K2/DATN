@@ -6,7 +6,10 @@ export class ProductModel {
     brands?: BrandModel;
     material?: MarterialModel;
     categories?: CategoriModel;
-
+    thumbnail?: string;
+    unitPrice?: number;
+    discountPrice?: number;
+    productDetails?: ProductDetailModel
     constructor(
         productId?: string,
         productName?: string,
@@ -14,7 +17,11 @@ export class ProductModel {
         weight?: number,
         brands?: BrandModel,
         material?: MarterialModel,
-        categories?: CategoriModel
+        categories?: CategoriModel,
+        thumbnail?: string,
+        discountPrice?: number,
+        unitPrice?: number,
+        productDetails?: ProductDetailModel
     ) {
         this.productId = productId;
         this.productName = productName;
@@ -23,6 +30,10 @@ export class ProductModel {
         this.brands = brands;
         this.material = material;
         this.categories = categories;
+        this.thumbnail = thumbnail;
+        this.unitPrice = unitPrice;
+        this.discountPrice = discountPrice;
+        this.productDetails = productDetails;
     }
 }
 
@@ -37,12 +48,12 @@ export class MarterialModel {
 }
 export class ColorModel{
     colerId?: string;
-    colorName?: string;
+    corlorName?: string;
     colorCode?: string;
     constructor(colerId?: string, corlorName?: string, colorCode?: string){
         this.colerId = colerId;
         this.colorCode = colorCode;
-        this.colorName = corlorName;
+        this.corlorName = corlorName;
     };
 }
 export class SizeModel{
@@ -64,29 +75,30 @@ export class BrandModel {
     };
 }
 
-export class ProductImageModel {
-    imageId?: string;
-    imageUrl?: string;
-    isThumbnail?: number;
-    constructor(imageId?: string, imageUrl?: string, isThumbnail?: number){
-        this.imageId = imageId;
-        this.imageUrl = imageUrl;
-        this.isThumbnail = isThumbnail;
-    };
-}
+// export class ProductImageModel {
+//     imageId?: string;
+//     imageUrl?: string;
+//     isThumbnail?: number;
+//     constructor(imageId?: string, imageUrl?: string, isThumbnail?: number){
+//         this.imageId = imageId;
+//         this.imageUrl = imageUrl;
+//         this.isThumbnail = isThumbnail;
+//     };
+// }
 export class ProductDetailModel {
     productDetailId?: string;
-    productId?: ProductModel;
-    colorModel?: ColorModel;
-    sizeModel?: SizeModel;
-    productImages?: ProductImageModel;
-
-    constructor(productDetailId?: string, productId?: ProductModel, colorModel?: ColorModel, sizeModel?: SizeModel, productImages?: ProductImageModel) {
+    products?: string;
+    colors?: ColorModel;
+    sizes?: SizeModel;
+    imageUrl?: string;
+    quantity?: number;
+    constructor(productDetailId?: string, productId?: string, colors?: ColorModel, sizeModel?: SizeModel, imageUrl?: string, quantity?: number) {
         this.productDetailId = productDetailId;
-        this.productId = productId;
-        this.colorModel = colorModel;
-        this.sizeModel = sizeModel;
-        this.productImages = productImages;
+        this.products = productId;
+        this.colors = colors;
+        this.sizes = sizeModel;
+        this.imageUrl = imageUrl;
+        this.quantity = quantity;
     }
 }
 export class CategoriModel {

@@ -40,6 +40,9 @@ public class ProductDetail {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @ManyToOne
     @JoinColumn(name = "corlor_id")
     private Colors colors;
@@ -52,8 +55,8 @@ public class ProductDetail {
     @JoinColumn(name = "product_id", referencedColumnName = "product_id")
     private Products products;
 
-    @OneToMany(mappedBy = "productDetail" ,cascade = CascadeType.ALL)
-    private List<ProductImages> productImages ;
+//    @OneToMany(mappedBy = "productDetail" ,cascade = CascadeType.ALL)
+//    private List<ProductImages> productImages ;
 
 
 

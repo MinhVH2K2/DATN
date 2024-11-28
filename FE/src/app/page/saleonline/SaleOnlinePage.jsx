@@ -11,9 +11,6 @@ export default function SaleOnlinePage() {
      <Footer/>
     </div>
 
-
-
-
   )
 }
 
