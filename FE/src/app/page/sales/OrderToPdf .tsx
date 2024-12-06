@@ -21,13 +21,21 @@ const OrderToPdf = ({ order }: { order: OrderModel }) => {
     pdf.addImage(data, 'PNG', 10, 10, imgWidth, imgHeight);
     pdf.save(`order_${order.orderId}.pdf`);
   };
-
+  const formatDate = (dateString: string | undefined) => {
+    if (!dateString) return ''; // Kiểm tra nếu ngày không tồn tại
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat('vi-VN', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    }).format(date);
+  };
   return (
     <div>
       <div ref={pdfRef} style={{ padding: '20px', background: '#f5f5f5' }}>
         <h2>Thông tin Đơn hàng</h2>
         <p><strong>Mã đơn hàng:</strong> {order.orderId}</p>
-        <p><strong>Ngày tạo:</strong> {order.createdDate?.toString()}</p>
+        <p><strong>Ngày tạo:</strong> {formatDate(order.createdDate?.toString())}</p>
         <p><strong>Tên khách hàng:</strong> {order.customer?.fullName}</p>       
         <p><strong>Số điện thoại:</strong> {order.customer?.phoneNumber}</p>
         
