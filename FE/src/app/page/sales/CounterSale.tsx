@@ -110,7 +110,7 @@ export default function CounterSale() {
       .then((response) => {
         if (nameProduct != "") {
           setProducts(response.data.data);
-          // console.log(response.data.data);
+          console.log("product",response.data.data.content);
         } else {
           setProducts(response.data.data.content);
           // console.log(response.data.data.content);
@@ -489,7 +489,7 @@ export default function CounterSale() {
                         }`}
                       >
                         <span
-                          className="me-2 bg-blue-800"
+                          className="me-2"
                           onClick={() => handleActiveOrder(o.orderId)}
                         >
                           Hóa đơn {o.orderId}

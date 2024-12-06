@@ -16,6 +16,8 @@ import {productDetail} from "./app/router/productDetail";
 import { cartShopping } from "./app/router/cartShoppingRouter";
 // import CounterSale from "./app/page/sales/CounterSale";
 import { discountsRouter } from "./app/router/discountsRouter";
+import Statistical from "./app/page/statistical/Statistical";
+import { statisticalRouter } from "./app/router/statisticalRouter";
 
 export const spinner = (
   <div className="progress-spinner text-center">
@@ -37,6 +39,7 @@ function App() {
     productDetail,
     cartShopping,
     discountsRouter,
+    statisticalRouter ,
     // salesCounter,
     // saleRouter,
     // { path: "counter-sale", element: <CounterSale /> }, //500

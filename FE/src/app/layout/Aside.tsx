@@ -22,6 +22,17 @@ export default function Aside() {
             <span>Dashboard</span>
           </a>
         </li>
+        <li className="nav-item">
+          <a
+            className="pointer nav-link"
+            onClick={() => {
+              navigate("statistical");
+            }}
+          >
+            <i className="bi bi-grid"></i>
+            <span>Statistical</span>
+          </a>
+        </li>
         {/* <!-- End Dashboard Nav --> */}
         <li className="nav-item">
           <a

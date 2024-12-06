@@ -181,7 +181,7 @@ export default function Dashboard() {
               {/* <!-- End Customers Card --> */}
 
               {/* <!-- Reports --> */}
-              <div className="col-12">
+              {/* <div className="col-12">
                 <div className="card">
                   <div className="filter">
                     <a className="icon" href="#" data-bs-toggle="dropdown">
@@ -219,11 +219,11 @@ export default function Dashboard() {
 
                   </div>
                 </div>
-              </div>
+              </div> */}
               {/* <!-- End Reports --> */}
 
               {/* <!-- Recent Sales --> */}
-              <div className="col-12">
+              {/* <div className="col-12">
                 <div className="card recent-sales overflow-auto">
                   <div className="filter">
                     <a className="icon" href="#" data-bs-toggle="dropdown">
@@ -347,7 +347,7 @@ export default function Dashboard() {
                     </table>
                   </div>
                 </div>
-              </div>
+              </div> */}
               {/* <!-- End Recent Sales --> */}
 
               {/* <!-- Top Selling --> */}
@@ -483,7 +483,7 @@ export default function Dashboard() {
           {/* <!-- Right side columns --> */}
           <div className="col-lg-4">
             {/* <!-- Recent Activity --> */}
-            <div className="card">
+            {/* <div className="card">
               <div className="filter">
                 <a className="icon" href="#" data-bs-toggle="dropdown">
                   <i className="bi bi-three-dots"></i>
@@ -580,11 +580,11 @@ export default function Dashboard() {
                   
                 </div>
               </div>
-            </div> 
+            </div> */}
             {/* <!-- End Recent Activity --> */}
 
             {/* <!-- Budget Report --> */}
-            <div className="card">
+            {/* <div className="card">
               <div className="filter">
                 <a className="icon" href="#" data-bs-toggle="dropdown">
                   <i className="bi bi-three-dots"></i>
@@ -619,11 +619,11 @@ export default function Dashboard() {
 
                 <div id="budgetChart" className="echart"></div>
               </div>
-            </div>
+            </div> */}
             {/* <!-- End Budget Report --> */}
 
             {/* <!-- Website Traffic --> */}
-            <div className="card">
+            {/* <div className="card">
               <div className="filter">
                 <a className="icon" href="#" data-bs-toggle="dropdown">
                   <i className="bi bi-three-dots"></i>
@@ -658,8 +658,8 @@ export default function Dashboard() {
 
                 <div id="trafficChart" className="echart"></div>
               </div>
-            </div>
-            {/* {/* <!-- End Website Traffic --> */}
+            </div> */}
+            {/* <!-- End Website Traffic --> */}
 
             {/* <!-- News & Updates Traffic --> */}
             <div className="card">
