@@ -49,6 +49,12 @@ export default function Order() {
                 return null;
         }
     };
+    const formatCurrency = (value: number) => {
+        return new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND',
+        }).format(value);
+    };
     return (
         <>
         <h3>Hóa đơn</h3>
@@ -59,7 +65,11 @@ export default function Order() {
                 <Column field="customer.phoneNumber" header="SDT"></Column>
                 <Column field="createdDate" header="Ngày tạo"></Column>
                 <Column header="Trạng thái" body={statusBodyTemplate}></Column>
-                <Column field="totalPrice" header="Tổng tiền"></Column>
+                <Column
+                        field="totalPrice"
+                        header="Tổng tiền"
+                        body={(rowData) => formatCurrency(rowData.totalPrice)}
+                    ></Column>
             </DataTable>
         </div>
         </>       
