@@ -6,7 +6,7 @@ export default function Header() {
 
   return (
     <>
-      <Dialog
+      {/* <Dialog
         header="Header"
         visible={visible}
         style={{ width: "50vw" }}
@@ -24,7 +24,7 @@ export default function Header() {
           pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
           culpa qui officia deserunt mollit anim id est laborum
         </p>
-      </Dialog>
+      </Dialog> */}
       <header
         id="header"
         className="header fixed-top d-flex align-items-center"
@@ -40,11 +40,11 @@ export default function Header() {
             </span>
             <span className="fw-bold d-none d-lg-block">Shop</span>
           </a>
-          <i onClick={()=>{setVisible(true)}} className="bi bi-list toggle-sidebar-btn"></i>
+          {/* <i onClick={()=>{setVisible(true)}} className="bi bi-list toggle-sidebar-btn"></i> */}
         </div>
         {/* <!-- End Logo --> */}
 
-        <div className="search-bar">
+        {/* <div className="search-bar">
           <form
             className="search-form d-flex align-items-center"
             method="POST"
@@ -60,7 +60,7 @@ export default function Header() {
               <i className="bi bi-search"></i>
             </button>
           </form>
-        </div>
+        </div> */}
         {/* <!-- End Search Bar --> */}
 
         <nav className="header-nav ms-auto">

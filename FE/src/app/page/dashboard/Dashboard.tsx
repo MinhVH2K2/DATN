@@ -215,10 +215,8 @@ export default function Dashboard() {
                       Reports <span>/Today</span>
                     </h5>
 
-                    {/* <!-- Line Chart --> */}
                     <div id="reportsChart"></div>
 
-                    {/* <!-- End Line Chart --> */}
                   </div>
                 </div>
               </div>
@@ -530,7 +528,7 @@ export default function Dashboard() {
                       beatae
                     </div>
                   </div>
-                  {/* <!-- End activity item--> */}
+                  
 
                   <div className="activity-item d-flex">
                     <div className="activite-label">56 min</div>
@@ -539,7 +537,7 @@ export default function Dashboard() {
                       Voluptatem blanditiis blanditiis eveniet
                     </div>
                   </div>
-                  {/* <!-- End activity item--> */}
+                  
 
                   <div className="activity-item d-flex">
                     <div className="activite-label">2 hrs</div>
@@ -548,7 +546,7 @@ export default function Dashboard() {
                       Voluptates corrupti molestias voluptatem
                     </div>
                   </div>
-                  {/* <!-- End activity item--> */}
+                  
 
                   <div className="activity-item d-flex">
                     <div className="activite-label">1 day</div>
@@ -561,7 +559,7 @@ export default function Dashboard() {
                       tempore
                     </div>
                   </div>
-                  {/* <!-- End activity item--> */}
+                  
 
                   <div className="activity-item d-flex">
                     <div className="activite-label">2 days</div>
@@ -570,7 +568,7 @@ export default function Dashboard() {
                       Est sit eum reiciendis exercitationem
                     </div>
                   </div>
-                  {/* <!-- End activity item--> */}
+                  
 
                   <div className="activity-item d-flex">
                     <div className="activite-label">4 weeks</div>
@@ -579,10 +577,10 @@ export default function Dashboard() {
                       Dicta dolorem harum nulla eius. Ut quidem quidem sit quas
                     </div>
                   </div>
-                  {/* <!-- End activity item--> */}
+                  
                 </div>
               </div>
-            </div>
+            </div> 
             {/* <!-- End Recent Activity --> */}
 
             {/* <!-- Budget Report --> */}
@@ -661,7 +659,7 @@ export default function Dashboard() {
                 <div id="trafficChart" className="echart"></div>
               </div>
             </div>
-            {/* <!-- End Website Traffic --> */}
+            {/* {/* <!-- End Website Traffic --> */}
 
             {/* <!-- News & Updates Traffic --> */}
             <div className="card">

@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ProductRepository extends JpaRepository<Products, String>, JpaSpecificationExecutor<Products> {
     @Query(value = "select products.product_id , products.product_name ,products.description,products.discount_price , products.unit_price ,\n" +
@@ -24,4 +26,5 @@ public interface ProductRepository extends JpaRepository<Products, String>, JpaS
             "join sizes on product_details.size_id = sizes.size_id \n" +
             "join colors on product_details.corlor_id = colors.color_id", nativeQuery = true)
     Page<ProductResponse> getAll(Pageable pageable);
+    List<Products> findProductsByProductNameContaining(String name);
 }

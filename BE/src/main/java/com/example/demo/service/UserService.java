@@ -21,6 +21,7 @@ public class UserService {
     UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     @Autowired
     RolesRepository rolesRepository;
 
@@ -87,5 +88,8 @@ public class UserService {
     public User findByUserName(String userName) throws Exception {
         return userRepository.findByuserName(userName).orElseThrow(() -> new Exception("Không tìm thấy người dùng"));
 
+    }
+    public List<User> getUsersByRole(String roleName) {
+        return userRepository.findByRolesRoleName(roleName);
     }
 }

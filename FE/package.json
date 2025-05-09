@@ -3,7 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.13.5",
+    "@emotion/styled": "^11.13.5",
     "@fortawesome/fontawesome-free": "^6.6.0",
+    "@mui/base": "^5.0.0-beta.62",
+    "@mui/icons-material": "^6.1.8",
+    "@mui/material": "^6.1.8",
     "@popperjs/core": "^2.11.8",
     "@reduxjs/toolkit": "^1.9.2",
     "@testing-library/jest-dom": "^5.17.0",
@@ -17,10 +22,12 @@
     "autoprefixer": "^10.4.20",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
+    "html2canvas": "^1.4.1",
     "i18next": "^22.4.9",
     "i18next-http-backend": "^2.1.1",
     "js-cookie": "^3.0.5",
     "js-cookies": "^1.0.4",
+    "jspdf": "^2.5.2",
     "lucide-react": "^0.438.0",
     "primeicons": "^7.0.0",
     "primereact": "^10.8.3",
@@ -33,6 +40,7 @@
     "react-router-dom": "^6.21.3",
     "react-scripts": "5.0.1",
     "react-toastify": "^9.1.1",
+    "sale-fe": "file:",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
@@ -60,12 +68,14 @@
       "last 1 safari version"
     ]
   },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "postcss.config.js",
   "devDependencies": {
-<<<<<<< HEAD
-=======
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.47",
->>>>>>> 37c46b033526ccd1b349e77086d69c03aab5a91c
     "tailwindcss": "^3.4.14"
-  }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

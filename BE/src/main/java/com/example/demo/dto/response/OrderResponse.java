@@ -2,6 +2,7 @@ package com.example.demo.dto.response;
 
 import com.example.demo.model.Discounts;
 import com.example.demo.model.OrderItems;
+import com.example.demo.model.User;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -14,14 +15,11 @@ import java.util.List;
 @AllArgsConstructor
 public class OrderResponse {
     private String orderId;
-    private String userId;
-    private String discountId;
+    private User customer;
+    private Discounts discounts;
     private BigDecimal totalPrice;
     private String status;
     private LocalDateTime createdDate;
     private String createdBy;
-    private LocalDateTime updatedDate;
-    private String updatedBy;
     private List<OrderItems> orderItems;
-    private Discounts discounts;
 }

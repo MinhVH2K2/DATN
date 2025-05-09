@@ -27,14 +27,15 @@ public class Orders {
     @Column(name = "order_id")
     private String orderId;
 
-    @Column(name = "user_id")
-    private String userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User customer;
 
-    @Column(name = "discount_id")
-    private String discountId;
+//    @Column(name = "user_id")
+//    private String userId;
 
     @ManyToOne
-    @JoinColumn(name = "discount_id" , insertable = false , updatable = false)
+    @JoinColumn(name = "discount_id")
     private Discounts discounts;
 
     @Column(name = "total_price")
@@ -48,6 +49,8 @@ public class Orders {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdDate;
 
+//    @ManyToOne
+//    @JoinColumn(name = "created_by")
     @Column(name = "created_by")
     private String createdBy;
 
@@ -56,8 +59,9 @@ public class Orders {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime updatedDate;
 
-    @Column(name = "updated_by")
-    private String updatedBy;
+    @ManyToOne
+    @JoinColumn(name = "updated_by")
+    private User updatedBy;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "orders")
     @JsonIgnore

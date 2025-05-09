@@ -23,16 +23,17 @@ public class OrderItems {
     @Column(name = "order_item_id")
     private Long orderItemId;
 
-    @Column(name = "order_id")
-    private String orderId;
+//    @Column(name = "order_id")
+//    private String orderId;
 
     @ManyToOne
-    @JoinColumn(name = "order_id", insertable = false, updatable = false)
+    @JoinColumn(name = "order_id")
     @JsonIgnoreProperties
     private Orders orders;
 
-    @Column(name = "product_detail_id")
-    private String productDetailId;
+    @ManyToOne
+    @JoinColumn(name = "product_detail_id")
+    private ProductDetail productDetail;
 
     @Column(name = "quantity")
     private Integer quantity;
@@ -46,7 +47,7 @@ public class OrderItems {
     @Column(name = "total_price")
     private BigDecimal  totalPrice;
 
-    public void calculateTotalPrice() {
-        this.totalPrice = unitPrice.multiply(BigDecimal.valueOf(quantity)).subtract(discountPrice != null ? discountPrice : BigDecimal.ZERO);
-    }
+//    public void calculateTotalPrice() {
+//        this.totalPrice = unitPrice.multiply(BigDecimal.valueOf(quantity)).subtract(discountPrice != null ? discountPrice : BigDecimal.ZERO);
+//    }
 }

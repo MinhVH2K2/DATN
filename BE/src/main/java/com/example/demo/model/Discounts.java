@@ -20,6 +20,7 @@ import java.util.List;
 @Entity
 @Table(name = "discounts")
 @Builder
+@ToString
 public class Discounts {
 
     @Id
@@ -34,10 +35,10 @@ public class Discounts {
     private String discountType;
 
     @Column(name = "start_date")
-    private LocalDateTime  startDate;
+    private LocalDate  startDate;
 
     @Column(name = "end_date")
-    private LocalDateTime  endDate;
+    private LocalDate  endDate;
 
     @Column(name = "status")
     private String status;

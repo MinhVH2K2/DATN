@@ -4,11 +4,8 @@ import com.example.demo.dto.response.PageResponse;
 import com.example.demo.dto.response.ProductResponse;
 import com.example.demo.model.Brands;
 import com.example.demo.model.Categories;
-import com.example.demo.model.Colors;
 import com.example.demo.model.Marterial;
-import com.example.demo.model.ProductDetail;
 import com.example.demo.model.Products;
-import com.example.demo.model.Sizes;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.service.ProductService;
 import jakarta.persistence.criteria.Join;
@@ -121,7 +118,6 @@ public class ProductServiceImpl implements ProductService {
                 }
 
         );
-<<<<<<< HEAD
         Specification<Products> hasName = Specification.where((root, query, criteriaBuilder) ->
                 {
                     if (nameProducts == null) {
@@ -136,7 +132,6 @@ public class ProductServiceImpl implements ProductService {
 //                criteriaBuilder.equal(root.get("productId"), id)
 //        );
         Specification<Products> finalSpec = spec.and(hasName);
-=======
 //        Specification<Products> hasName = Specification.where((root, query, criteriaBuilder) ->
 //                criteriaBuilder.like(root.get("productName"),"%" + nameProducts + "%")
 //        );
@@ -144,34 +139,30 @@ public class ProductServiceImpl implements ProductService {
 //                criteriaBuilder.equal(root.get("productId"), id)
 //        );
 //        Specification<Products> finalSpec = spec.and(hasName);
->>>>>>> 37c46b033526ccd1b349e77086d69c03aab5a91c
 
         Page<Products> lists = productRepository.findAll(spec, pageable);
-
-<<<<<<< HEAD
         List<Products> productsList = lists.stream().map(list -> Products.builder()
                 .productId(list.getProductId())
                 .productName(list.getProductName())
-                .productIng(list.getProductIng())
+                .thumbnail(list.getThumbnail())
                 .categories(list.getCategories())
                 .unitPrice(list.getUnitPrice())
                 .description(list.getDescription())
                 .productDetails(list.getProductDetails())
                 .build()).toList();
-=======
-       List<Products> productsList= lists.stream().map(list -> Products.builder()
-               .productId(list.getProductId())
-               .productName(list.getProductName())
-               .categories(list.getCategories())
-               .productDetails(list.getProductDetails())
-               .build()).toList();
->>>>>>> 37c46b033526ccd1b349e77086d69c03aab5a91c
-
         return PageResponse.builder()
                 .pageNo(pageNo)
                 .pageSize(pageSize)
                 .totalPage(lists.getTotalPages())
                 .data(productsList)
                 .build();
+//    @Override
+//    public List<Products> findProductByProductName(String name) {
+//        return productRepository.findProductsByProductNameContaining(name);
+    }
+
+    @Override
+    public List<Products> findProductByProductName(String name) {
+        return productRepository.findProductsByProductNameContaining(name);
     }
 }

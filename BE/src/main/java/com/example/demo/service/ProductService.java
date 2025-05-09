@@ -10,7 +10,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface ProductService  {
+
+import java.util.List;
+
+public interface ProductService {
 
     Page<ProductResponse> getAll(Pageable pageable);
     Page<Products> getAllProduct(Pageable pageable);
@@ -20,4 +23,5 @@ public interface ProductService  {
 
     Boolean deleteProduct(String id);
     PageResponse <?>getAllProductByMutipleColums(int pageNo, int pageSize, String categories , String nameProducts,String id);
+    List<Products> findProductByProductName(String name);
 }
